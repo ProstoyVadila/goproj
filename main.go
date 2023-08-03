@@ -15,7 +15,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = files.Generate2(projectInfo)
+	err = files.Generate(projectInfo)
 	if err != nil {
 		log.Fatal(err)
 	}

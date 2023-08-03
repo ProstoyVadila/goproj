@@ -9,6 +9,6 @@ tests:
 	go tests .
 
 cleanup:
-	rm tests/files/*
+	rm tests/tempFiles/*
 
 .PHONY: run build tests cleanup
