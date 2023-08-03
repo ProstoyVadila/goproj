@@ -8,4 +8,3 @@
 - add cli args to skip a starter quiz
 - add initial setup configuration (???)
 - rewrite readme lol
-

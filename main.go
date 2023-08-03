@@ -1,4 +1,3 @@
-// package groprojscript
 package main
 
 import (
