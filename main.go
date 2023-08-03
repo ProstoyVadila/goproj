@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/ProstoyVadila/goprojtemplate/internal/files"
 	"github.com/ProstoyVadila/goprojtemplate/internal/reader"
+	"github.com/ProstoyVadila/goprojtemplate/pkg/files"
 )
 
 func main() {
@@ -19,6 +19,4 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	fmt.Println("Successfully generated!")
 }
