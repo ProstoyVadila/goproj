@@ -7,8 +7,8 @@ import (
 )
 
 func generateTemplate(info *models.TemplateInfo, errCh chan<- error) {
-	licenseTemplate := NewTemplate(info)
-	err := licenseTemplate.generate()
+	template := NewTemplate(info)
+	err := template.generate()
 	if err != nil {
 		errCh <- err
 	}
