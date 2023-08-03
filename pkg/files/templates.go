@@ -1,6 +1,7 @@
 package files
 
 import (
+	"embed"
 	"os"
 	"text/template"
 
@@ -19,8 +20,8 @@ func NewTemplate(templateInfo *models.TemplateInfo) *Templapte {
 	}
 }
 
-func (t *Templapte) getTemplateFile() error {
-	tmpl, err := template.ParseFiles(t.TemplateInfo.PathWithTemplateName())
+func (t *Templapte) getTemplateFile(embedFiles embed.FS) error {
+	tmpl, err := template.ParseFS(embedFiles, t.TemplateInfo.PathWithTemplateName())
 	if err != nil {
 		return err
 	}
@@ -45,10 +46,10 @@ func (t *Templapte) writeFile() error {
 	return nil
 }
 
-func (t *Templapte) generate() error {
+func (t *Templapte) generate(embedFiles embed.FS) error {
 	defer t.File.Close()
 
-	err := t.getTemplateFile()
+	err := t.getTemplateFile(embedFiles)
 	if err != nil {
 		return err
 	}

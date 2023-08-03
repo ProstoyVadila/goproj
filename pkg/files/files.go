@@ -1,14 +1,15 @@
 package files
 
 import (
+	"embed"
 	"fmt"
 
 	"github.com/ProstoyVadila/goprojtemplate/internal/models"
 )
 
-func generateTemplate(info *models.TemplateInfo, errCh chan<- error) {
+func generateTemplate(info *models.TemplateInfo, embedFiles embed.FS, errCh chan<- error) {
 	template := NewTemplate(info)
-	err := template.generate()
+	err := template.generate(embedFiles)
 	if err != nil {
 		errCh <- err
 	}
@@ -18,11 +19,11 @@ func generateTemplate(info *models.TemplateInfo, errCh chan<- error) {
 func Generate(projectInfo *models.ProjectInfo) error {
 	fmt.Printf("Generating files for %s\n", projectInfo.AuthorName)
 
-	errCh := make(chan error)
+	errCh := make(chan error, len(projectInfo.Templates))
 	defer close(errCh)
 
 	for _, templateInfo := range projectInfo.Templates {
-		go generateTemplate(templateInfo, errCh)
+		go generateTemplate(templateInfo, projectInfo.EmbedFiles, errCh)
 	}
 
 	for i := 0; i < len(projectInfo.Templates); i++ {
@@ -30,5 +31,6 @@ func Generate(projectInfo *models.ProjectInfo) error {
 			return err
 		}
 	}
+
 	return nil
 }

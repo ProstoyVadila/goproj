@@ -1,17 +1,23 @@
 package models
 
 import (
+	"embed"
+	"log"
+	"os"
 	"path/filepath"
 	"time"
 )
 
-const TEMPLATE_PATH = "./templates"
-const RESULT_PATH = "./tests/tempFiles"
+// const TEMPLATE_PATH = "/Users/vadim/Documents/scripts/groproj_script/templates"
+const (
+	TEMPLATE_PATH        = "./templates"
+	LOCALRUN_RESULT_PATH = "./tests/tempFiles"
 
-const LICENSE_TEMPLATE = "LICENSE.tmpl"
-const LICENSE_FILE = "LICENSE"
-const README_TEMPLATE = "README.tmpl"
-const README_FILE = "README.md"
+	LICENSE_TEMPLATE = "LICENSE.tmpl"
+	LICENSE_FILE     = "LICENSE"
+	README_TEMPLATE  = "README.tmpl"
+	README_FILE      = "README.md"
+)
 
 type TemplateInfo struct {
 	Name     string
@@ -19,14 +25,6 @@ type TemplateInfo struct {
 	Filename string
 	Filepath string
 	Data     any
-}
-
-func (t *TemplateInfo) PathWtihFileName() string {
-	return filepath.Join(t.Filepath, t.Filename)
-}
-
-func (t *TemplateInfo) PathWithTemplateName() string {
-	return filepath.Join(t.Path, t.Name)
 }
 
 type LicenseInfo struct {
@@ -42,19 +40,33 @@ type ReadmeInfo struct {
 }
 
 type ProjectInfo struct {
-	Templates    []*TemplateInfo
-	AuthorName   string
-	PackageName  string
-	TemplatePath string
+	Templates   []*TemplateInfo
+	EmbedFiles  embed.FS
+	AuthorName  string
+	PackageName string
+	Path        string
+}
+
+func (t *TemplateInfo) PathWtihFileName() string {
+	return filepath.Join(t.Filepath, t.Filename)
+}
+
+func (t *TemplateInfo) PathWithTemplateName() string {
+	return filepath.Join(t.Path, t.Name)
+}
+
+func (p *ProjectInfo) TemplatePath() string {
+	// return filepath.Join(p.Path, TEMPLATE_PATH)
+	return TEMPLATE_PATH
 }
 
 // TODO: get path from os
-func NewTemplateInfo(name, filename string, data any) *TemplateInfo {
+func NewTemplateInfo(name, filename, absPath, templatePath string, data any) *TemplateInfo {
 	return &TemplateInfo{
 		Name:     name,
-		Path:     TEMPLATE_PATH,
+		Path:     templatePath,
 		Filename: filename,
-		Filepath: RESULT_PATH,
+		Filepath: absPath,
 		Data:     data,
 	}
 }
@@ -68,20 +80,29 @@ func NewReadmeInfo(authorName, description string) *ReadmeInfo {
 }
 
 func NewProjectInfo(authorName, packageName, description string) *ProjectInfo {
+	absPath, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	projectInfo := &ProjectInfo{
-		AuthorName:   authorName,
-		PackageName:  packageName,
-		TemplatePath: TEMPLATE_PATH,
+		AuthorName:  authorName,
+		PackageName: packageName,
+		Path:        absPath,
 	}
 
 	license := NewTemplateInfo(
 		LICENSE_TEMPLATE,
 		LICENSE_FILE,
+		absPath,
+		projectInfo.TemplatePath(),
 		NewLicenceInfo(authorName),
 	)
 	readme := NewTemplateInfo(
 		README_TEMPLATE,
 		README_FILE,
+		absPath,
+		projectInfo.TemplatePath(),
 		NewReadmeInfo(authorName, description),
 	)
 

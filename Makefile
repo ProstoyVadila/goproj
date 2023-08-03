@@ -3,7 +3,7 @@ run:
 	go run .
 
 build:
-	go build .
+	go build
 
 tests:
 	go tests .
