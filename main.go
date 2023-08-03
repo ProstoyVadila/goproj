@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/ProstoyVadila/goprojtemplate/internal/git"
 	"github.com/ProstoyVadila/goprojtemplate/internal/reader"
 	"github.com/ProstoyVadila/goprojtemplate/pkg/files"
 )
@@ -23,6 +24,11 @@ func main() {
 	projectInfo.EmbedFiles = EmbedFiles
 
 	err = files.Generate(projectInfo)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = git.InitGitRepo(projectInfo)
 	if err != nil {
 		log.Fatal(err)
 	}
