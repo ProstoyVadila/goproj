@@ -17,7 +17,7 @@ func generateTemplate(info *models.TemplateInfo, embedFiles embed.FS, errCh chan
 }
 
 func Generate(projectInfo *models.ProjectInfo) error {
-	fmt.Printf("Generating files for %s\n", projectInfo.AuthorName)
+	fmt.Println("Generating files for")
 
 	errCh := make(chan error, len(projectInfo.Templates))
 	defer close(errCh)
