@@ -7,8 +7,8 @@ import (
 	"github.com/ProstoyVadila/goprojtemplate/internal/models"
 )
 
-func generateTemplate(info *models.TemplateInfo, embedFiles embed.FS, errCh chan<- error) {
-	template := NewTemplate(info)
+func generateTemplate(info *models.Document, embedFiles embed.FS, errCh chan<- error) {
+	template := NewFile(info)
 	err := template.generate(embedFiles)
 	if err != nil {
 		errCh <- err

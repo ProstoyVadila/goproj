@@ -1,0 +1,11 @@
+FROM golang:{{ .GoVersion }} AS builder
+WORKDIR /app
+COPY . .
+RUN env GOOS=linux CGO_ENABLED=0 go build -ldflags "-w" -o main
+
+FROM alpine:{{ .AlpineVersion }} 
+WORKDIR /app
+COPY --from=builder /app/main .
+COPY .env .
+
+CMD ["/app/main"]

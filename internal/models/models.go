@@ -8,14 +8,20 @@ import (
 
 const (
 	TEMPLATE_PATH        = "./templates"
+	FILE_TO_MOVE_PATH    = "./templates/files"
 	LOCALRUN_RESULT_PATH = "./tests/tempFiles"
+
+	GITIGNORE_FILE    = ".gitignore"
+	DOCKERIGNORE_FILE = ".dockerignore"
+	MAIN_GO_FILE      = "main.go"
+	MAKEFILE          = "Makefile"
 )
 
 // TODO get values from input/setup
 var LIST_OF_FOLDERS = [4]string{"cmd", "pkg", "internal", "tests"}
 
 type ProjectInfo struct {
-	Templates   []*TemplateInfo
+	Templates   []*Document
 	EmbedFiles  embed.FS
 	AuthorName  string
 	PackageName string
@@ -24,12 +30,7 @@ type ProjectInfo struct {
 	Folders     []*Folder
 }
 
-func (p *ProjectInfo) TemplatePath() string {
-	// return filepath.Join(p.Path, TEMPLATE_PATH)
-	return TEMPLATE_PATH
-}
-
-func (p *ProjectInfo) AddTemplates(templates ...*TemplateInfo) {
+func (p *ProjectInfo) AddFiles(templates ...*Document) {
 	p.Templates = append(p.Templates, templates...)
 }
 
@@ -51,28 +52,84 @@ func NewProjectInfo(authorName, packageName, description string) *ProjectInfo {
 		InitGit: true,
 	}
 
-	license := NewTemplateInfo(
+	// Template files
+	license := NewDocument(
 		LICENSE_TEMPLATE,
 		LICENSE_FILE,
 		absPath,
-		projectInfo.TemplatePath(),
+		TEMPLATE_PATH,
+		true,
 		NewLicenceInfo(authorName),
 	)
-	readme := NewTemplateInfo(
+	readme := NewDocument(
 		README_TEMPLATE,
 		README_FILE,
 		absPath,
-		projectInfo.TemplatePath(),
+		TEMPLATE_PATH,
+		true,
 		NewReadmeInfo(authorName, description),
 	)
-	gomod := NewTemplateInfo(
+	gomod := NewDocument(
 		GOMOD_TEMPLATE,
 		GOMOD_FILE,
 		absPath,
-		projectInfo.TemplatePath(),
+		TEMPLATE_PATH,
+		true,
 		NewGoModInfo(packageName),
 	)
-	projectInfo.AddTemplates(license, readme, gomod)
+	dockerfile := NewDocument(
+		DOCKERFILE_TEMPLATE,
+		DOCKERFILE,
+		absPath,
+		TEMPLATE_PATH,
+		true,
+		NewDockerfileInfo(),
+	)
+
+	// Files to copy
+	gitignore := NewDocument(
+		GITIGNORE_FILE,
+		GITIGNORE_FILE,
+		absPath,
+		FILE_TO_MOVE_PATH,
+		false,
+		struct{}{},
+	)
+	dockerignore := NewDocument(
+		DOCKERIGNORE_FILE,
+		DOCKERIGNORE_FILE,
+		absPath,
+		FILE_TO_MOVE_PATH,
+		false,
+		struct{}{},
+	)
+	mainGoFile := NewDocument(
+		MAIN_GO_FILE,
+		MAIN_GO_FILE,
+		absPath,
+		FILE_TO_MOVE_PATH,
+		false,
+		struct{}{},
+	)
+	makefile := NewDocument(
+		MAKEFILE,
+		MAKEFILE,
+		absPath,
+		FILE_TO_MOVE_PATH,
+		false,
+		struct{}{},
+	)
+
+	projectInfo.AddFiles(
+		license,
+		readme,
+		gomod,
+		dockerfile,
+		gitignore,
+		mainGoFile,
+		dockerignore,
+		makefile,
+	)
 
 	for _, folderName := range LIST_OF_FOLDERS {
 		projectInfo.AddFolders(NewFolder(folderName))

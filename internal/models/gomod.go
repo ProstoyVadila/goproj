@@ -1,10 +1,5 @@
 package models
 
-import (
-	"regexp"
-	"runtime"
-)
-
 const (
 	GOMOD_TEMPLATE = "go.mod.tmpl"
 	GOMOD_FILE     = "go.mod"
@@ -20,10 +15,4 @@ func NewGoModInfo(packageName string) *GoModInfo {
 		PackageName: packageName,
 		GoVersion:   GoVersion(),
 	}
-}
-
-func GoVersion() string {
-	fullVersion := runtime.Version()
-	re := regexp.MustCompile(`\d\.\d+`)
-	return re.FindString(fullVersion)
 }
