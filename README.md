@@ -1,9 +1,10 @@
 # Go Project Template Generator
 
-This small utility allows you to start a new project with an already initialized standard folder structure and default support files such as Makefile, README.md, LICINSE etc.
+This small utility allows you to start a new project with an already initialized standard folder structure and default support files such as Makefile, README.md, LICINSE etc. It creates a git repo as well.
 
 Init project structre:
 ```bash
+├── .git
 ├── LICENSE
 ├── README.md
 ├── go.mod
