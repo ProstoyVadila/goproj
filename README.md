@@ -1,6 +1,6 @@
 # Go Project Template Generator
 
-Utility to initialize a Go project with default folders and files.
+An utility to initialize a Go project with default folders and files.
 
 ## Overview
 
