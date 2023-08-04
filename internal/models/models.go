@@ -59,7 +59,11 @@ func NewProjectInfo(authorName, packageName, description string) *ProjectInfo {
 		NewGoModInfo(packageName),
 	)
 
-	projectInfo.Templates = append(projectInfo.Templates, license, readme, gomod)
+	projectInfo.AddTemplate(license, readme, gomod)
 
 	return projectInfo
+}
+
+func (p *ProjectInfo) AddTemplate(templates ...*TemplateInfo) {
+	p.Templates = append(p.Templates, templates...)
 }
