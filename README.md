@@ -1,6 +1,6 @@
 # Go Project Template Generator
 
-This small utility allows you to start your new project in Go with an already initialized standard `folders` and default support files such as `Makefile`, `Dockerfile`, `README.md`, `LICINSE` etc. It creates a git repo as well.
+This small utility allows you to start your new project in Go with an already initialized standard [folders](#list-of-generated-folders) and default support files such as [Makefile](#list-of-generated-files), [Dockerfile](#list-of-generated-files), [README.md](#list-of-generated-files), [LICINSE](#list-of-generated-files) etc. It creates a git repo as well.
 
 Init project structure:
 ```bash
@@ -21,6 +21,13 @@ Init project structure:
 └── .git
 ```
 
+## Content
+- [File Description](#file-description)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Plans](#plans)
+
+## File Description
 ### List of Generated Files
 1. <b>go.mod</b> – generates with the entered package name and your version of Go.
 
@@ -117,17 +124,18 @@ Just type `goproj` in your terminal in <b>your project folder</b>
 ```bash
 goproj
 ```
-And answer a few questions:
+and answer a few questions:
 ```
 Let's start!
 Please, enter your name: Bob
 Please, enter your new project (package) name: github.com/Bobert/new_project
 Please, add a description to your project: my new project 
 ```
-That's it!
+That's it! \
+Please, Enjoy! :)
 
 ## Plans
 - udpate cli ui/ux to make it prettier and more fun
 - add an option to choose a [license](https://choosealicense.com/)
 - add cli args to skip a starter quiz
-- add initial setup configuration (to do setup only once)
+- add initial setup configuration (to do setup only once and forever)
