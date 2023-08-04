@@ -1,5 +1,7 @@
 # Go Project Template Generator
 
+## Overview
+
 This small utility allows you to start your new project in Go with an already initialized standard [folders](#list-of-generated-folders) and default support files such as [Makefile](#list-of-generated-files), [Dockerfile](#list-of-generated-files), [README.md](#list-of-generated-files), [LICINSE](#list-of-generated-files) etc. It creates a git repo as well.
 
 Init project structure:
@@ -22,22 +24,47 @@ Init project structure:
 ```
 
 ## Content
-- [File Description](#file-description)
-- [Installation](#installation)
-- [Usage](#usage)
+- [Quick Start](#quick-start)
+    - [Installation](#installation)
+    - [Usage](#usage)
+- [Project Structure](#project-structure)
+    - [Full List of Files](#a-full-list-of-generated-files)
+    - [Full List of Folders](#a-full-list-of-generated-folders)
 - [Plans](#plans)
 
-## File Description
-### List of Generated Files
-1. <b>go.mod</b> – generates with the entered package name and your version of Go.
+## Quick Start
 
-2. <b>main.go</b> – an empty file with `package main` and `func main()`.
+### Installation
+Default installation to `GOPATH/bin` folder
+```bash
+go install github.com/ProstoyVadila/goproj@latest
+```
+**!!! Make sure that `GOPATH/bin` is in your `PATH`.**
 
-3. <b>.env</b> – an empty env file.
+### Usage
+Just type `goproj` in your terminal in <b>your project folder</b>
+```bash
+goproj
+```
+and answer a few questions:
+```
+Let's start!
+Please, enter your name: Bob
+Please, enter your new project (package) name: github.com/Bobert/new_project
+Please, add a description to your project: my new project 
+```
 
-4. <b>LICENSE</b> – [The MIT license](https://opensource.org/license/mit/) with your entered name and the current year.
+## Project Structure
+### A Full List of Generated Files
+1. **go.mod** – generates with the entered package name and your version of Go.
 
-5. <b>Dockerfile</b> – multi-stage build dockerfile setup with your version of Go.
+2. **main.go** – an empty file with `package main` and `func main()`.
+
+3. **.env** – an empty env file.
+
+4. **LICENSE** – [The MIT license](https://opensource.org/license/mit/) with your entered name and the current year.
+
+5. **Dockerfile** – multi-stage build dockerfile setup with your version of Go.
 ```Dockerfile
 FROM golang:1.20-alpine AS builder
 WORKDIR /app
@@ -52,7 +79,7 @@ COPY .env .
 CMD ["/app/main"]
 ```
 
-6. <b>Makefile</b> – a simple Makefile with `run`/`build`/`tests` commands.
+6. **Makefile** – a simple Makefile with `run`/`build`/`tests` commands.
 ```Makefile
 run:
 	@go run .
@@ -67,7 +94,7 @@ tests:
 .PHONY: run build tests
 ```
 
-7. <b>.gitignore</b> – a default [gitignore template](https://github.com/github/gitignore/blob/main/Go.gitignore) for projects in Go.
+7. **.gitignore** – a default [gitignore template](https://github.com/github/gitignore/blob/main/Go.gitignore) for projects in Go.
 ```gitignore
 # Binaries for programs and plugins
 *.exe
@@ -89,7 +116,7 @@ tests:
 go.work
 ```
 
-8. <b>.dockerignore</b> – a default [dockerignore template](https://github.com/GoogleCloudPlatform/golang-samples/blob/main/run/helloworld/.dockerignore) for projects in Go. 
+8. **.dockerignore** – a default [dockerignore template](https://github.com/GoogleCloudPlatform/golang-samples/blob/main/run/helloworld/.dockerignore) for projects in Go. 
 ```dockerignore
 # The .dockerignore file excludes files from the container build process.
 #
@@ -106,33 +133,15 @@ vendor/
 .gitignore
 ```
 
-### List of Generated Folders
-1. <b>cmd</b>
-2. <b>internal</b>
-3. <b>pkg</b>
-4. <b>tests</b>
+### A Full List of Generated Folders
+There are some standart folders for any project in Go:
+1. **cmd**
+2. **internal**
+3. **pkg**
+4. **tests**
 
-## Installation
-Default installation to `GOPATH/bin` folder
-```bash
-go install github.com/ProstoyVadila/goproj@latest
-```
-!!! Make sure that `GOPATH/bin` is in your `PATH`.
-
-## Usage
-Just type `goproj` in your terminal in <b>your project folder</b>
-```bash
-goproj
-```
-and answer a few questions:
-```
-Let's start!
-Please, enter your name: Bob
-Please, enter your new project (package) name: github.com/Bobert/new_project
-Please, add a description to your project: my new project 
-```
 That's it! \
-Please, Enjoy! :)
+Please, enjoy! :)
 
 ## Plans
 - udpate cli ui/ux to make it prettier and more fun
