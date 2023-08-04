@@ -12,7 +12,7 @@ const (
 )
 
 // TODO get values from input/setup
-var LIST_OF_FOLDERS = [3]string{"cmd", "pkg", "internal"}
+var LIST_OF_FOLDERS = [4]string{"cmd", "pkg", "internal", "tests"}
 
 type ProjectInfo struct {
 	Templates   []*TemplateInfo

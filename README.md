@@ -10,6 +10,7 @@ Init project structre:
 ├── go.mod
 ├── cmd/
 ├── internal/
+├── tests/
 └── pkg/
 
 
