@@ -10,7 +10,7 @@ Init project structre:
 ```
 
 ## Installation
-Default installation to Go root folder (as language utility)
+Default installation to Go root folder (as utility)
 ```bash
 go install github.com/ProstoyVadila/goprojtepmplate
 ```
@@ -24,6 +24,7 @@ go install github.com/ProstoyVadila/goprojtepmplate
 - generate Dockerfile
 - add pre-made files moving to the new proj functionality
 - pretty cli ui
+- add an option to choose a [license](https://choosealicense.com/)
 - add cli args to skip a starter quiz
 - add initial setup configuration (???)
 - rewrite readme lol
