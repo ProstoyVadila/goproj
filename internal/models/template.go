@@ -1,6 +1,10 @@
 package models
 
-import "path/filepath"
+import (
+	"path/filepath"
+	"regexp"
+	"runtime"
+)
 
 type Document interface {
 	ReadmeInfo | LicenseInfo | GoModInfo
@@ -31,4 +35,10 @@ func (t *TemplateInfo) PathWtihFileName() string {
 
 func (t *TemplateInfo) PathWithTemplateName() string {
 	return filepath.Join(t.Path, t.Name)
+}
+
+func GoVersion() string {
+	fullVersion := runtime.Version()
+	re := regexp.MustCompile(`\d\.\d+`)
+	return re.FindString(fullVersion)
 }

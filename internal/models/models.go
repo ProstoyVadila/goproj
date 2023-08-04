@@ -72,7 +72,15 @@ func NewProjectInfo(authorName, packageName, description string) *ProjectInfo {
 		projectInfo.TemplatePath(),
 		NewGoModInfo(packageName),
 	)
-	projectInfo.AddTemplates(license, readme, gomod)
+	dockerfile := NewTemplateInfo(
+		DOCKERFILE_TEMPLATE,
+		DOCKERFILE,
+		absPath,
+		projectInfo.TemplatePath(),
+		NewDockerfileInfo(),
+	)
+
+	projectInfo.AddTemplates(license, readme, gomod, dockerfile)
 
 	for _, folderName := range LIST_OF_FOLDERS {
 		projectInfo.AddFolders(NewFolder(folderName))
