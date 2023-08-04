@@ -1,5 +1,7 @@
 # Go Project Template Generator
 
+Utility to initialize a Go project with default folders and files.
+
 ## Overview
 
 This small utility allows you to start your new project in Go with an already initialized standard [folders](#list-of-generated-folders) and default support files such as [Makefile](#list-of-generated-files), [Dockerfile](#list-of-generated-files), [README.md](#list-of-generated-files), [LICINSE](#list-of-generated-files) etc. It creates a git repo as well.
