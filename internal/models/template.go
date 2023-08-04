@@ -2,12 +2,17 @@ package models
 
 import "path/filepath"
 
+type Document interface {
+	ReadmeInfo | LicenseInfo | GoModInfo
+}
+
 type TemplateInfo struct {
 	Name     string
 	Path     string
 	Filename string
 	Filepath string
-	Data     any
+	// TODO: figure out with the type of Data
+	Data any // Document type
 }
 
 func NewTemplateInfo(name, filename, absPath, templatePath string, data any) *TemplateInfo {
