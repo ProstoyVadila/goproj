@@ -4,7 +4,7 @@ import (
 	"embed"
 	"fmt"
 
-	"github.com/ProstoyVadila/goprojtemplate/internal/models"
+	"github.com/ProstoyVadila/goproj/internal/models"
 )
 
 func generateTemplate(info *models.Document, embedFiles embed.FS, errCh chan<- error) {

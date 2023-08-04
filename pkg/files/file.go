@@ -5,7 +5,7 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/ProstoyVadila/goprojtemplate/internal/models"
+	"github.com/ProstoyVadila/goproj/internal/models"
 )
 
 type File struct {

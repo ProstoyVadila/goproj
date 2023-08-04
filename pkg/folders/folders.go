@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ProstoyVadila/goprojtemplate/internal/models"
+	"github.com/ProstoyVadila/goproj/internal/models"
 )
 
 func Create(folders []*models.Folder) error {

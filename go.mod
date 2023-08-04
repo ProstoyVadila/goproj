@@ -1,3 +1,3 @@
-module github.com/ProstoyVadila/goprojtemplate
+module github.com/ProstoyVadila/goproj
 
 go 1.20
