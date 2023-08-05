@@ -76,7 +76,7 @@ Usage:
 Flags:
   -a, --author string         an optional flag to set your name
   -d, --description strings   an optional flag to set a description of your project
-  -e, --exclude strings       an optional flag to exclude exact files from the generation
+  -s, --skip strings          an optional flag to skip exact files from the generation
   -h, --help                  help for init
   ```
 You can find more information with `-h` or `--help` flags.

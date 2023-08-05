@@ -6,12 +6,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const (
-	SKIP        = "skip"
-	AUTHOR      = "author"
-	DESCRIPTION = "description"
-)
-
 func getPackageName(args []string) string {
 	if len(args) != 0 {
 		return args[0]
@@ -38,13 +32,13 @@ func getDescription(cmd *cobra.Command) string {
 	return ""
 }
 
-func getSkip(cmd *cobra.Command) []string {
-	skip, err := cmd.Flags().GetStringSlice(SKIP)
+func getFilesToSkip(cmd *cobra.Command) []string {
+	filesToSkip, err := cmd.Flags().GetStringSlice(SKIP)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if len(skip) != 0 {
-		return skip
+	if len(filesToSkip) != 0 {
+		return filesToSkip
 	}
 	return make([]string, 0)
 }

@@ -8,19 +8,25 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	SKIP        = "skip"
+	AUTHOR      = "author"
+	DESCRIPTION = "description"
+)
+
 var packageCommand = &cobra.Command{
 	Use:   "init",
-	Short: "Your new package name",
-	Long:  "Your new package name, like 'github.com/bla/blabla'",
+	Short: "Generate a new Go porject with default files and folders",
+	Long:  "Generate a new Go porject with default files (README.md, LICENSE, go.mod, Makefile, Dockerfile, .gitignore, .dockerignore, .env) and folders (cmd/, internal/, pkg/, tests/)",
 	Run:   packageName,
 }
 
 func init() {
 	rootCommand.AddCommand(packageCommand)
 
-	packageCommand.PersistentFlags().StringP(AUTHOR, "a", "", "An optional flag to set your name")
-	packageCommand.PersistentFlags().StringSliceP(DESCRIPTION, "d", nil, "An optional flag to set description of your project")
-	packageCommand.PersistentFlags().StringSliceP(SKIP, "s", nil, "A flag to skip exact files")
+	packageCommand.PersistentFlags().StringP(AUTHOR, "a", "", "an optional flag to set your name")
+	packageCommand.PersistentFlags().StringSliceP(DESCRIPTION, "d", nil, "an optional flag to set a description of your project")
+	packageCommand.PersistentFlags().StringSliceP(SKIP, "e", nil, "an optional flag to exclude exact files from the generation")
 }
 
 // packageName gets poject's setup from CLI and runs generation and initialization of files/git repo.
@@ -30,7 +36,7 @@ func packageName(cmd *cobra.Command, args []string) {
 		getPackageName(args),
 		getAuthor(cmd),
 		getDescription(cmd),
-		getSkip(cmd),
+		getFilesToSkip(cmd),
 	)
 
 	showSetup(setup)
