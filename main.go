@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/ProstoyVadila/goprojtemplate/internal/git"
-	"github.com/ProstoyVadila/goprojtemplate/internal/reader"
-	"github.com/ProstoyVadila/goprojtemplate/pkg/files"
-	"github.com/ProstoyVadila/goprojtemplate/pkg/folders"
+	"github.com/ProstoyVadila/goproj/cmd/cli"
+	"github.com/ProstoyVadila/goproj/internal/git"
+	"github.com/ProstoyVadila/goproj/internal/reader"
+	"github.com/ProstoyVadila/goproj/pkg/files"
+	"github.com/ProstoyVadila/goproj/pkg/folders"
 )
 
 //go:embed templates/* templates/files/*
@@ -16,6 +17,11 @@ var EmbedFiles embed.FS
 
 func main() {
 	fmt.Println("Let's start!")
+
+	err := cli.Execute()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	projectInfo, err := reader.ReadInput()
 	if err != nil {

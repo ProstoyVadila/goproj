@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ProstoyVadila/goprojtemplate/internal/models"
+	"github.com/ProstoyVadila/goproj/internal/models"
 )
 
 func readInput(scanner *bufio.Scanner, previousMessage string) (string, error) {

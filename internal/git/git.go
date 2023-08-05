@@ -1,8 +1,8 @@
 package git
 
 import (
-	"github.com/ProstoyVadila/goprojtemplate/internal/models"
-	"github.com/ProstoyVadila/goprojtemplate/pkg/cmd"
+	"github.com/ProstoyVadila/goproj/internal/models"
+	"github.com/ProstoyVadila/goproj/pkg/cmd"
 )
 
 const gitCommand = "git"
