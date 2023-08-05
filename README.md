@@ -29,6 +29,7 @@ Init project structure:
 - [Quick Start](#quick-start)
     - [Installation](#installation)
     - [Usage](#usage)
+    - [Command-line interface](#command-line-interface)
 - [Project Structure](#project-structure)
     - [Full List of Files](#a-full-list-of-generated-files)
     - [Full List of Folders](#a-full-list-of-generated-folders)
@@ -52,9 +53,33 @@ and answer a few questions:
 ```
 Let's start!
 Please, enter your name: Bob
-Please, enter your new project (package) name: github.com/Bobert/new_project
+Please, enter your new project (package) name: github.com/Bobert/new_app
 Please, add a description to your project: my new project 
 ```
+
+### Command-line interface
+Another option is to use CLI arguments to make it more in a Go way:
+```bash
+goproj init <your_new_package>
+```
+\
+You can specify some parameters with optional flags. For example:
+```bash
+goproj init github.com/Bobert/new_app -a Bob -d="My new project" -s="Dockerfile,.dokerignore"
+```
+\
+There is a description of all flags and options:
+```
+Usage:
+   init [flags]
+
+Flags:
+  -a, --author string         an optional flag to set your name
+  -d, --description strings   an optional flag to set a description of your project
+  -e, --exclude strings       an optional flag to exclude exact files from the generation
+  -h, --help                  help for init
+  ```
+You can find more information with `-h` or `--help` flags.
 
 ## Project Structure
 ### A Full List of Generated Files
@@ -150,5 +175,6 @@ Please, enjoy! :)
 - add tests
 - add option to skip exact files
 - add option to create exact folders
+- update readme [ssage section](#usage) with cli args examples
 - add an option to choose a [license](https://choosealicense.com/)
 - add initial setup configuration (to do setup only once and forever)
