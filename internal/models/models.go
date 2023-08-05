@@ -19,17 +19,17 @@ const (
 	MAKEFILE          = "Makefile"
 )
 
-// TODO get values from input/setup
 var LIST_OF_FOLDERS = [4]string{"cmd", "pkg", "internal", "tests"}
 
 type ProjectInfo struct {
-	Templates   []*Document
 	EmbedFiles  embed.FS
+	Templates   []*Document
+	Folders     []*Folder
+	FilesToSkip []string
 	AuthorName  string
 	PackageName string
 	Path        string
 	InitGit     bool
-	Folders     []*Folder
 }
 
 func (p *ProjectInfo) AddFiles(templates ...*Document) {
@@ -49,6 +49,7 @@ func NewProjectInfo(setup *Setup) *ProjectInfo {
 	projectInfo := &ProjectInfo{
 		AuthorName:  setup.Author,
 		PackageName: setup.PackageName,
+		FilesToSkip: setup.FilesToSkip,
 		Path:        absPath,
 		// TODO get InitGit value from input questions
 		InitGit: true,
