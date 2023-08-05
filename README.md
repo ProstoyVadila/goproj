@@ -1,37 +1,154 @@
 # Go Project Template Generator
 
-This small utility allows you to start a new project with an already initialized standard folder structure and default support files such as Makefile, README.md, LICINSE etc. It creates a git repo as well.
+An utility to initialize a Go project with default folders and files.
 
-Init project structre:
+## Overview
+
+This small utility allows you to start your new project in Go with an already initialized standard [folders](#list-of-generated-folders) and default support files such as [Makefile](#list-of-generated-files), [Dockerfile](#list-of-generated-files), [README.md](#list-of-generated-files), [LICINSE](#list-of-generated-files) etc. It creates a git repo as well.
+
+Init project structure:
 ```bash
-├── .git
+.
+├── cmd/
+├── internal/
+├── pkg/
+├── tests/
+├── main.go
+├── Makefile
+├── Dockerfile
 ├── LICENSE
 ├── README.md
 ├── go.mod
-├── cmd/
-├── internal/
-├── tests/
-└── pkg/
-
-
+├── .dockerignore
+├── .gitignore
+├── .env
+└── .git
 ```
 
-## Installation
-Default installation to Go root folder (as utility)
+## Content
+- [Quick Start](#quick-start)
+    - [Installation](#installation)
+    - [Usage](#usage)
+- [Project Structure](#project-structure)
+    - [Full List of Files](#a-full-list-of-generated-files)
+    - [Full List of Folders](#a-full-list-of-generated-folders)
+- [Plans](#plans)
+
+## Quick Start
+
+### Installation
+Default installation to `GOPATH/bin` folder
 ```bash
-go install github.com/ProstoyVadila/goprojtepmplate
+go install github.com/ProstoyVadila/goproj@latest
 ```
+**!!! Make sure that `GOPATH/bin` is in your `PATH`.**
 
-## Usage
-...
+### Usage
+Just type `goproj` in your terminal in <b>your project folder</b>
 ```bash
+goproj
+```
+and answer a few questions:
+```
+Let's start!
+Please, enter your name: Bob
+Please, enter your new project (package) name: github.com/Bobert/new_project
+Please, add a description to your project: my new project 
 ```
 
-## Todo
-- generate Dockerfile
-- add pre-made files moving to the new proj functionality
-- pretty cli ui
+## Project Structure
+### A Full List of Generated Files
+1. **go.mod** – generates with the entered package name and your version of Go.
+
+2. **main.go** – an empty file with `package main` and `func main()`.
+
+3. **.env** – an empty env file.
+
+4. **LICENSE** – [The MIT license](https://opensource.org/license/mit/) with your entered name and the current year.
+
+5. **Dockerfile** – multi-stage build dockerfile setup with your version of Go.
+```Dockerfile
+FROM golang:1.20-alpine AS builder
+WORKDIR /app
+COPY . .
+RUN env GOOS=linux CGO_ENABLED=0 go build -ldflags "-w" -o main
+
+FROM alpine:latest 
+WORKDIR /app
+COPY --from=builder /app/main .
+COPY .env .
+
+CMD ["/app/main"]
+```
+
+6. **Makefile** – a simple Makefile with `run`/`build`/`tests` commands.
+```Makefile
+run:
+	@go run .
+
+build:
+	@go build -o bin/main
+
+tests:
+	@go tests .
+
+
+.PHONY: run build tests
+```
+
+7. **.gitignore** – a default [gitignore template](https://github.com/github/gitignore/blob/main/Go.gitignore) for projects in Go.
+```gitignore
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Go workspace file
+go.work
+```
+
+8. **.dockerignore** – a default [dockerignore template](https://github.com/GoogleCloudPlatform/golang-samples/blob/main/run/helloworld/.dockerignore) for projects in Go. 
+```dockerignore
+# The .dockerignore file excludes files from the container build process.
+#
+# https://docs.docker.com/engine/reference/builder/#dockerignore-file
+
+# Exclude locally vendored dependencies.
+vendor/
+
+# Exclude "build-time" ignore files.
+.dockerignore
+.gcloudignore
+
+# Exclude git history and configuration.
+.gitignore
+```
+
+### A Full List of Generated Folders
+There are some standart folders for any project in Go:
+1. **cmd**
+2. **internal**
+3. **pkg**
+4. **tests**
+
+That's it! \
+Please, enjoy! :)
+
+## Plans
+- udpate cli ui/ux to make it prettier and more fun
+- add tests
+- add option to skip exact files
+- add option to create exact folders
 - add an option to choose a [license](https://choosealicense.com/)
-- add cli args to skip a starter quiz
-- add initial setup configuration (???)
-- rewrite readme lol
+- add initial setup configuration (to do setup only once and forever)
