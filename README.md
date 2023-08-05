@@ -175,6 +175,6 @@ Please, enjoy! :)
 - add tests
 - add option to skip exact files
 - add option to create exact folders
-- update readme [ssage section](#usage) with cli args examples
+- update readme [usage section](#usage) with cli args examples
 - add an option to choose a [license](https://choosealicense.com/)
 - add initial setup configuration (to do setup only once and forever)
