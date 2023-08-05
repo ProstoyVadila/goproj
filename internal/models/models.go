@@ -38,15 +38,15 @@ func (p *ProjectInfo) AddFolders(folders ...*Folder) {
 	p.Folders = append(p.Folders, folders...)
 }
 
-func NewProjectInfo(authorName, packageName, description string) *ProjectInfo {
+func NewProjectInfo(setup *Setup) *ProjectInfo {
 	absPath, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	projectInfo := &ProjectInfo{
-		AuthorName:  authorName,
-		PackageName: packageName,
+		AuthorName:  setup.Author,
+		PackageName: setup.PackageName,
 		Path:        absPath,
 		// TODO get InitGit value from input questions
 		InitGit: true,
@@ -59,7 +59,7 @@ func NewProjectInfo(authorName, packageName, description string) *ProjectInfo {
 		absPath,
 		TEMPLATE_PATH,
 		true,
-		NewLicenceInfo(authorName),
+		NewLicenceInfo(setup.Author),
 	)
 	readme := NewDocument(
 		README_TEMPLATE,
@@ -67,7 +67,7 @@ func NewProjectInfo(authorName, packageName, description string) *ProjectInfo {
 		absPath,
 		TEMPLATE_PATH,
 		true,
-		NewReadmeInfo(authorName, description),
+		NewReadmeInfo(setup.Author, setup.Description),
 	)
 	gomod := NewDocument(
 		GOMOD_TEMPLATE,
@@ -75,7 +75,7 @@ func NewProjectInfo(authorName, packageName, description string) *ProjectInfo {
 		absPath,
 		TEMPLATE_PATH,
 		true,
-		NewGoModInfo(packageName),
+		NewGoModInfo(setup.PackageName),
 	)
 	dockerfile := NewDocument(
 		DOCKERFILE_TEMPLATE,

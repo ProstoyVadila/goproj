@@ -1,6 +1,10 @@
 package cli
 
-import "github.com/spf13/cobra"
+import (
+	"os"
+
+	"github.com/spf13/cobra"
+)
 
 var rootCommand = &cobra.Command{
 	Short: "Go project generator",
@@ -12,4 +16,9 @@ func Execute() error {
 		return err
 	}
 	return nil
+}
+
+// ArgsInCLI checks if there are any arguments in cli
+func ArgsInCLI() bool {
+	return len(os.Args[1:]) != 0
 }

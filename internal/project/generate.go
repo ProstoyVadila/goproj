@@ -1,13 +1,12 @@
-package main
+package project
 
 import (
 	"embed"
-	"fmt"
 	"log"
 
-	"github.com/ProstoyVadila/goproj/cmd/cli"
+	"github.com/ProstoyVadila/goproj/cmd/input"
 	"github.com/ProstoyVadila/goproj/internal/git"
-	"github.com/ProstoyVadila/goproj/internal/reader"
+	"github.com/ProstoyVadila/goproj/internal/models"
 	"github.com/ProstoyVadila/goproj/pkg/files"
 	"github.com/ProstoyVadila/goproj/pkg/folders"
 )
@@ -15,18 +14,20 @@ import (
 //go:embed templates/* templates/files/*
 var EmbedFiles embed.FS
 
-func main() {
-	fmt.Println("Let's start!")
+func Generate(dataFromCli ...*models.Setup) {
+	var setup *models.Setup
+	var err error
 
-	err := cli.Execute()
-	if err != nil {
-		log.Fatal(err)
+	if len(dataFromCli) == 1 {
+		setup = dataFromCli[0]
+	} else {
+		setup, err = input.GetSetup()
+		if err != nil {
+			log.Fatal()
+		}
 	}
 
-	projectInfo, err := reader.ReadInput()
-	if err != nil {
-		log.Fatal(err)
-	}
+	projectInfo := models.NewProjectInfo(setup)
 	projectInfo.EmbedFiles = EmbedFiles
 
 	err = files.Generate(projectInfo)
@@ -45,6 +46,4 @@ func main() {
 			log.Fatal(err)
 		}
 	}
-
-	fmt.Println("Successfully generated!")
 }
