@@ -26,7 +26,7 @@ func init() {
 
 	packageCommand.PersistentFlags().StringP(AUTHOR, "a", "", "an optional flag to set your name")
 	packageCommand.PersistentFlags().StringSliceP(DESCRIPTION, "d", nil, "an optional flag to set a description of your project")
-	packageCommand.PersistentFlags().StringSliceP(SKIP, "e", nil, "an optional flag to exclude exact files from the generation")
+	packageCommand.PersistentFlags().StringSliceP(SKIP, "s", nil, "an optional flag to skip exact files from the generation")
 }
 
 // packageName gets poject's setup from CLI and runs generation and initialization of files/git repo.
