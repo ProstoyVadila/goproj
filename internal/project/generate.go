@@ -11,6 +11,8 @@ import (
 	"github.com/ProstoyVadila/goproj/pkg/folders"
 )
 
+// some wierd Go embed magic here
+//
 //go:embed templates/* templates/files/*
 var EmbedFiles embed.FS
 
