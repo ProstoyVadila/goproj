@@ -2,8 +2,6 @@ package models
 
 import (
 	"path/filepath"
-	"regexp"
-	"runtime"
 )
 
 type Document struct {
@@ -35,11 +33,4 @@ func (t *Document) FullFilePath() string {
 // FullDocPath return the full path with the document name.
 func (t *Document) FullDocPath() string {
 	return filepath.Join(t.Path, t.Name)
-}
-
-// GoVersion gets the version of Go from the runtime in the format <major_version>.<minor_version> (1.19 for example).
-func GoVersion() string {
-	fullVersion := runtime.Version()
-	re := regexp.MustCompile(`\d\.\d+`)
-	return re.FindString(fullVersion)
 }

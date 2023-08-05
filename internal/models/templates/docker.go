@@ -1,4 +1,4 @@
-package models
+package templates
 
 const (
 	DOCKERFILE_TEMPLATE = "Dockerfile.tmpl"

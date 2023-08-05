@@ -1,4 +1,4 @@
-package models
+package templates
 
 const (
 	README_TEMPLATE = "README.tmpl"

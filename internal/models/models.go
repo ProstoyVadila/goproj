@@ -4,6 +4,8 @@ import (
 	"embed"
 	"log"
 	"os"
+
+	"github.com/ProstoyVadila/goproj/internal/models/templates"
 )
 
 const (
@@ -54,36 +56,36 @@ func NewProjectInfo(setup *Setup) *ProjectInfo {
 
 	// Template files
 	license := NewDocument(
-		LICENSE_TEMPLATE,
-		LICENSE_FILE,
+		templates.LICENSE_TEMPLATE,
+		templates.LICENSE_FILE,
 		absPath,
 		TEMPLATE_PATH,
 		true,
-		NewLicenceInfo(setup.Author),
+		templates.NewLicenceInfo(setup.Author),
 	)
 	readme := NewDocument(
-		README_TEMPLATE,
-		README_FILE,
+		templates.README_TEMPLATE,
+		templates.README_FILE,
 		absPath,
 		TEMPLATE_PATH,
 		true,
-		NewReadmeInfo(setup.Author, setup.Description),
+		templates.NewReadmeInfo(setup.Author, setup.Description),
 	)
 	gomod := NewDocument(
-		GOMOD_TEMPLATE,
-		GOMOD_FILE,
+		templates.GOMOD_TEMPLATE,
+		templates.GOMOD_FILE,
 		absPath,
 		TEMPLATE_PATH,
 		true,
-		NewGoModInfo(setup.PackageName),
+		templates.NewGoModInfo(setup.PackageName),
 	)
 	dockerfile := NewDocument(
-		DOCKERFILE_TEMPLATE,
-		DOCKERFILE,
+		templates.DOCKERFILE_TEMPLATE,
+		templates.DOCKERFILE,
 		absPath,
 		TEMPLATE_PATH,
 		true,
-		NewDockerfileInfo(),
+		templates.NewDockerfileInfo(),
 	)
 
 	// Files to copy
