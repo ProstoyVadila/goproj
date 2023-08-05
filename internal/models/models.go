@@ -20,6 +20,7 @@ const (
 )
 
 var LIST_OF_FOLDERS = [4]string{"cmd", "pkg", "internal", "tests"}
+var LIST_OF_FILES = [8]string{"license", "readme", "go.mod", ".dockerfile", ".gitignore", "dockerignore", "main.go", "makefile"}
 
 type ProjectInfo struct {
 	EmbedFiles  embed.FS
