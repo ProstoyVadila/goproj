@@ -16,6 +16,7 @@ func generateTemplate(info *models.Document, embedFiles embed.FS, errCh chan<- e
 	errCh <- nil
 }
 
+// Generate creates files from templates and move pre-made files
 func Generate(projectInfo *models.ProjectInfo) error {
 	fmt.Println("Generating files")
 

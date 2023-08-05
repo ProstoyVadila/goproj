@@ -23,21 +23,25 @@ func init() {
 	packageCommand.PersistentFlags().StringSliceP(SKIP, "s", nil, "A flag to skip exact files")
 }
 
+// packageName gets poject's setup from CLI and runs generation and initialization of files/git repo.
 func packageName(cmd *cobra.Command, args []string) {
 	fmt.Println("I get package name")
 
-	dataCli := models.NewInputData(
+	setup := models.NewSetup(
 		getPackageName(args),
 		getAuthor(cmd),
 		getDescription(cmd),
 		getSkip(cmd),
 	)
 
-	fmt.Println("DataCLI")
-	fmt.Printf("package name: %s\n", dataCli.PackageName)
-	fmt.Printf("author: %s\n", dataCli.Author)
-	fmt.Printf("descr: %s\n", dataCli.Description)
-	fmt.Printf("skip: %v\n", dataCli.FilesToSkip)
+	showSetup(setup)
+	project.Generate(setup)
+}
 
-	project.Generate(dataCli)
+// showSetup writes setup info from CLI to standart output.
+func showSetup(setup *models.Setup) {
+	fmt.Printf("\nProject (package) name: %s\n", setup.PackageName)
+	fmt.Printf("Author: %s\n", setup.Author)
+	fmt.Printf("Description: %s\n", setup.Description)
+	fmt.Printf("Files to skip: %v\n", setup.FilesToSkip)
 }

@@ -14,6 +14,7 @@ import (
 //go:embed templates/* templates/files/*
 var EmbedFiles embed.FS
 
+// Generate creates files and initialize git repo with data from CLI or input.
 func Generate(dataFromCli ...*models.Setup) {
 	var setup *models.Setup
 	var err error

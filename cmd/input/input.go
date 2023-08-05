@@ -8,6 +8,7 @@ import (
 	"github.com/ProstoyVadila/goproj/internal/models"
 )
 
+// readInput gets information from input.
 func readInput(scanner *bufio.Scanner, previousMessage string) (string, error) {
 	fmt.Print(previousMessage)
 	scanner.Scan()
@@ -17,16 +18,16 @@ func readInput(scanner *bufio.Scanner, previousMessage string) (string, error) {
 	return scanner.Text(), nil
 }
 
-// GetSetup tries to get information about project from CLI or from Input
+// GetSetup tries to get information about project from CLI or from Input.
 func GetSetup() (*models.Setup, error) {
 
 	scanner := bufio.NewScanner(os.Stdin)
 
-	author, err := readInput(scanner, "Please, enter your name: ")
+	packageName, err := readInput(scanner, "Please, enter your new project (package) name: ")
 	if err != nil {
 		return &models.Setup{}, err
 	}
-	packageName, err := readInput(scanner, "Please, enter your new project (package) name: ")
+	author, err := readInput(scanner, "Please, enter your name: ")
 	if err != nil {
 		return &models.Setup{}, err
 	}
@@ -35,5 +36,5 @@ func GetSetup() (*models.Setup, error) {
 		return &models.Setup{}, err
 	}
 
-	return models.NewInputData(packageName, author, description, make([]string, 0)), nil
+	return models.NewSetup(packageName, author, description, make([]string, 0)), nil
 }

@@ -7,7 +7,7 @@ type Setup struct {
 	Description string
 }
 
-func NewInputData(packageName, author, description string, filesToSkip []string) *Setup {
+func NewSetup(packageName, author, description string, filesToSkip []string) *Setup {
 	return &Setup{
 		PackageName: packageName,
 		Author:      author,
