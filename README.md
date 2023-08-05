@@ -65,7 +65,7 @@ goproj init <your_new_package>
 \
 You can specify some parameters with optional flags. For example:
 ```bash
-goproj init github.com/Bobert/new_app -a Bob -d="My new project" -s="Dockerfile,.dokerignore"
+goproj init github.com/Bobert/new_app --author Bob -d="My new project" --skip="Dockerfile,.dokerignore"
 ```
 \
 There is a description of all flags and options:
