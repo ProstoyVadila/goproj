@@ -12,7 +12,6 @@ Init project structure:
 ├── cmd/
 ├── internal/
 ├── pkg/
-├── tests/
 ├── main.go
 ├── Makefile
 ├── Dockerfile

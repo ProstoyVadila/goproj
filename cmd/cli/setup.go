@@ -18,7 +18,7 @@ const (
 var packageCommand = &cobra.Command{
 	Use:     "init",
 	Short:   "Generate a new Go porject with default files and folders",
-	Long:    "Generate a new Go porject with default files (README.md, LICENSE, go.mod, Makefile, Dockerfile, .gitignore, .dockerignore, .env) and folders (cmd/, internal/, pkg/, tests/)",
+	Long:    "Generate a new Go porject with default files (README.md, LICENSE, go.mod, Makefile, Dockerfile, .gitignore, .dockerignore, .env) and folders (cmd/, internal/, pkg/)",
 	Run:     packageName,
 	Example: "goproj init github.com/Bobert/new_project -a Bob -d=\"My new project\" -s=\"Dockerfile,.dockerignore,internal/,pkg/\" --git=false",
 }
