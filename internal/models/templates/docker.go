@@ -1,5 +1,7 @@
 package templates
 
+import "runtime"
+
 const (
 	DOCKERFILE_TEMPLATE = "Dockerfile.tmpl"
 	DOCKERFILE          = "Dockerfile"
@@ -13,7 +15,7 @@ type DockerfileInfo struct {
 }
 
 func NewDockerfileInfo() *DockerfileInfo {
-	goVersion := GoVersion() + "-alpine"
+	goVersion := GoVersion(runtime.Version()) + "-alpine"
 	return &DockerfileInfo{
 		GoVersion:     goVersion,
 		AlpineVersion: ALPINE_VERSION,

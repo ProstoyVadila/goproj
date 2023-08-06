@@ -6,7 +6,7 @@ build:
 	@go build -o bin/goproj cmd/app/main.go
 
 tests:
-	@go test .
+	@go test -v -cover ./...
 
 cleanup:
 	rm tests/tempFiles/*
