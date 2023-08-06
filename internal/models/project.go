@@ -2,7 +2,6 @@ package models
 
 import (
 	"embed"
-	"fmt"
 	"log"
 	"os"
 	"reflect"
@@ -20,7 +19,12 @@ const (
 	MAKEFILE          = "Makefile"
 )
 
-var foldersToGenerate = [4]string{"cmd", "pkg", "internal", "tests"}
+var foldersToGenerate = map[string]struct{}{
+	"cmd":      {},
+	"pkg":      {},
+	"internal": {},
+	"tests":    {},
+}
 
 // ProjectInfo contains all information about the new project to create.
 type ProjectInfo struct {
@@ -29,6 +33,7 @@ type ProjectInfo struct {
 	Folders         []*Folder
 	FilesToGenerate map[string]*Document
 	FilesToSkip     []string
+	FoldersToSkip   []string
 	PackageName     string
 	Author          string
 	Description     string
@@ -53,8 +58,18 @@ func (p *ProjectInfo) setFilesToGenerate(filesToGenerate map[string]*Document) {
 	p.FilesToGenerate = filesToGenerate
 }
 
-// setDocuments sets Documents field of ProjectInfo by filling in the setup data to the existing configuration of templates and files.
-func (p *ProjectInfo) setDocuments() {
+// setFoldersToGenerate generates and sets Folders for ProjectInfo without skipped ones.
+func (p *ProjectInfo) setFoldersToGenerate(foldersToGenerate map[string]struct{}) {
+	for _, folderToSkip := range p.FoldersToSkip {
+		delete(foldersToGenerate, folderToSkip)
+	}
+	for k := range foldersToGenerate {
+		p.AddFolders(NewFolder(k))
+	}
+}
+
+// generateDocuments creates Documents  for ProjectInfo by filling in the setup data into the existing configuration of templates and files.
+func (p *ProjectInfo) generateDocuments() {
 	for _, v := range p.FilesToGenerate {
 		// setting a path where file will be created
 		v.Filepath = p.Path
@@ -62,7 +77,7 @@ func (p *ProjectInfo) setDocuments() {
 		if v.IsTemplate {
 			var valuesFromSetup []reflect.Value
 
-			// getting data from setup by field names from the configuration
+			// getting setup data from ProjectInfo by field names from the configuration
 			for _, fieldName := range v.DataToAdd {
 				val := reflect.ValueOf(p).Elem().FieldByName(fieldName)
 				valuesFromSetup = append(valuesFromSetup, val)
@@ -85,22 +100,23 @@ func NewProjectInfo(setup *Setup) *ProjectInfo {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Abs Path", absPath)
 
 	projectInfo := &ProjectInfo{
-		Author:      setup.Author,
-		PackageName: setup.PackageName,
-		FilesToSkip: setup.FilesToSkip,
-		Description: setup.Description,
-		Path:        absPath,
+		Author:        setup.Author,
+		PackageName:   setup.PackageName,
+		FilesToSkip:   setup.FilesToSkip,
+		FoldersToSkip: setup.FoldersToSkip,
+		Description:   setup.Description,
+		Path:          absPath,
 		// TODO get InitGit value from input questions
 		SkipGit: false,
 	}
-	projectInfo.setFilesToGenerate(filesToGenerate)
-	projectInfo.setDocuments()
 
-	for _, folderName := range foldersToGenerate {
-		projectInfo.AddFolders(NewFolder(folderName))
-	}
+	projectInfo.setFilesToGenerate(filesToGenerate)
+
+	projectInfo.setFoldersToGenerate(foldersToGenerate)
+
+	projectInfo.generateDocuments()
+
 	return projectInfo
 }

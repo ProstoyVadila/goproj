@@ -18,7 +18,7 @@ func readInput(scanner *bufio.Scanner, previousMessage string) (string, error) {
 	return scanner.Text(), nil
 }
 
-// GetSetup tries to get information about project from CLI or from Input.
+// GetSetup tries to get information about the project from input.
 func GetSetup() (*models.Setup, error) {
 
 	scanner := bufio.NewScanner(os.Stdin)
@@ -36,5 +36,5 @@ func GetSetup() (*models.Setup, error) {
 		return &models.Setup{}, err
 	}
 
-	return models.NewSetup(packageName, author, description, make([]string, 0)), nil
+	return models.NewSetup(packageName, author, description, make([]string, 0), make([]string, 0)), nil
 }
