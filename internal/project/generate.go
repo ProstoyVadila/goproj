@@ -43,7 +43,7 @@ func Generate(dataFromCli ...*models.Setup) {
 		log.Fatal(err)
 	}
 
-	if projectInfo.InitGit {
+	if !projectInfo.SkipGit {
 		err = git.InitGitRepo(projectInfo)
 		if err != nil {
 			log.Fatal(err)

@@ -20,14 +20,14 @@ func generateTemplate(info *models.Document, embedFiles embed.FS, errCh chan<- e
 func Generate(projectInfo *models.ProjectInfo) error {
 	fmt.Println("Generating files")
 
-	errCh := make(chan error, len(projectInfo.Templates))
+	errCh := make(chan error, len(projectInfo.Documents))
 	defer close(errCh)
 
-	for _, templateInfo := range projectInfo.Templates {
+	for _, templateInfo := range projectInfo.Documents {
 		go generateTemplate(templateInfo, projectInfo.EmbedFiles, errCh)
 	}
 
-	for i := 0; i < len(projectInfo.Templates); i++ {
+	for i := 0; i < len(projectInfo.Documents); i++ {
 		if err := <-errCh; err != nil {
 			return err
 		}

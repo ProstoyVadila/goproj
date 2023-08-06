@@ -13,7 +13,6 @@ type DockerfileInfo struct {
 }
 
 func NewDockerfileInfo() *DockerfileInfo {
-	// TODO add images checks
 	goVersion := GoVersion() + "-alpine"
 	return &DockerfileInfo{
 		GoVersion:     goVersion,
