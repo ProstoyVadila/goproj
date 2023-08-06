@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ProstoyVadila/goprojtemplate/internal/models"
+	"github.com/ProstoyVadila/goproj/internal/models"
 )
 
+// Create creates folders
 func Create(folders []*models.Folder) error {
 	fmt.Println("Generating folders")
 
