@@ -65,21 +65,20 @@ goproj init <your_new_package>
 \
 You can specify some parameters with optional flags. For example:
 ```bash
-goproj init github.com/Bobert/new_app --author Bob -d="My new project" --skip="Dockerfile,.dokerignore"
+goproj init github.com/Bobert/new_app --author Bob -d="My new project" --skip="Dockerfile,.dokerignore,internal/,pkg/"
 ```
 \
 There is a description of all flags and options:
 ```
-Usage:
-   init [flags]
-
 Flags:
   -a, --author string         an optional flag to set your name
   -d, --description strings   an optional flag to set a description of your project
-  -s, --skip strings          an optional flag to skip exact files from the generation
+  -g, --git                   an optional flag to define start git initialization or not (default true)
+  -s, --skip                  an optional flag to skip exact files and/or folders (add /) from the generation.
   -h, --help                  help for init
+Successfully generated!
   ```
-You can find more information with `-h` or `--help` flags.
+You can find more information with `goproj init -h` or `goproj init --help`.
 
 ## Project Structure
 ### A Full List of Generated Files

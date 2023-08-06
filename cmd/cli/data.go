@@ -71,3 +71,12 @@ func getFoldersToSkip(cmd *cobra.Command) []string {
 	}
 	return folders
 }
+
+// getSkipGit gets a boolean value that defines init git repo or not.
+func getSkipGit(cmd *cobra.Command) bool {
+	initGit, err := cmd.Flags().GetBool(GIT)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return !initGit
+}

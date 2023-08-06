@@ -36,5 +36,12 @@ func GetSetup() (*models.Setup, error) {
 		return &models.Setup{}, err
 	}
 
-	return models.NewSetup(packageName, author, description, make([]string, 0), make([]string, 0)), nil
+	return models.NewSetup(
+		packageName,
+		author,
+		description,
+		make([]string, 0),
+		make([]string, 0),
+		false,
+	), nil
 }

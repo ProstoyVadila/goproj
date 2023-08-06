@@ -107,9 +107,8 @@ func NewProjectInfo(setup *Setup) *ProjectInfo {
 		FilesToSkip:   setup.FilesToSkip,
 		FoldersToSkip: setup.FoldersToSkip,
 		Description:   setup.Description,
+		SkipGit:       setup.SkipGit,
 		Path:          absPath,
-		// TODO get InitGit value from input questions
-		SkipGit: false,
 	}
 
 	projectInfo.setFilesToGenerate(filesToGenerate)

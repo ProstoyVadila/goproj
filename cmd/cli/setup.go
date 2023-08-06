@@ -12,13 +12,15 @@ const (
 	SKIP        = "skip"
 	AUTHOR      = "author"
 	DESCRIPTION = "description"
+	GIT         = "git"
 )
 
 var packageCommand = &cobra.Command{
-	Use:   "init",
-	Short: "Generate a new Go porject with default files and folders",
-	Long:  "Generate a new Go porject with default files (README.md, LICENSE, go.mod, Makefile, Dockerfile, .gitignore, .dockerignore, .env) and folders (cmd/, internal/, pkg/, tests/)",
-	Run:   packageName,
+	Use:     "init",
+	Short:   "Generate a new Go porject with default files and folders",
+	Long:    "Generate a new Go porject with default files (README.md, LICENSE, go.mod, Makefile, Dockerfile, .gitignore, .dockerignore, .env) and folders (cmd/, internal/, pkg/, tests/)",
+	Run:     packageName,
+	Example: "goproj init github.com/Bobert/new_project -a Bob -d=\"My new project\" -s=\"Dockerfile,.dockerignore,internal/,pkg/\" --git=false",
 }
 
 func init() {
@@ -26,7 +28,8 @@ func init() {
 
 	packageCommand.PersistentFlags().StringP(AUTHOR, "a", "", "an optional flag to set your name")
 	packageCommand.PersistentFlags().StringSliceP(DESCRIPTION, "d", nil, "an optional flag to set a description of your project")
-	packageCommand.PersistentFlags().StringSliceP(SKIP, "s", nil, "an optional flag to skip exact files and/or folders from the generation. To skip a folder add / to the end of it's name (For example `-s=\"Dockerfile,cmd/\"`. It'll skip the creation of Dockerfile and cmd/ folder)")
+	packageCommand.PersistentFlags().StringSliceP(SKIP, "s", nil, "an optional flag to skip exact files and/or folders (add `/`) from the generation.")
+	packageCommand.PersistentFlags().BoolP(GIT, "g", true, "an optional flag to define start git initialization or not")
 }
 
 // packageName gets poject's setup from CLI and runs generation and initialization of files/git repo.
@@ -38,6 +41,7 @@ func packageName(cmd *cobra.Command, args []string) {
 		getDescription(cmd),
 		getFilesToSkip(cmd),
 		getFoldersToSkip(cmd),
+		getSkipGit(cmd),
 	)
 
 	showSetup(setup)
