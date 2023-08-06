@@ -72,7 +72,7 @@ func (p *ProjectInfo) setDocuments() {
 			constructor := reflect.ValueOf(v.Constructor)
 			// calling the construction function with args from the setup
 			resultValue := constructor.Call(valuesFromSetup)
-			// setting it as Data field for Document to fill the appropriate template in future
+			// setting it as the Data field of Document for filling in the appropriate template
 			v.Data = resultValue[0].Interface()
 		}
 		p.AddFiles(v)
