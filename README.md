@@ -29,6 +29,7 @@ Init project structure:
 - [Quick Start](#quick-start)
     - [Installation](#installation)
     - [Usage](#usage)
+    - [Command-line interface](#command-line-interface)
 - [Project Structure](#project-structure)
     - [Full List of Files](#a-full-list-of-generated-files)
     - [Full List of Folders](#a-full-list-of-generated-folders)
@@ -52,9 +53,32 @@ and answer a few questions:
 ```
 Let's start!
 Please, enter your name: Bob
-Please, enter your new project (package) name: github.com/Bobert/new_project
+Please, enter your new project (package) name: github.com/Bobert/new_app
 Please, add a description to your project: my new project 
 ```
+
+### Command-line interface
+Another option is to use CLI arguments to make it more in a Go way:
+```bash
+goproj init <your_new_package>
+```
+\
+You can specify some parameters with optional flags. For example:
+```bash
+goproj init github.com/Bobert/new_app --author Bob -d="My new project" --skip="Dockerfile,.dokerignore,internal/,pkg/"
+```
+\
+There is a description of all flags and options:
+```
+Flags:
+  -a, --author string         an optional flag to set your name
+  -d, --description strings   an optional flag to set a description of your project
+  -g, --git                   an optional flag to define start git initialization or not (default true)
+  -s, --skip                  an optional flag to skip exact files and/or folders (add /) from the generation.
+  -h, --help                  help for init
+Successfully generated!
+  ```
+You can find more information with `goproj init -h` or `goproj init --help`.
 
 ## Project Structure
 ### A Full List of Generated Files
@@ -147,6 +171,9 @@ Please, enjoy! :)
 
 ## Plans
 - udpate cli ui/ux to make it prettier and more fun
+- add tests
+- add option to skip exact files
+- add option to create exact folders
+- update readme [usage section](#usage) with cli args examples
 - add an option to choose a [license](https://choosealicense.com/)
-- add cli args to skip a starter quiz
 - add initial setup configuration (to do setup only once and forever)

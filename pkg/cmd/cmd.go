@@ -17,6 +17,7 @@ func New(cmd string, args ...string) *Command {
 	}
 }
 
+// Execute executes command in command line
 func (c *Command) Execute() error {
 	cmd := exec.Command(c.cmd, c.args...)
 	stout, err := cmd.Output()

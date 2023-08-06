@@ -7,6 +7,7 @@ import (
 	"github.com/ProstoyVadila/goproj/internal/models"
 )
 
+// Create creates folders
 func Create(folders []*models.Folder) error {
 	fmt.Println("Generating folders")
 

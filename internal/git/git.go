@@ -8,6 +8,7 @@ import (
 const gitCommand = "git"
 const arg0 = "init"
 
+// InitGitRepo initialize git repository
 func InitGitRepo(projectInfo *models.ProjectInfo) error {
 	command := cmd.New(gitCommand, arg0)
 	if err := command.Execute(); err != nil {
