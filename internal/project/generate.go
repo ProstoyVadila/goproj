@@ -2,6 +2,7 @@ package project
 
 import (
 	"embed"
+	"fmt"
 	"log"
 
 	"github.com/ProstoyVadila/goproj/cmd/input"
@@ -18,6 +19,8 @@ var EmbedFiles embed.FS
 
 // Generate creates files and initialize git repo with data from CLI or input.
 func Generate(dataFromCli ...*models.Setup) {
+	fmt.Println("Let's start!")
+
 	var setup *models.Setup
 	var err error
 
@@ -49,4 +52,5 @@ func Generate(dataFromCli ...*models.Setup) {
 			log.Fatal(err)
 		}
 	}
+	fmt.Println("Let's start!")
 }

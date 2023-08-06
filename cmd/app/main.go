@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/ProstoyVadila/goproj/cmd/cli"
@@ -9,7 +8,6 @@ import (
 )
 
 func main() {
-	fmt.Println("Let's start!")
 
 	if cli.ArgsInCLI() {
 		if err := cli.Execute(); err != nil {
@@ -18,6 +16,4 @@ func main() {
 	} else {
 		project.Generate()
 	}
-
-	fmt.Println("Successfully generated!")
 }
