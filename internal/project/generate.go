@@ -52,5 +52,5 @@ func Generate(dataFromCli ...*models.Setup) {
 			log.Fatal(err)
 		}
 	}
-	fmt.Println("Let's start!")
+	fmt.Println("successfully generated!")
 }

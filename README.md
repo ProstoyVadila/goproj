@@ -1,6 +1,6 @@
 # Go Project Template Generator
 
-An utility to initialize a Go project with default folders and files.
+A CLI tool to initialize a Go project with customizable default folders and files.
 
 ## Overview
 
@@ -172,8 +172,5 @@ Please, enjoy! :)
 ## Plans
 - udpate cli ui/ux to make it prettier and more fun
 - add tests
-- add option to skip exact files
-- add option to create exact folders
-- update readme [usage section](#usage) with cli args examples
 - add an option to choose a [license](https://choosealicense.com/)
 - add initial setup configuration (to do setup only once and forever)
