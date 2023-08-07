@@ -12,7 +12,6 @@ Init project structure:
 ├── cmd/
 ├── internal/
 ├── pkg/
-├── tests/
 ├── main.go
 ├── Makefile
 ├── Dockerfile
@@ -164,7 +163,6 @@ There are some standart folders for any project in Go:
 1. **cmd**
 2. **internal**
 3. **pkg**
-4. **tests**
 
 That's it! \
 Please, enjoy! :)

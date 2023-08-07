@@ -3,7 +3,7 @@ run:
 	@go run .
 
 build:
-	@go build -o bin/goproj cmd/app/main.go
+	@go build -o bin/goproj main.go
 
 tests:
 	@go test .
