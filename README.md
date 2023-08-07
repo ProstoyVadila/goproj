@@ -1,4 +1,4 @@
-# Go Project Template Generator
+# Go Project Generator
 
 A CLI tool to initialize a Go project with customizable default folders and files.
 
