@@ -23,7 +23,6 @@ var foldersToGenerate = map[string]struct{}{
 	"cmd":      {},
 	"pkg":      {},
 	"internal": {},
-	"tests":    {},
 }
 
 // ProjectInfo contains all information about the new project to create.
