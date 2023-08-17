@@ -6,16 +6,18 @@ type Setup struct {
 	PackageName   string
 	Author        string
 	Description   string
-	SkipGit       bool
+	InitGit       bool
+	InitVSCode    bool
 }
 
-func NewSetup(packageName, author, description string, filesToSkip, foldersToSkip []string, skipGit bool) *Setup {
+func NewSetup(packageName, author, description string, filesToSkip, foldersToSkip []string, skipGit, initVSCode bool) *Setup {
 	return &Setup{
 		PackageName:   packageName,
 		Author:        author,
 		Description:   description,
 		FilesToSkip:   filesToSkip,
 		FoldersToSkip: foldersToSkip,
-		SkipGit:       skipGit,
+		InitGit:       skipGit,
+		InitVSCode:    initVSCode,
 	}
 }

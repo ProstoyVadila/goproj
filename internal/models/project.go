@@ -37,7 +37,8 @@ type ProjectInfo struct {
 	Author          string
 	Description     string
 	Path            string
-	SkipGit         bool
+	InitGit         bool
+	InitVSCode      bool
 }
 
 func (p *ProjectInfo) AddFiles(templates ...*Document) {
@@ -106,7 +107,8 @@ func NewProjectInfo(setup *Setup) *ProjectInfo {
 		FilesToSkip:   setup.FilesToSkip,
 		FoldersToSkip: setup.FoldersToSkip,
 		Description:   setup.Description,
-		SkipGit:       setup.SkipGit,
+		InitGit:       setup.InitGit,
+		InitVSCode:    setup.InitVSCode,
 		Path:          absPath,
 	}
 

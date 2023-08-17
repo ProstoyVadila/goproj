@@ -17,8 +17,18 @@ func New(cmd string, args ...string) *Command {
 	}
 }
 
+// commandExists checks existance of the CLI command in the PATH.
+func commandExists(command string) bool {
+	_, err := exec.LookPath(command)
+	return err == nil
+}
+
 // Execute executes command in command line
 func (c *Command) Execute() error {
+	if !commandExists(c.cmd) {
+		return fmt.Errorf("cannot find this command in the PATH: %s", c.cmd)
+	}
+
 	cmd := exec.Command(c.cmd, c.args...)
 	stout, err := cmd.Output()
 	if err != nil {
