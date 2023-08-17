@@ -13,6 +13,7 @@ const (
 	AUTHOR      = "author"
 	DESCRIPTION = "description"
 	GIT         = "git"
+	VSCODE      = "vscode"
 )
 
 var packageCommand = &cobra.Command{
@@ -30,6 +31,7 @@ func init() {
 	packageCommand.PersistentFlags().StringSliceP(DESCRIPTION, "d", nil, "an optional flag to set a description of your project")
 	packageCommand.PersistentFlags().StringSliceP(SKIP, "s", nil, "an optional flag to skip exact files and/or folders (add `/`) from the generation.")
 	packageCommand.PersistentFlags().BoolP(GIT, "g", true, "an optional flag to define start git initialization or not")
+	packageCommand.PersistentFlags().BoolP(VSCODE, "c", true, "an optional flag to open the new project in VS Code")
 }
 
 // packageName gets poject's setup from CLI and runs generation and initialization of files/git repo.
@@ -41,7 +43,8 @@ func packageName(cmd *cobra.Command, args []string) {
 		getDescription(cmd),
 		getFilesToSkip(cmd),
 		getFoldersToSkip(cmd),
-		getSkipGit(cmd),
+		getInitGit(cmd),
+		getVSCode(cmd),
 	)
 
 	showSetup(setup)

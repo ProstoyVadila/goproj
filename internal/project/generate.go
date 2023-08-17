@@ -8,6 +8,7 @@ import (
 	"github.com/ProstoyVadila/goproj/cmd/input"
 	"github.com/ProstoyVadila/goproj/internal/git"
 	"github.com/ProstoyVadila/goproj/internal/models"
+	"github.com/ProstoyVadila/goproj/internal/vscode"
 	"github.com/ProstoyVadila/goproj/pkg/files"
 	"github.com/ProstoyVadila/goproj/pkg/folders"
 )
@@ -36,21 +37,24 @@ func Generate(dataFromCli ...*models.Setup) {
 	projectInfo := models.NewProjectInfo(setup)
 	projectInfo.EmbedFiles = EmbedFiles
 
-	err = files.Generate(projectInfo)
-	if err != nil {
+	if err = files.Generate(projectInfo); err != nil {
 		log.Fatal(err)
 	}
 
-	err = folders.Create(projectInfo.Folders)
-	if err != nil {
+	if err = folders.Create(projectInfo.Folders); err != nil {
 		log.Fatal(err)
 	}
 
-	if !projectInfo.SkipGit {
-		err = git.InitGitRepo(projectInfo)
-		if err != nil {
+	if projectInfo.InitGit {
+		if err = git.InitGitRepo(projectInfo); err != nil {
 			log.Fatal(err)
 		}
 	}
 	fmt.Println("successfully generated!")
+
+	if projectInfo.InitVSCode {
+		if _ = vscode.InitVSCode(); err != nil {
+			log.Println(err)
+		}
+	}
 }
