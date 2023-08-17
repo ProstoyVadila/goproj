@@ -43,5 +43,6 @@ func GetSetup() (*models.Setup, error) {
 		make([]string, 0),
 		make([]string, 0),
 		false,
+		false,
 	), nil
 }
