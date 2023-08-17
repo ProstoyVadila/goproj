@@ -53,8 +53,8 @@ func Generate(dataFromCli ...*models.Setup) {
 	fmt.Println("successfully generated!")
 
 	if projectInfo.InitVSCode {
-		if err = vscode.InitVSCode(); err != nil {
-			log.Fatal(err)
+		if _ = vscode.InitVSCode(); err != nil {
+			log.Println(err)
 		}
 	}
 }
