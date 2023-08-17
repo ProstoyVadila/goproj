@@ -3,6 +3,8 @@ package cli
 import (
 	"log"
 
+	"github.com/ProstoyVadila/goproj/internal/models"
+	"github.com/ProstoyVadila/goproj/pkg/reader"
 	"github.com/spf13/cobra"
 )
 
@@ -88,4 +90,21 @@ func getVSCode(cmd *cobra.Command) bool {
 		log.Fatal(err)
 	}
 	return initVSCode
+}
+
+// getConfigFile gets information from a configuration file
+func getConfigFile(cmd *cobra.Command) (config models.ConfigFromFile, err error) {
+	filename, err := cmd.Flags().GetString(FILE)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if filename == "" {
+		return
+	}
+
+	config, err = reader.ConfigFromFile(filename)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return
 }
