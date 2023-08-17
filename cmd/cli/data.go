@@ -81,7 +81,7 @@ func getInitGit(cmd *cobra.Command) bool {
 	return initGit
 }
 
-// getVSCode gets a boolean balue that defines open the project in the VS Code or not.
+// getVSCode gets a boolean balue that defines open the project in VS Code or not.
 func getVSCode(cmd *cobra.Command) bool {
 	initVSCode, err := cmd.Flags().GetBool(VSCODE)
 	if err != nil {
