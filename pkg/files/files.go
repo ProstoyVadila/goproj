@@ -9,7 +9,7 @@ import (
 
 func generateTemplate(info *models.Document, embedFiles embed.FS, errCh chan<- error) {
 	template := NewFile(info)
-	err := template.generate(embedFiles)
+	err := template.Generate(embedFiles)
 	if err != nil {
 		errCh <- err
 	}
