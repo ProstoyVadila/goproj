@@ -97,7 +97,7 @@ Flags:
   -h, --help                  help for init
 ```
 
-You can find more information with `goproj init -h` or `goproj init --help`.
+You can find more information with `goproj init --help` command.
 
 ## Project Structure
 
@@ -137,7 +137,7 @@ build:
 	@go build -o bin/main
 
 tests:
-	@go tests .
+	@go test .
 
 
 .PHONY: run build tests
@@ -192,12 +192,9 @@ There are some standart folders for any project in Go:
 2. **internal**
 3. **pkg**
 
-That's it! \
-Please, enjoy! :)
-
 ## Configuration
 
-You can set a global configuration for your new projects by command `gorpoj config` with args in CLI. This command creates `.goproj.config.toml` config file in your user folder. And generator will read it every time when you start a new project (additinal args will override config setup)
+You can set a global configuration for your new projects by command `gorpoj config` with args in CLI. It will create `.goproj.config.toml` config file in your user folder. And generator will read it every time when you start a new project (additinal args will override config setup for that project only)
 
 You can set a global config by providing a file. Goproj supports `json`, `yaml` and `toml` file extensions.
 For example:
@@ -237,8 +234,11 @@ Flags:
   -c, --vscode          an optional flag to open the new project in VS Code (default true)
 ```
 
+That's it! \
+Please, enjoy! :)
+
 ## Plans
 
-- udpate cli ui/ux to make it prettier and more fun
+- udpate cli ui/ux to make it prettier and more convinient
 - add tests
 - add an option to choose a [license](https://choosealicense.com/)
