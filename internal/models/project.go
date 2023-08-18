@@ -104,8 +104,8 @@ func NewProjectInfo(setup *Setup) *ProjectInfo {
 	projectInfo := &ProjectInfo{
 		Author:        setup.Author,
 		PackageName:   setup.PackageName,
-		FilesToSkip:   setup.FilesToSkip,
-		FoldersToSkip: setup.FoldersToSkip,
+		FilesToSkip:   setup.FilesToSkip(),
+		FoldersToSkip: setup.FoldersToSkip(),
 		Description:   setup.Description,
 		InitGit:       setup.InitGit,
 		InitVSCode:    setup.InitVSCode,

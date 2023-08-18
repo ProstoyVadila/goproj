@@ -1,56 +1,73 @@
 package models
 
 type Setup struct {
-	FilesToSkip   []string
-	FoldersToSkip []string
-	PackageName   string
-	Author        string
-	Description   string
-	InitGit       bool
-	InitVSCode    bool
+	Skip        []string
+	PackageName string
+	Author      string
+	Description string
+	InitGit     bool
+	InitVSCode  bool
 }
 
-func NewSetup(packageName, author, description string, filesToSkip, foldersToSkip []string, skipGit, initVSCode bool) *Setup {
+func NewSetup(packageName, author, description string, skip []string, skipGit, initVSCode bool) *Setup {
 	return &Setup{
-		PackageName:   packageName,
-		Author:        author,
-		Description:   description,
-		FilesToSkip:   filesToSkip,
-		FoldersToSkip: foldersToSkip,
-		InitGit:       skipGit,
-		InitVSCode:    initVSCode,
+		PackageName: packageName,
+		Author:      author,
+		Description: description,
+		Skip:        skip,
+		InitGit:     skipGit,
+		InitVSCode:  initVSCode,
 	}
 }
 
-func NewSetupFromConfig(conf ConfigFromFile, filesToSkip, foldersToSkip []string) *Setup {
+func NewSetupFromConfig(conf ConfigFromFile) *Setup {
 	return &Setup{
-		Author:        conf.Author,
-		Description:   conf.Description,
-		FilesToSkip:   filesToSkip,
-		FoldersToSkip: foldersToSkip,
-		InitGit:       conf.InitGit,
-		InitVSCode:    conf.InitVSCode,
+		Author:      conf.Author,
+		Description: conf.Description,
+		Skip:        conf.Skip,
+		InitGit:     conf.InitGit,
+		InitVSCode:  conf.InitVSCode,
 	}
 }
 
-func UpdateSetup(setup1, setup2 *Setup) {
-	setup1.PackageName = setup2.PackageName
-	if setup2.Author != "" {
-		setup1.Author = setup2.Author
+func (s *Setup) Update(anotherSetup *Setup) {
+	s.PackageName = anotherSetup.PackageName
+	if anotherSetup.Author != "" {
+		s.Author = anotherSetup.Author
 	}
-	if setup2.Description != "" {
-		setup1.Description = setup2.Description
+	if anotherSetup.Description != "" {
+		s.Description = anotherSetup.Description
 	}
-	if len(setup2.FilesToSkip) != 0 {
-		setup1.FilesToSkip = setup2.FilesToSkip
+	if len(anotherSetup.Skip) != 0 {
+		s.Skip = anotherSetup.Skip
 	}
-	if len(setup2.FoldersToSkip) != 0 {
-		setup1.FoldersToSkip = setup2.FilesToSkip
+	if anotherSetup.InitGit {
+		s.InitGit = anotherSetup.InitGit
 	}
-	if !setup2.InitGit {
-		setup1.InitGit = setup2.InitGit
+	if anotherSetup.InitVSCode {
+		s.InitVSCode = anotherSetup.InitVSCode
 	}
-	if !setup2.InitVSCode {
-		setup1.InitVSCode = setup2.InitVSCode
+}
+
+// FilesToSkip gets files from skip objects.
+func (s *Setup) FilesToSkip() []string {
+	var files []string
+	for _, object := range s.Skip {
+		if object[len(object)-1] != '/' {
+			files = append(files, object)
+		}
 	}
+	return files
+}
+
+// FoldersToSkip gets folders from skip objects.
+func (s *Setup) FoldersToSkip() []string {
+	var folders []string
+	for _, object := range s.Skip {
+		last := len(object) - 1
+		if object[last] == '/' {
+			folders = append(folders, object[:last])
+		}
+	}
+	return folders
 }

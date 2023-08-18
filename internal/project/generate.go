@@ -12,7 +12,6 @@ import (
 	"github.com/ProstoyVadila/goproj/internal/vscode"
 	"github.com/ProstoyVadila/goproj/pkg/files"
 	"github.com/ProstoyVadila/goproj/pkg/folders"
-	"github.com/ProstoyVadila/goproj/pkg/reader"
 )
 
 // some wierd Go embed magic here
@@ -25,37 +24,37 @@ func showSetup(setup *models.Setup) {
 	fmt.Printf("\nProject (package) name: %s\n", setup.PackageName)
 	fmt.Printf("Author: %s\n", setup.Author)
 	fmt.Printf("Description: %s\n", setup.Description)
-	fmt.Printf("Files to skip: %v\n", setup.FilesToSkip)
-	fmt.Printf("Folders to skip: %v\n", setup.FoldersToSkip)
+	fmt.Printf("Files to skip: %v\n", setup.FilesToSkip())
+	fmt.Printf("Folders to skip: %v\n", setup.FoldersToSkip())
 	fmt.Printf("Init Git Repo: %v\n", setup.InitGit)
 	fmt.Printf("Open in VS Code: %v\n\n", setup.InitVSCode)
 }
 
 // Generate creates files and initialize git repo with data from CLI or input.
-func Generate(dataFromCli ...*models.Setup) {
+func Generate(ArgsSetup ...*models.Setup) {
 	fmt.Println("Let's start!")
 
-	var setup *models.Setup
 	var err error
+	var configExists bool
+	setup := new(models.Setup)
 
 	// trying to get setup from the configuration file
 	conf, err := config.Get()
 
 	if err == nil {
-		filesToSkip := reader.GetFilesToSkip(conf.Skip)
-		foldersToSkip := reader.GetFoldersToSkip(conf.Skip)
-		setup = models.NewSetupFromConfig(conf, filesToSkip, foldersToSkip)
+		setup = models.NewSetupFromConfig(conf)
+		configExists = true
 	}
 
 	// getting package name and other info from CLI or input
-	if len(dataFromCli) == 1 {
-		models.UpdateSetup(setup, dataFromCli[0])
+	if len(ArgsSetup) == 1 {
+		setup.Update(ArgsSetup[0])
 	} else {
-		inputSetup, err := input.GetSetup()
+		inputSetup, err := input.GetSetup(configExists)
 		if err != nil {
 			log.Fatal()
 		}
-		models.UpdateSetup(setup, inputSetup)
+		setup.Update(inputSetup)
 	}
 
 	// Show final Setup
@@ -66,11 +65,13 @@ func Generate(dataFromCli ...*models.Setup) {
 	projectInfo.EmbedFiles = EmbedFiles
 
 	// generating files
+	fmt.Println("Generating files...")
 	if err = files.Generate(projectInfo); err != nil {
 		log.Fatal(err)
 	}
 
 	// generating folders
+	fmt.Println("Generating folders...")
 	if err = folders.Create(projectInfo.Folders); err != nil {
 		log.Fatal(err)
 	}
@@ -81,7 +82,8 @@ func Generate(dataFromCli ...*models.Setup) {
 			log.Fatal(err)
 		}
 	}
-	fmt.Println("successfully generated!")
+
+	fmt.Println("\nSuccessfully generated!")
 
 	// open VS Code
 	if projectInfo.InitVSCode {

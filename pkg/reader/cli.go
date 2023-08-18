@@ -49,29 +49,6 @@ func GetSkip(cmd *cobra.Command, flag string) []string {
 	return make([]string, 0)
 }
 
-// getFilesToSkip gets files from skip objects.
-func GetFilesToSkip(skip []string) []string {
-	var files []string
-	for _, object := range skip {
-		if object[len(object)-1] != '/' {
-			files = append(files, object)
-		}
-	}
-	return files
-}
-
-// getFoldersToSkip gets folders from skip objects.
-func GetFoldersToSkip(skip []string) []string {
-	var folders []string
-	for _, object := range skip {
-		last := len(object) - 1
-		if object[last] == '/' {
-			folders = append(folders, object[:last])
-		}
-	}
-	return folders
-}
-
 // GetInitGit gets a boolean value that defines init git repo or not.
 func GetInitGit(cmd *cobra.Command, flag string) bool {
 	initGit, err := cmd.Flags().GetBool(flag)
