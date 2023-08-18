@@ -1,5 +1,8 @@
 # Go Project Generator
 
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+![GitHub Release](https://badgen.net/github/release/ProstoyVadila/goproj)
+
 A CLI tool to initialize a Go project with customizable default folders and files.
 
 ## Overview
