@@ -196,12 +196,14 @@ Please, enjoy! :)
 
 You can set a global configuration for your new projects by command `gorpoj config` with args in CLI. This command creates `.goproj.config.toml` config file in your user folder. And generator will read it every time when you start a new project (additinal args will override config setup)
 
-You can set a global config by file. Goproj supports `json`, `yaml` and `toml` file extensions.
+You can set a global config by providing a file. Goproj supports `json`, `yaml` and `toml` file extensions.
 For example:
 
 ```bash
 goproj config -f ~Documets/my_config.toml
 ```
+
+You can find examples of files [here](examples)
 
 Or you can set it with additional flags line in the gorpoj init mode.
 For example:

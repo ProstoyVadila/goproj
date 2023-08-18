@@ -1,0 +1,4 @@
+author: "Bobert Doe"
+skip: ["pkg/"]
+git: true
+vscode: false
