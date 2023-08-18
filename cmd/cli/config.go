@@ -15,8 +15,8 @@ const FILE = "file"
 var configCommand = &cobra.Command{
 	Use:     "config",
 	Short:   "Set up global configuration for all new generated projects",
-	Long:    "Set up global configuration for all new generated projects to not do it every time",
-	Example: "goproj config -a \"Bob Doe\" -s=\"Dockerfile,.dockerignore,package/\" --git=false --vscode=false",
+	Long:    "Set up global configuration for all new generated projects to not do it every time. You can find generated config file \".goproj.config.toml\" in your user folder and change it manually.",
+	Example: "goproj config -a \"Bobert Doe\" -s=\"Dockerfile,.dockerignore,internal/,pkg/\" -g=false --vscode=false",
 	Args:    cobra.NoArgs,
 	Run:     setupConfig,
 }

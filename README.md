@@ -34,6 +34,7 @@ Init project structure:
 - [Project Structure](#project-structure)
   - [Full List of Files](#a-full-list-of-generated-files)
   - [Full List of Folders](#a-full-list-of-generated-folders)
+- [Configuration](#configuration)
 - [Plans](#plans)
 
 ## Quick Start
@@ -91,7 +92,6 @@ Flags:
   -s, --skip                  an optional flag to skip exact files and/or folders (add /) from the generation.
   -c, --vscode                an optional flag to open the new project in VS Code (default true
   -h, --help                  help for init
-Successfully generated!
 ```
 
 You can find more information with `goproj init -h` or `goproj init --help`.
@@ -192,9 +192,48 @@ There are some standart folders for any project in Go:
 That's it! \
 Please, enjoy! :)
 
+## Configuration
+
+You can set a global configuration for your new projects by command `gorpoj config` with args in CLI. This command creates `.goproj.config.toml` config file in your user folder. And generator will read it every time when you start a new project (additinal args will override config setup)
+
+You can set a global config by file. Goproj supports `json`, `yaml` and `toml` file extensions.
+For example:
+
+```bash
+goproj config -f ~Documets/my_config.toml
+```
+
+Or you can set it with additional flags line in the gorpoj init mode.
+For example:
+
+```bash
+goproj -a "Bobert Doe" --skip="Dockerfile,.dockerignore,internal/,pkg/" --git=false --vscode=false
+```
+
+Or you can set/change a global config manually by creating/changing `.goproj.config.toml` file in your user folder (It doesn't exist by default).
+
+There is a list of all flags. You can find them with `gorpoj config --help` command.
+
+```bash
+Set up global configuration for all new generated projects to not do it every time
+
+Usage:
+   config [flags]
+
+Examples:
+goproj config -a "Bobert Doe" -s="Dockerfile,.dockerignore,internal/,pkg/" --git=false --vscode=false
+
+Flags:
+  -a, --author string   an optional flag to set author name
+  -f, --file json       an optional flag to set information from yaml file (supprots json, `yaml`, `toml`)
+  -g, --git             an optional flag to define start git initialization or not (default true)
+  -h, --help            help for config
+  -s, --skip /          an optional flag to skip exact files and/or folders (add /) from the generation
+  -c, --vscode          an optional flag to open the new project in VS Code (default true)
+```
+
 ## Plans
 
 - udpate cli ui/ux to make it prettier and more fun
 - add tests
 - add an option to choose a [license](https://choosealicense.com/)
-- add initial setup configuration (to do setup only once and forever)
