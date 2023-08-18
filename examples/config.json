@@ -1,0 +1,6 @@
+{
+  "author": "Bobert Doe",
+  "skip": ["Dockerfile", ".dockerignore", "pkg/"],
+  "git": false,
+  "vscode": false
+}
