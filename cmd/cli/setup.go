@@ -1,10 +1,9 @@
 package cli
 
 import (
-	"fmt"
-
 	"github.com/ProstoyVadila/goproj/internal/models"
 	"github.com/ProstoyVadila/goproj/internal/project"
+	"github.com/ProstoyVadila/goproj/pkg/reader"
 	"github.com/spf13/cobra"
 )
 
@@ -39,26 +38,17 @@ func init() {
 // packageName gets poject's setup from CLI and runs generation and initialization of files/git repo.
 func packageName(cmd *cobra.Command, args []string) {
 
+	skip := reader.GetSkip(cmd, SKIP)
+
 	setup := models.NewSetup(
-		getPackageName(args),
-		getAuthor(cmd),
-		getDescription(cmd),
-		getFilesToSkip(cmd),
-		getFoldersToSkip(cmd),
-		getInitGit(cmd),
-		getVSCode(cmd),
+		reader.GetPackageName(args),
+		reader.GetAuthor(cmd, AUTHOR),
+		reader.GetDescription(cmd, DESCRIPTION),
+		reader.GetFilesToSkip(skip),
+		reader.GetFoldersToSkip(skip),
+		reader.GetInitGit(cmd, GIT),
+		reader.GetVSCode(cmd, VSCODE),
 	)
 
-	showSetup(setup)
-
 	project.Generate(setup)
-}
-
-// showSetup writes setup info from CLI to standart output.
-func showSetup(setup *models.Setup) {
-	fmt.Printf("\nProject (package) name: %s\n", setup.PackageName)
-	fmt.Printf("Author: %s\n", setup.Author)
-	fmt.Printf("Description: %s\n", setup.Description)
-	fmt.Printf("Files to skip: %v\n", setup.FilesToSkip)
-	fmt.Printf("Folders to skip: %v\n\n", setup.FoldersToSkip)
 }

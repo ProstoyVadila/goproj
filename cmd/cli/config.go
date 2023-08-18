@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/ProstoyVadila/goproj/internal/config"
+	"github.com/ProstoyVadila/goproj/internal/models"
+	"github.com/ProstoyVadila/goproj/pkg/reader"
 	"github.com/spf13/cobra"
 )
 
@@ -29,16 +32,26 @@ func init() {
 }
 
 func setupConfig(cmd *cobra.Command, args []string) {
-	author, err := cmd.Flags().GetString(AUTHOR)
+	conf, err := reader.GetConfigFile(cmd, FILE)
+	if err != nil {
+		conf.Author = reader.GetAuthor(cmd, AUTHOR)
+		conf.Description = reader.GetDescription(cmd, DESCRIPTION)
+		conf.InitGit = reader.GetInitGit(cmd, GIT)
+		conf.InitVSCode = reader.GetVSCode(cmd, VSCODE)
+		conf.Skip = reader.GetSkip(cmd, SKIP)
+	}
+
+	err = config.Store(conf)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("\nMY NAME IS %s\n", author)
 
-	config, err := getConfigFile(cmd)
-	if err != nil {
-		log.Fatal(err)
-	}
+	showConfig(conf)
+}
 
-	fmt.Println(config)
+func showConfig(conf models.ConfigFromFile) {
+	fmt.Println("\nYou set this configuration for your new projects:")
+	fmt.Printf("Author: %s\n", conf.Author)
+	fmt.Printf("Description: %s\n", conf.Description)
+	fmt.Printf("Obejcts to Skip: %v\n\n", conf.Skip)
 }

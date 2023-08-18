@@ -7,3 +7,11 @@ type ConfigFromFile struct {
 	InitGit     bool     `yaml:"git" json:"git" toml:"git"`
 	InitVSCode  bool     `yaml:"vscode" json:"vscode" toml:"vscode"`
 }
+
+func (c ConfigFromFile) FilesToSkip(fn func([]string) []string) []string {
+	return fn(c.Skip)
+}
+
+func (c ConfigFromFile) FoldersToSkip(fn func([]string) []string) []string {
+	return fn(c.Skip)
+}

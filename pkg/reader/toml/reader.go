@@ -9,3 +9,7 @@ func Unmarshal(file []byte) (config models.ConfigFromFile, err error) {
 	err = toml.Unmarshal(file, &config)
 	return
 }
+
+func Marshal(config models.ConfigFromFile) (data []byte, err error) {
+	return toml.Marshal(config)
+}
