@@ -26,9 +26,9 @@ func showSetup(setup *models.Setup) {
 	fmt.Printf("Author: %s\n", setup.Author)
 	fmt.Printf("Description: %s\n", setup.Description)
 	fmt.Printf("Files to skip: %v\n", setup.FilesToSkip)
-	fmt.Printf("Folders to skip: %v\n\n", setup.FoldersToSkip)
+	fmt.Printf("Folders to skip: %v\n", setup.FoldersToSkip)
 	fmt.Printf("Init Git Repo: %v\n", setup.InitGit)
-	fmt.Printf("Open in VS Code: %v\n", setup.InitVSCode)
+	fmt.Printf("Open in VS Code: %v\n\n", setup.InitVSCode)
 }
 
 // Generate creates files and initialize git repo with data from CLI or input.
@@ -40,11 +40,7 @@ func Generate(dataFromCli ...*models.Setup) {
 
 	// trying to get setup from the configuration file
 	conf, err := config.Get()
-	if err != nil {
-		log.Print(err)
-	}
 
-	log.Println(conf)
 	if err == nil {
 		filesToSkip := reader.GetFilesToSkip(conf.Skip)
 		foldersToSkip := reader.GetFoldersToSkip(conf.Skip)
