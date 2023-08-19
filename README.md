@@ -7,7 +7,7 @@ A CLI tool to initialize a Go project with customizable default folders and file
 
 ## Overview
 
-This small utility allows you to start your new project in Go with an already initialized standard [folders](#list-of-generated-folders) and default support files such as [Makefile](#list-of-generated-files), [Dockerfile](#list-of-generated-files), [README.md](#list-of-generated-files), [LICINSE](#list-of-generated-files) etc. It creates a git repo as well and tries to open the new project in VS Code by default. (You can change this behaviour by flags in [CLI](#command-line-interface))
+This small utility allows you to start your new project in Go with an already initialized standard [folders](#list-of-generated-folders) and default support files such as [Makefile](#list-of-generated-files), [Dockerfile](#list-of-generated-files), [README.md](#list-of-generated-files), [LICINSE](#list-of-generated-files) etc. It **creates a git repo** as well and tries to **open the new project in VS Code** by default. (You can change this behaviour by flags in [CLI](#command-line-interface))
 
 Init project structure:
 
@@ -23,9 +23,7 @@ Init project structure:
 ├── README.md
 ├── go.mod
 ├── .dockerignore
-├── .gitignore
-├── .env
-└── .git
+└── .gitignore
 ```
 
 ## Content
