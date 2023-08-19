@@ -61,13 +61,7 @@ goproj
 ```
 
 and answer a few questions:
-
-```
-Let's start!
-Please, enter your name: Bob
-Please, enter your new project (package) name: github.com/Bobert/new_app
-Please, add a description to your project: my new project
-```
+![](/examples/usage/example_full_input.GIF)
 
 ### Command-line interface
 
@@ -76,6 +70,8 @@ Another option is to use CLI arguments to make it more in a Go way:
 ```bash
 goproj init <your_new_package>
 ```
+
+![](/examples/usage/example_init.GIF)
 
 \
 You can specify some parameters with optional flags. For example:
@@ -212,11 +208,11 @@ For example:
 goproj -a "Bobert Doe" --skip="Dockerfile,.dockerignore,internal/,pkg/" --git=false --vscode=false
 ```
 
-Or you can set/change a global config manually by creating/changing `.goproj.config.toml` file in your user folder (It doesn't exist by default).
+Or you can set/change a global config manually by creating/changing `~/.goproj.config.toml` file in your user folder (It doesn't exist by default).
 
-There is a list of all flags. You can find them with `gorpoj config --help` command.
+There is a list of all flags:
 
-```bash
+```
 Set up global configuration for all new generated projects to not do it every time
 
 Usage:
@@ -233,6 +229,8 @@ Flags:
   -s, --skip /          an optional flag to skip exact files and/or folders (add /) from the generation
   -c, --vscode          an optional flag to open the new project in VS Code (default true)
 ```
+
+You can find them with `gorpoj config --help` command.
 
 That's it! \
 Please, enjoy! :)
