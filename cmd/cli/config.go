@@ -30,10 +30,13 @@ func init() {
 }
 
 func setupConfig(cmd *cobra.Command, args []string) {
+	if cmd.Flags().NFlag() == 0 {
+		// TODO: there will be a path to input
+		log.Println("Specify some flags")
+	}
 	conf, err := reader.GetConfigFile(cmd, FILE)
 	if err != nil {
 		conf.Author = reader.GetAuthor(cmd, AUTHOR)
-		conf.Description = reader.GetDescription(cmd, DESCRIPTION)
 		conf.InitGit = reader.GetInitGit(cmd, GIT)
 		conf.InitVSCode = reader.GetVSCode(cmd, VSCODE)
 		conf.Skip = reader.GetSkip(cmd, SKIP)
