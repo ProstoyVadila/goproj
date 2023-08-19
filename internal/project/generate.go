@@ -2,14 +2,13 @@ package project
 
 import (
 	"embed"
-	"fmt"
-	"log"
 
 	"github.com/ProstoyVadila/goproj/internal/git"
 	"github.com/ProstoyVadila/goproj/internal/models"
 	"github.com/ProstoyVadila/goproj/internal/vscode"
 	"github.com/ProstoyVadila/goproj/pkg/files"
 	"github.com/ProstoyVadila/goproj/pkg/folders"
+	"github.com/ProstoyVadila/goproj/pkg/output"
 )
 
 // some wierd Go embed magic here
@@ -19,7 +18,7 @@ var EmbedFiles embed.FS
 
 // Generate creates files and folders, initializes git repo, opens VS Code according to GlobalConfig, CLI args or Input Setup.
 func Generate(ArgsSetup ...*models.Setup) {
-	fmt.Println("Let's start!")
+	output.Info("Let's start!")
 
 	// trying to get setup from the configuration file or CLI args, or Input
 	setup := enrichSetup(ArgsSetup...)
@@ -32,30 +31,30 @@ func Generate(ArgsSetup ...*models.Setup) {
 	projectInfo.EmbedFiles = EmbedFiles
 
 	// generating files
-	fmt.Println("Generating files...")
+	output.Info("Generating files...")
 	if err := files.Generate(projectInfo); err != nil {
-		log.Fatal(err)
+		output.Fatal(err)
 	}
 
 	// generating folders
-	fmt.Println("Generating folders...")
+	output.Info("Generating folders...")
 	if err := folders.Create(projectInfo.Folders); err != nil {
-		log.Fatal(err)
+		output.Fatal(err)
 	}
 
 	// Git init
 	if projectInfo.InitGit {
 		if err := git.InitGitRepo(projectInfo); err != nil {
-			log.Fatal(err)
+			output.Fatal(err)
 		}
 	}
 
-	fmt.Println("\nSuccessfully generated!")
+	output.Info("\nSuccessfully generated!")
 
 	// open VS Code
 	if projectInfo.InitVSCode {
 		if err := vscode.InitVSCode(); err != nil {
-			log.Println(err)
+			output.Err(err, "cannot open VS Code")
 		}
 	}
 }

@@ -75,7 +75,7 @@ var additionalQsuestions = []*survey.Question{
 
 // getConfigQuestion creates a question (type Confirm) about using GlobalConfig or not and provides it in the Question's Help.
 func getConfigQuestion(conf models.GlobalConfig) *survey.Question {
-	help := fmt.Sprintf("\nYour global config is located in the \"~/%s\" file. More info via \"goproj config --help\" command.", config.ConfigName)
+	help := fmt.Sprintf("Your global config is located in the \"~/%s\" file. More info via \"goproj config --help\" command.\n", config.ConfigName)
 	return &survey.Question{
 		Name: "config",
 		Prompt: &survey.Confirm{

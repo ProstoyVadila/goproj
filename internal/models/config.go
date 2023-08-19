@@ -1,6 +1,9 @@
 package models
 
-import "fmt"
+import (
+	"github.com/ProstoyVadila/goproj/pkg/output"
+	"github.com/elliotchance/orderedmap/v2"
+)
 
 var showString = `
 You set this configuration for your new projects:
@@ -21,17 +24,26 @@ type GlobalConfig struct {
 	InitVSCode  bool     `yaml:"vscode" json:"vscode" toml:"vscode"`
 }
 
-func (g GlobalConfig) Show() {
-	fmt.Println(g.ShowString())
+// getShow creates ordered map of GlobalConfig fields and msg for output.
+func (g GlobalConfig) getShow() (*orderedmap.OrderedMap[string, any], string) {
+	msg := "This is your global config:"
+	omap := orderedmap.NewOrderedMap[string, any]()
+
+	omap.Set("Author: %s", g.Author)
+	omap.Set("Description: %s", g.Description)
+	omap.Set("Objects to skip: %v", g.Skip)
+	omap.Set("Init Git Repo: %v", g.InitGit)
+	omap.Set("Open in VS Code: %v", g.InitVSCode)
+
+	return omap, msg
 }
 
+// Show writes GlobalConfig info to standart output.
+func (g GlobalConfig) Show() {
+	output.Show(g.getShow())
+}
+
+// ShowString returns output string for GlobalConfig.
 func (g GlobalConfig) ShowString() string {
-	return fmt.Sprintf(
-		showString,
-		g.Author,
-		g.Description,
-		g.Skip,
-		g.InitGit,
-		g.InitVSCode,
-	)
+	return output.ShowString(g.getShow())
 }

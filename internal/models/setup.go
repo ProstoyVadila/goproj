@@ -1,6 +1,9 @@
 package models
 
-import "fmt"
+import (
+	"github.com/ProstoyVadila/goproj/pkg/output"
+	"github.com/elliotchance/orderedmap/v2"
+)
 
 type Setup struct {
 	Skip        []string
@@ -77,13 +80,28 @@ func (s *Setup) FoldersToSkip() []string {
 	return folders
 }
 
-// showSetup writes setup info from CLI to standart output.
+// getShow creates ordered map of Setup fields and msg for output.
+func (s *Setup) getShow() (*orderedmap.OrderedMap[string, any], string) {
+	msg := "This your project setup:"
+	omap := orderedmap.NewOrderedMap[string, any]()
+
+	omap.Set("Project (package) name: %s", s.PackageName)
+	omap.Set("Author: %s", s.Author)
+	omap.Set("Description: %s", s.Description)
+	omap.Set("Files to skip: %v", s.FilesToSkip())
+	omap.Set("Folders to skip: %v", s.FoldersToSkip())
+	omap.Set("Init Git Repo: %v", s.InitGit)
+	omap.Set("Open in VS Code: %v", s.InitVSCode)
+
+	return omap, msg
+}
+
+// Show writes Setup info to standart output.
 func (s *Setup) Show() {
-	fmt.Printf("\nProject (package) name: %s\n", s.PackageName)
-	fmt.Printf("Author: %s\n", s.Author)
-	fmt.Printf("Description: %s\n", s.Description)
-	fmt.Printf("Files to skip: %v\n", s.FilesToSkip())
-	fmt.Printf("Folders to skip: %v\n", s.FoldersToSkip())
-	fmt.Printf("Init Git Repo: %v\n", s.InitGit)
-	fmt.Printf("Open in VS Code: %v\n\n", s.InitVSCode)
+	output.Show(s.getShow())
+}
+
+// ShowString returns output string for Setup.
+func (s *Setup) ShowString() string {
+	return output.ShowString(s.getShow())
 }
