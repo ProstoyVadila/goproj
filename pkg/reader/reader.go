@@ -12,11 +12,11 @@ import (
 )
 
 type Reader interface {
-	Unmarshal(file []byte) (*models.ConfigFromFile, error)
+	Unmarshal(file []byte) (*models.GlobalConfig, error)
 }
 
-// Unmarshal reads file provided in CLI to models.ConfigFromFile
-func ConfigFromFile(filename string) (config models.ConfigFromFile, err error) {
+// Unmarshal reads file provided in CLI to models.GetGlobalConfig
+func GetGlobalConfig(filename string) (config models.GlobalConfig, err error) {
 	file, err := os.ReadFile(filename)
 	if err != nil {
 		return

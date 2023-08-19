@@ -1,11 +1,9 @@
 package cli
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/ProstoyVadila/goproj/internal/config"
-	"github.com/ProstoyVadila/goproj/internal/models"
 	"github.com/ProstoyVadila/goproj/pkg/reader"
 	"github.com/spf13/cobra"
 )
@@ -46,12 +44,5 @@ func setupConfig(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 
-	showConfig(conf)
-}
-
-func showConfig(conf models.ConfigFromFile) {
-	fmt.Println("\nYou set this configuration for your new projects:")
-	fmt.Printf("Author: %s\n", conf.Author)
-	fmt.Printf("Description: %s\n", conf.Description)
-	fmt.Printf("Obejcts to Skip: %v\n\n", conf.Skip)
+	conf.Show()
 }

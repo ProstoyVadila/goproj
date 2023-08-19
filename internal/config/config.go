@@ -1,7 +1,7 @@
 package config
 
 import (
-	"errors"
+	"log"
 	"os"
 	"path/filepath"
 
@@ -22,7 +22,7 @@ func configExists(filepath string) bool {
 	return err == nil
 }
 
-func Store(config models.ConfigFromFile) (err error) {
+func Store(config models.GlobalConfig) (err error) {
 	file, err := os.Create(ConfigFilepath)
 	if err != nil {
 		return
@@ -38,9 +38,13 @@ func Store(config models.ConfigFromFile) (err error) {
 	return
 }
 
-func Get() (config models.ConfigFromFile, err error) {
+func Get() (config models.GlobalConfig, ok bool) {
 	if !configExists(ConfigFilepath) {
-		return config, errors.New("cannot find configuration file")
+		return
 	}
-	return reader.ConfigFromFile(ConfigFilepath)
+	conf, err := reader.GetGlobalConfig(ConfigFilepath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return conf, true
 }

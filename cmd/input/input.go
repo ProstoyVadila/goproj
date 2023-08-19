@@ -5,8 +5,8 @@ import (
 	"github.com/ProstoyVadila/goproj/internal/models"
 )
 
-// GetSetup tries to get information about the project from input.
-func GetSetup(configExists bool) (*models.Setup, error) {
+// Get tries to get information about the project from input.
+func Get(configExists bool, conf models.GlobalConfig) (*models.Setup, error) {
 	setup := new(models.Setup)
 	var useConfig bool
 
@@ -19,6 +19,7 @@ func GetSetup(configExists bool) (*models.Setup, error) {
 	}
 
 	if configExists {
+		configQuestion := getConfigQuestion(conf)
 		if err := survey.AskOne(configQuestion.Prompt, &useConfig); err != nil {
 			return &models.Setup{}, err
 		}
