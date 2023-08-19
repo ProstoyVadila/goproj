@@ -237,6 +237,5 @@ Please, enjoy! :)
 
 ## Plans
 
-- udpate cli ui/ux to make it prettier and more convinient
-- add tests
+- add CI tests
 - add an option to choose a [license](https://choosealicense.com/)
