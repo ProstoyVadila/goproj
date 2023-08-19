@@ -46,14 +46,13 @@ func ShowString(omap *orderedmap.OrderedMap[string, any], msg ...string) string 
 
 	builder.WriteString(newLine)
 	if len(msg) != 0 {
-		builder.WriteString(infoMsg.Sprintln(msg[0]))
+		builder.WriteString(infoMsg.Sprintln(msg[0]) + "\n")
 	}
 
 	for el := omap.Front(); el != nil; el = el.Next() {
 		line := fieldShowMsg.Sprintf(el.Key, valueShowMsg.Sprint(el.Value))
 		builder.WriteString(line + "\n")
 	}
-	builder.WriteString(newLine)
 
 	return fmt.Sprintln(builder.String())
 }
