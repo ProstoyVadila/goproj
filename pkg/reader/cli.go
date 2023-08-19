@@ -49,29 +49,6 @@ func GetSkip(cmd *cobra.Command, flag string) []string {
 	return make([]string, 0)
 }
 
-// getFilesToSkip gets files from skip objects.
-func GetFilesToSkip(skip []string) []string {
-	var files []string
-	for _, object := range skip {
-		if object[len(object)-1] != '/' {
-			files = append(files, object)
-		}
-	}
-	return files
-}
-
-// getFoldersToSkip gets folders from skip objects.
-func GetFoldersToSkip(skip []string) []string {
-	var folders []string
-	for _, object := range skip {
-		last := len(object) - 1
-		if object[last] == '/' {
-			folders = append(folders, object[:last])
-		}
-	}
-	return folders
-}
-
 // GetInitGit gets a boolean value that defines init git repo or not.
 func GetInitGit(cmd *cobra.Command, flag string) bool {
 	initGit, err := cmd.Flags().GetBool(flag)
@@ -91,7 +68,7 @@ func GetVSCode(cmd *cobra.Command, flag string) bool {
 }
 
 // GetConfigFile gets information from a configuration file
-func GetConfigFile(cmd *cobra.Command, flag string) (config models.ConfigFromFile, err error) {
+func GetConfigFile(cmd *cobra.Command, flag string) (config models.GlobalConfig, err error) {
 	filename, err := cmd.Flags().GetString(flag)
 	if err != nil {
 		log.Fatal(err)
@@ -100,7 +77,7 @@ func GetConfigFile(cmd *cobra.Command, flag string) (config models.ConfigFromFil
 		return config, errors.New("there is no config file")
 	}
 
-	config, err = ConfigFromFile(filename)
+	config, err = GetGlobalConfig(filename)
 	if err != nil {
 		log.Fatal(err)
 	}

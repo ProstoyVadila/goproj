@@ -1,56 +1,107 @@
 package models
 
+import (
+	"github.com/ProstoyVadila/goproj/pkg/output"
+	"github.com/elliotchance/orderedmap/v2"
+)
+
 type Setup struct {
-	FilesToSkip   []string
-	FoldersToSkip []string
-	PackageName   string
-	Author        string
-	Description   string
-	InitGit       bool
-	InitVSCode    bool
+	Skip        []string
+	PackageName string
+	Author      string
+	Description string
+	InitGit     bool
+	InitVSCode  bool
 }
 
-func NewSetup(packageName, author, description string, filesToSkip, foldersToSkip []string, skipGit, initVSCode bool) *Setup {
+// NewSetup constructs Setup by fields.
+func NewSetup(packageName, author, description string, skip []string, skipGit, initVSCode bool) *Setup {
 	return &Setup{
-		PackageName:   packageName,
-		Author:        author,
-		Description:   description,
-		FilesToSkip:   filesToSkip,
-		FoldersToSkip: foldersToSkip,
-		InitGit:       skipGit,
-		InitVSCode:    initVSCode,
+		PackageName: packageName,
+		Author:      author,
+		Description: description,
+		Skip:        skip,
+		InitGit:     skipGit,
+		InitVSCode:  initVSCode,
 	}
 }
 
-func NewSetupFromConfig(conf ConfigFromFile, filesToSkip, foldersToSkip []string) *Setup {
+// NewSetupFromConfig costructs Setup from ConfigFromFile.
+func NewSetupFromConfig(conf GlobalConfig) *Setup {
 	return &Setup{
-		Author:        conf.Author,
-		Description:   conf.Description,
-		FilesToSkip:   filesToSkip,
-		FoldersToSkip: foldersToSkip,
-		InitGit:       conf.InitGit,
-		InitVSCode:    conf.InitVSCode,
+		Author:      conf.Author,
+		Description: conf.Description,
+		Skip:        conf.Skip,
+		InitGit:     conf.InitGit,
+		InitVSCode:  conf.InitVSCode,
 	}
 }
 
-func UpdateSetup(setup1, setup2 *Setup) {
-	setup1.PackageName = setup2.PackageName
-	if setup2.Author != "" {
-		setup1.Author = setup2.Author
+// Update updates Setup fields by another Setup
+func (s *Setup) Update(from *Setup) {
+	s.PackageName = from.PackageName
+	if from.Author != "" {
+		s.Author = from.Author
 	}
-	if setup2.Description != "" {
-		setup1.Description = setup2.Description
+	if from.Description != "" {
+		s.Description = from.Description
 	}
-	if len(setup2.FilesToSkip) != 0 {
-		setup1.FilesToSkip = setup2.FilesToSkip
+	if len(from.Skip) != 0 {
+		s.Skip = from.Skip
 	}
-	if len(setup2.FoldersToSkip) != 0 {
-		setup1.FoldersToSkip = setup2.FilesToSkip
+	if from.InitGit || s.InitGit != from.InitGit {
+		s.InitGit = from.InitGit
 	}
-	if !setup2.InitGit {
-		setup1.InitGit = setup2.InitGit
+	if from.InitVSCode || s.InitVSCode != from.InitVSCode {
+		s.InitVSCode = from.InitVSCode
 	}
-	if !setup2.InitVSCode {
-		setup1.InitVSCode = setup2.InitVSCode
+}
+
+// FilesToSkip gets files from skip objects.
+func (s *Setup) FilesToSkip() []string {
+	var files []string
+	for _, object := range s.Skip {
+		if object[len(object)-1] != '/' {
+			files = append(files, object)
+		}
 	}
+	return files
+}
+
+// FoldersToSkip gets folders from skip objects.
+func (s *Setup) FoldersToSkip() []string {
+	var folders []string
+	for _, object := range s.Skip {
+		last := len(object) - 1
+		if object[last] == '/' {
+			folders = append(folders, object[:last])
+		}
+	}
+	return folders
+}
+
+// getShow creates ordered map of Setup fields and msg for output.
+func (s *Setup) getShow() (*orderedmap.OrderedMap[string, any], string) {
+	msg := "This your project setup:"
+	omap := orderedmap.NewOrderedMap[string, any]()
+
+	omap.Set("Project (package) name: %s", s.PackageName)
+	omap.Set("Author: %s", s.Author)
+	omap.Set("Description: %s", s.Description)
+	omap.Set("Files to skip: %v", s.FilesToSkip())
+	omap.Set("Folders to skip: %v", s.FoldersToSkip())
+	omap.Set("Init Git Repo: %v", s.InitGit)
+	omap.Set("Open in VS Code: %v", s.InitVSCode)
+
+	return omap, msg
+}
+
+// Show writes Setup info to standart output.
+func (s *Setup) Show() {
+	output.Show(s.getShow())
+}
+
+// ShowString returns output string for Setup.
+func (s *Setup) ShowString() string {
+	return output.ShowString(s.getShow())
 }

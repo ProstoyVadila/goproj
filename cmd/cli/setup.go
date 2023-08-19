@@ -37,15 +37,11 @@ func init() {
 
 // packageName gets poject's setup from CLI and runs generation and initialization of files/git repo.
 func packageName(cmd *cobra.Command, args []string) {
-
-	skip := reader.GetSkip(cmd, SKIP)
-
 	setup := models.NewSetup(
 		reader.GetPackageName(args),
 		reader.GetAuthor(cmd, AUTHOR),
 		reader.GetDescription(cmd, DESCRIPTION),
-		reader.GetFilesToSkip(skip),
-		reader.GetFoldersToSkip(skip),
+		reader.GetSkip(cmd, SKIP),
 		reader.GetInitGit(cmd, GIT),
 		reader.GetVSCode(cmd, VSCODE),
 	)
