@@ -188,7 +188,7 @@ There are some standart folders for any project in Go:
 
 ## Configuration
 
-You can set a global configuration for your new projects by command `gorpoj config` with args in CLI. It will create `.goproj.config.toml` config file in your user folder. And generator will read it every time when you start a new project (additinal args will override config setup for that project only)
+You can set a global configuration for your new projects by command `gorpoj config` with args in CLI. It will create `~/.goproj.config.toml` config file in your user folder. And generator will read it every time when you start a new project (additinal args will override config setup for that project only)
 
 You can set a global config by providing a file. Goproj supports `json`, `yaml` and `toml` file extensions.
 For example:
@@ -203,7 +203,7 @@ Or you can set it with additional flags line in the gorpoj init mode.
 For example:
 
 ```bash
-goproj -a "Bobert Doe" --skip="Dockerfile,.dockerignore,internal/,pkg/" --git=false --vscode=false
+goproj config -a "Bobert Doe" --skip="Dockerfile,.dockerignore,internal/,pkg/" --git=false --vscode=false
 ```
 
 Or you can set/change a global config manually by creating/changing `~/.goproj.config.toml` file in your user folder (It doesn't exist by default).
@@ -221,7 +221,7 @@ goproj config -a "Bobert Doe" -s="Dockerfile,.dockerignore,internal/,pkg/" --git
 
 Flags:
   -a, --author string   an optional flag to set author name
-  -f, --file json       an optional flag to set information from yaml file (supprots json, `yaml`, `toml`)
+  -f, --file json       an optional flag to set information from yaml file (supprots `json`, `yaml`, `toml`)
   -g, --git             an optional flag to define start git initialization or not (default true)
   -h, --help            help for config
   -s, --skip /          an optional flag to skip exact files and/or folders (add /) from the generation
