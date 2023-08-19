@@ -1,10 +1,14 @@
 package input
 
 import (
+	"fmt"
+
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/ProstoyVadila/goproj/internal/config"
 	"github.com/ProstoyVadila/goproj/internal/models"
 )
 
+// packageNameQuestion is a required question about the new generated project name
 var packageNameQuestion = &survey.Question{
 	Name: "PackageName",
 	Prompt: &survey.Input{
@@ -14,6 +18,7 @@ var packageNameQuestion = &survey.Question{
 	Validate: survey.Required,
 }
 
+// additionalQuestions variable is additional input questions
 var additionalQsuestions = []*survey.Question{
 	{
 		Name: "Author",
@@ -68,8 +73,9 @@ var additionalQsuestions = []*survey.Question{
 	},
 }
 
+// getConfigQuestion creates a question (type Confirm) about using GlobalConfig or not and provides it in the Question's Help.
 func getConfigQuestion(conf models.GlobalConfig) *survey.Question {
-	help := "\nYour global config is located in the \"~/.goproj.config.toml\" file. More info via \"goproj config --help\" command."
+	help := fmt.Sprintf("\nYour global config is located in the \"~/%s\" file. More info via \"goproj config --help\" command.", config.ConfigName)
 	return &survey.Question{
 		Name: "config",
 		Prompt: &survey.Confirm{

@@ -17,7 +17,7 @@ import (
 //go:embed templates/* templates/files/*
 var EmbedFiles embed.FS
 
-// Generate creates files and initialize git repo with data from CLI or input.
+// Generate creates files and folders, initializes git repo, opens VS Code according to GlobalConfig, CLI args or Input Setup.
 func Generate(ArgsSetup ...*models.Setup) {
 	fmt.Println("Let's start!")
 
