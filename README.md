@@ -190,16 +190,26 @@ There are some standart folders for any project in Go:
 
 You can set a global configuration for your new projects by command `gorpoj config` with args in CLI. It will create `~/.goproj.config.toml` config file in your user folder. And generator will read it every time when you start a new project (additinal args will override config setup for that project only)
 
-You can set a global config by providing a file. Goproj supports `json`, `yaml` and `toml` file extensions.
+### Usage
+
+Just type
+
+```bash
+goproj config
+```
+
+and answer a few questions like in [`goproj`](#quick-start) command.
+
+You can set a global config by providing a file as well. Goproj supports `json`, `yaml` and `toml` file extensions.
 For example:
 
 ```bash
 goproj config -f ~Documets/my_config.toml
 ```
 
-You can find examples of files [here](examples)
+You can find examples of config files [here](examples)
 
-Or you can set it with additional flags line in the gorpoj init mode.
+Or you can set it with additional flags line in the [gorpoj init](#command-line-interface) mode.
 For example:
 
 ```bash
@@ -208,7 +218,7 @@ goproj config -a "Bobert Doe" --skip="Dockerfile,.dockerignore,internal/,pkg/" -
 
 Or you can set/change a global config manually by creating/changing `~/.goproj.config.toml` file in your user folder (It doesn't exist by default).
 
-There is a list of all flags:
+This is a list of all flags:
 
 ```
 Set up global configuration for all new generated projects to not do it every time
@@ -230,10 +240,19 @@ Flags:
 
 You can find them with `gorpoj config --help` command.
 
+### Show
+
+You can check your global config with:
+
+```bash
+goproj config show
+```
+
 That's it! \
 Please, enjoy! :)
 
 ## Plans
 
-- add CI tests
-- add an option to choose a [license](https://choosealicense.com/)
+- CI tests.
+- an option to set another folders or empty files to generate in the global config.
+- an option to choose a [license](https://choosealicense.com/).
