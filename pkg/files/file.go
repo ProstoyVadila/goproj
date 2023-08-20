@@ -42,30 +42,21 @@ func (t *File) Create() error {
 
 // Write writes tempate data to file
 func (t *File) Write() error {
-	err := t.Tmpl.Execute(t.File, t.Document.Data)
-	if err != nil {
-		return err
-	}
-	return nil
+	return t.Tmpl.Execute(t.File, t.Document.Data)
 }
 
 // Generate creates new files from the embed files with data if it's a template
-func (t *File) Generate(embedFiles embed.FS) error {
+func (t *File) Generate(embedFiles embed.FS) (err error) {
 	defer t.File.Close()
 
-	err := t.Get(embedFiles)
+	err = t.Get(embedFiles)
 	if err != nil {
-		return err
+		return
 	}
 	err = t.Create()
 	if err != nil {
-		return err
+		return
 	}
 
-	err = t.Write()
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return t.Write()
 }

@@ -18,6 +18,15 @@ var packageNameQuestion = &survey.Question{
 	Validate: survey.Required,
 }
 
+// descriptionQuestion
+var descriptionQuestion = &survey.Question{
+	Name: "Description",
+	Prompt: &survey.Input{
+		Message: "Description",
+		Help:    "You can set a small description in README.md for your new projct.",
+	},
+}
+
 // additionalQuestions variable is additional input questions
 var additionalQsuestions = []*survey.Question{
 	{
@@ -28,13 +37,7 @@ var additionalQsuestions = []*survey.Question{
 		},
 		Validate: survey.MaxLength(255),
 	},
-	{
-		Name: "Description",
-		Prompt: &survey.Input{
-			Message: "Description:",
-			Help:    "You can set a small description in README.md for your new projct.",
-		},
-	},
+
 	{
 		Name: "Skip",
 		Prompt: &survey.MultiSelect{
@@ -74,7 +77,7 @@ var additionalQsuestions = []*survey.Question{
 }
 
 // getConfigQuestion creates a question (type Confirm) about using GlobalConfig or not and provides it in the Question's Help.
-func getConfigQuestion(conf models.GlobalConfig) *survey.Question {
+func getConfigQuestion(conf *models.GlobalConfig) *survey.Question {
 	help := fmt.Sprintf("Your global config is located in the \"~/%s\" file. More info via \"goproj config --help\" command.\n", config.ConfigName)
 	return &survey.Question{
 		Name: "config",

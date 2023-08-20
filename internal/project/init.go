@@ -22,11 +22,11 @@ func enrichSetup(ArgsSetup ...*models.Setup) *models.Setup {
 	if len(ArgsSetup) == 1 {
 		setup.Update(ArgsSetup[0])
 	} else {
-		inputSetup, err := input.Get(confExists, conf)
+		inputSurvey, err := input.Get(confExists, true, conf)
 		if err != nil {
 			log.Fatal(err)
 		}
-		setup.Update(inputSetup)
+		setup.Update(inputSurvey.ToSetup())
 	}
 	return setup
 }

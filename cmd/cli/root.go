@@ -18,6 +18,10 @@ func Execute() error {
 	return nil
 }
 
+func flagExists(cmd *cobra.Command, flag string) bool {
+	return cmd.Flags().Lookup(flag).Changed
+}
+
 // ArgsInCLI checks if there are any arguments in cli
 func ArgsInCLI() bool {
 	return len(os.Args[1:]) != 0

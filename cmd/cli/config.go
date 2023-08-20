@@ -3,7 +3,8 @@ package cli
 import (
 	"log"
 
-	"github.com/ProstoyVadila/goproj/internal/config"
+	"github.com/ProstoyVadila/goproj/internal/models"
+	"github.com/ProstoyVadila/goproj/internal/project"
 	"github.com/ProstoyVadila/goproj/pkg/reader"
 	"github.com/spf13/cobra"
 )
@@ -30,19 +31,31 @@ func init() {
 }
 
 func setupConfig(cmd *cobra.Command, args []string) {
-	conf, err := reader.GetConfigFile(cmd, FILE)
-	if err != nil {
-		conf.Author = reader.GetAuthor(cmd, AUTHOR)
-		conf.Description = reader.GetDescription(cmd, DESCRIPTION)
-		conf.InitGit = reader.GetInitGit(cmd, GIT)
-		conf.InitVSCode = reader.GetVSCode(cmd, VSCODE)
-		conf.Skip = reader.GetSkip(cmd, SKIP)
+	if cmd.Flags().NFlag() == 0 {
+		if err := project.StoreConfig(); err != nil {
+			log.Fatal(err)
+		}
+		return
 	}
 
-	err = config.Store(conf)
-	if err != nil {
+	var err error
+	conf := new(models.GlobalConfig)
+
+	if flagExists(cmd, FILE) {
+		conf, err = reader.GetConfigFile(cmd, FILE)
+		if err != nil {
+			log.Fatal(err)
+		}
+	} else {
+		conf = models.NewGlobalConfig(
+			reader.GetAuthor(cmd, AUTHOR),
+			reader.GetSkip(cmd, SKIP),
+			reader.GetInitGit(cmd, GIT),
+			reader.GetVSCode(cmd, VSCODE),
+		)
+	}
+
+	if err := project.StoreConfig(conf); err != nil {
 		log.Fatal(err)
 	}
-
-	conf.Show()
 }
