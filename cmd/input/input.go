@@ -18,6 +18,7 @@ func Get(configExists, isInit bool, conf ...*models.GlobalConfig) (*models.Surve
 			&surv.PackageName,
 			survey.WithValidator(survey.Required),
 		)
+		additionalQsuestions = append(additionalQsuestions, descriptionQuestion)
 		if err != nil {
 			return surv, err
 		}

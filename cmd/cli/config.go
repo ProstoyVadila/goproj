@@ -32,9 +32,9 @@ func init() {
 
 func setupConfig(cmd *cobra.Command, args []string) {
 	if cmd.Flags().NFlag() == 0 {
-		// TODO: there will be a path to input
-		log.Println("Specify some flags")
-		project.StoreConfig()
+		if err := project.StoreConfig(); err != nil {
+			log.Fatal(err)
+		}
 		return
 	}
 
