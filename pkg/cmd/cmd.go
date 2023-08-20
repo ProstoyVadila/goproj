@@ -30,9 +30,10 @@ func (c *Command) Execute() error {
 	}
 
 	cmd := exec.Command(c.cmd, c.args...)
-	_, err := cmd.Output()
+	stout, err := cmd.Output()
 	if err != nil {
 		return err
 	}
+	fmt.Println(string(stout))
 	return nil
 }

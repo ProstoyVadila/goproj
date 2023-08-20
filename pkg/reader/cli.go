@@ -68,7 +68,7 @@ func GetVSCode(cmd *cobra.Command, flag string) bool {
 }
 
 // GetConfigFile gets information from a configuration file
-func GetConfigFile(cmd *cobra.Command, flag string) (config *models.GlobalConfig, err error) {
+func GetConfigFile(cmd *cobra.Command, flag string) (config models.GlobalConfig, err error) {
 	filename, err := cmd.Flags().GetString(flag)
 	if err != nil {
 		log.Fatal(err)

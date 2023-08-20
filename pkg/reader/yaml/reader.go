@@ -5,7 +5,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func Unmarshal(file []byte) (config *models.GlobalConfig, err error) {
+func Unmarshal(file []byte) (config models.GlobalConfig, err error) {
 	err = yaml.Unmarshal(file, &config)
 	return
 }

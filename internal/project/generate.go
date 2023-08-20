@@ -18,8 +18,6 @@ var EmbedFiles embed.FS
 
 // Generate creates files and folders, initializes git repo, opens VS Code according to GlobalConfig, CLI args or Input Setup.
 func Generate(ArgsSetup ...*models.Setup) {
-	output.Info(logo)
-
 	// trying to get setup from the configuration file or CLI args, or Input
 	setup := enrichSetup(ArgsSetup...)
 
