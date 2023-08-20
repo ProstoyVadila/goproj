@@ -12,5 +12,4 @@ ______________________________________________________
 _______ A CLI tool to initialize a Go project ________
 ____ with customizable default folders and files _____
 ______________________________________________________
-
 `

@@ -6,31 +6,34 @@ import (
 	"github.com/ProstoyVadila/goproj/pkg/output"
 )
 
-// Get tries to get information about the project from input.
-func Get(configExists bool, conf models.GlobalConfig) (*models.Setup, error) {
-	output.Info("Let's start!")
-	setup := new(models.Setup)
+// Get tries to get information through survey in input.
+func Get(configExists, isInit bool, conf ...*models.GlobalConfig) (*models.Survey, error) {
+	output.Info("\nLet's start!")
+	surv := new(models.Survey)
 	var useConfig bool
 
-	if err := survey.AskOne(
-		packageNameQuestion.Prompt,
-		&setup.PackageName,
-		survey.WithValidator(survey.Required),
-	); err != nil {
-		return &models.Setup{}, err
+	if isInit {
+		err := survey.AskOne(
+			packageNameQuestion.Prompt,
+			&surv.PackageName,
+			survey.WithValidator(survey.Required),
+		)
+		if err != nil {
+			return surv, err
+		}
 	}
 
-	if configExists {
-		configQuestion := getConfigQuestion(conf)
+	if configExists && len(conf) != 0 {
+		configQuestion := getConfigQuestion(conf[0])
 		if err := survey.AskOne(configQuestion.Prompt, &useConfig); err != nil {
-			return &models.Setup{}, err
+			return surv, err
 		}
 	}
 
 	if !configExists || !useConfig {
-		if err := survey.Ask(additionalQsuestions, setup); err != nil {
-			return &models.Setup{}, err
+		if err := survey.Ask(additionalQsuestions, surv); err != nil {
+			return surv, err
 		}
 	}
-	return setup, nil
+	return surv, nil
 }

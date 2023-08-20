@@ -6,7 +6,7 @@ import (
 	"github.com/ProstoyVadila/goproj/internal/models"
 )
 
-func Unmarshal(file []byte) (config models.GlobalConfig, err error) {
+func Unmarshal(file []byte) (config *models.GlobalConfig, err error) {
 	err = json.Unmarshal(file, &config)
 	return
 }

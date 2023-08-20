@@ -27,7 +27,7 @@ func NewSetup(packageName, author, description string, skip []string, skipGit, i
 }
 
 // NewSetupFromConfig costructs Setup from ConfigFromFile.
-func NewSetupFromConfig(conf GlobalConfig) *Setup {
+func NewSetupFromConfig(conf *GlobalConfig) *Setup {
 	return &Setup{
 		Author:     conf.Author,
 		Skip:       conf.Skip,

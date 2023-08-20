@@ -16,7 +16,7 @@ type Reader interface {
 }
 
 // Unmarshal reads file provided in CLI to models.GetGlobalConfig
-func GetGlobalConfig(filename string) (config models.GlobalConfig, err error) {
+func GetGlobalConfig(filename string) (config *models.GlobalConfig, err error) {
 	file, err := os.ReadFile(filename)
 	if err != nil {
 		return

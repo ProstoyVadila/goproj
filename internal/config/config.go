@@ -22,7 +22,7 @@ func configExists(filepath string) bool {
 	return err == nil
 }
 
-func Store(config models.GlobalConfig) (err error) {
+func Store(config *models.GlobalConfig) (err error) {
 	file, err := os.Create(ConfigFilepath)
 	if err != nil {
 		return
@@ -38,7 +38,7 @@ func Store(config models.GlobalConfig) (err error) {
 	return
 }
 
-func Get() (config models.GlobalConfig, ok bool) {
+func Get() (config *models.GlobalConfig, ok bool) {
 	if !configExists(ConfigFilepath) {
 		return
 	}
