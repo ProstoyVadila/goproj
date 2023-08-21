@@ -10,5 +10,8 @@ i:
 	@echo "Installing in ~/go/bin"
 	@go install
 
+tidy:
+	@echo "Running go mod tidy"
+	@go mod tidy
 
-.PHONY: build tests i
+.PHONY: build tests i tidy
