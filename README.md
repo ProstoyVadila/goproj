@@ -36,6 +36,8 @@ Init project structure:
   - [Full List of Files](#a-full-list-of-generated-files)
   - [Full List of Folders](#a-full-list-of-generated-folders)
 - [Configuration](#configuration)
+  - [Usage](#usage-1)
+  - [Show](#show)
 - [Plans](#plans)
 
 ## Quick Start
@@ -188,7 +190,7 @@ There are some standart folders for any project in Go:
 
 ## Configuration
 
-You can set a global configuration for your new projects by command `gorpoj config` with args in CLI. It will create `~/.goproj.config.toml` config file in your user folder. And generator will read it every time when you start a new project (additinal args will override config setup for that project only)
+You can set a global configuration for your new projects by command `gorpoj config` with args in CLI. It will create `~/.goproj.config.toml` config file in your user folder. And generator will read it every time when you start a new project (additinal args will override config setup for that project)
 
 ### Usage
 
@@ -209,7 +211,7 @@ goproj config -f ~Documets/my_config.toml
 
 You can find examples of config files [here](examples)
 
-Or you can set it with additional flags line in the [gorpoj init](#command-line-interface) mode.
+Or you can set it with additional flags like in the [gorpoj init](#command-line-interface) mode.
 For example:
 
 ```bash
