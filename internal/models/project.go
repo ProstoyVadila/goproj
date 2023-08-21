@@ -8,17 +8,6 @@ import (
 	"strings"
 )
 
-const (
-	TEMPLATE_PATH        = "./templates"
-	FILE_TO_MOVE_PATH    = "./templates/files"
-	LOCALRUN_RESULT_PATH = "./tests/tempFiles"
-
-	GITIGNORE_FILE    = ".gitignore"
-	DOCKERIGNORE_FILE = ".dockerignore"
-	MAIN_GO_FILE      = "main.go"
-	MAKEFILE          = "Makefile"
-)
-
 var foldersToGenerate = map[string]struct{}{
 	"cmd":      {},
 	"pkg":      {},

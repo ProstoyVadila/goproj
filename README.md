@@ -22,6 +22,7 @@ Init project structure:
 ├── LICENSE
 ├── README.md
 ├── go.mod
+├── .env
 ├── .dockerignore
 └── .gitignore
 ```
