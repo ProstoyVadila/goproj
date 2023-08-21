@@ -41,10 +41,12 @@ type ProjectInfo struct {
 	InitVSCode      bool
 }
 
+// AddFiles appneds Documents to ProjectInfo Documents field.
 func (p *ProjectInfo) AddFiles(templates ...*Document) {
 	p.Documents = append(p.Documents, templates...)
 }
 
+// AddFolders appneds Folder to ProjectInfo Folders field.
 func (p *ProjectInfo) AddFolders(folders ...*Folder) {
 	p.Folders = append(p.Folders, folders...)
 }
