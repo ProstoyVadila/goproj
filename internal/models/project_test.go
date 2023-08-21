@@ -157,4 +157,8 @@ func TestNewProjectInfo(t *testing.T) {
 	assert.Equal(t, setup.InitVSCode, proj.InitVSCode)
 	assert.Equal(t, setup.FilesToSkip(), proj.FilesToSkip)
 	assert.Equal(t, setup.FoldersToSkip(), proj.FoldersToSkip)
+
+	assert.NotEmpty(t, proj.FilesToGenerate)
+	assert.NotEmpty(t, proj.Folders)
+	assert.NotEmpty(t, proj.Documents)
 }
