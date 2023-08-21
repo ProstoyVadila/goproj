@@ -59,7 +59,7 @@ func TestNewSetupFromConfig(t *testing.T) {
 	assert.Equal(t, setup1.InitVSCode, setup2.InitVSCode)
 }
 
-func TestSetupFilesToSkip(t *testing.T) {
+func TestFilesToSkip(t *testing.T) {
 	setup := getTestSetup(true)
 
 	filesToSkip := []string{"Makefile", "Dockerfile"}
@@ -71,7 +71,7 @@ func TestSetupFilesToSkip(t *testing.T) {
 	assert.Equal(t, filesToSkip, setup.FilesToSkip())
 }
 
-func TestSetupFoldersToSkip(t *testing.T) {
+func TestFoldersToSkip(t *testing.T) {
 	setup := getTestSetup(true)
 
 	foldersToSkip := []string{"pkg", "internal"}
@@ -85,7 +85,7 @@ func TestSetupFoldersToSkip(t *testing.T) {
 	assert.Equal(t, foldersToSkip, setup.FoldersToSkip())
 }
 
-func TestSetupUpdate(t *testing.T) {
+func TestUpdate(t *testing.T) {
 	originalSetup := getTestSetup(true)
 
 	testCases := []struct {
