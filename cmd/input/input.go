@@ -1,47 +1,40 @@
 package input
 
 import (
-	"bufio"
-	"fmt"
-	"os"
-
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/ProstoyVadila/goproj/internal/models"
+	"github.com/ProstoyVadila/goproj/pkg/output"
 )
 
-// readInput gets information from input.
-func readInput(scanner *bufio.Scanner, previousMessage string) (string, error) {
-	fmt.Print(previousMessage)
-	scanner.Scan()
-	if err := scanner.Err(); err != nil {
-		return "", err
-	}
-	return scanner.Text(), nil
-}
+// Get tries to get information through survey in input.
+func Get(configExists, isInit bool, conf ...*models.GlobalConfig) (*models.Survey, error) {
+	output.Info("\nLet's start!")
+	surv := new(models.Survey)
+	var useConfig bool
 
-// GetSetup tries to get information about the project from input.
-func GetSetup() (*models.Setup, error) {
-
-	scanner := bufio.NewScanner(os.Stdin)
-
-	packageName, err := readInput(scanner, "Please, enter your new project (package) name: ")
-	if err != nil {
-		return &models.Setup{}, err
-	}
-	author, err := readInput(scanner, "Please, enter your name: ")
-	if err != nil {
-		return &models.Setup{}, err
-	}
-	description, err := readInput(scanner, "Please, add a description to your project: ")
-	if err != nil {
-		return &models.Setup{}, err
+	if isInit {
+		err := survey.AskOne(
+			packageNameQuestion.Prompt,
+			&surv.PackageName,
+			survey.WithValidator(survey.Required),
+		)
+		additionalQsuestions = append(additionalQsuestions, descriptionQuestion)
+		if err != nil {
+			return surv, err
+		}
 	}
 
-	return models.NewSetup(
-		packageName,
-		author,
-		description,
-		make([]string, 0),
-		make([]string, 0),
-		false,
-	), nil
+	if configExists && len(conf) != 0 {
+		configQuestion := getConfigQuestion(conf[0])
+		if err := survey.AskOne(configQuestion.Prompt, &useConfig); err != nil {
+			return surv, err
+		}
+	}
+
+	if !configExists || !useConfig {
+		if err := survey.Ask(additionalQsuestions, surv); err != nil {
+			return surv, err
+		}
+	}
+	return surv, nil
 }

@@ -1,14 +1,14 @@
 
-run:
-	@go run .
-
 build:
-	@go build -o bin/goproj cmd/app/main.go
+	@echo "Building binary"
+	@go build -o bin/goproj main.go
 
 tests:
 	@go test -v -cover ./...
 
-cleanup:
-	rm tests/tempFiles/*
+i:
+	@echo "Installing in ~/go/bin"
+	@go install
 
-.PHONY: run build tests cleanup
+
+.PHONY: build tests i

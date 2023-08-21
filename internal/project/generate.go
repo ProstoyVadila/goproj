@@ -2,14 +2,13 @@ package project
 
 import (
 	"embed"
-	"fmt"
-	"log"
 
-	"github.com/ProstoyVadila/goproj/cmd/input"
 	"github.com/ProstoyVadila/goproj/internal/git"
 	"github.com/ProstoyVadila/goproj/internal/models"
+	"github.com/ProstoyVadila/goproj/internal/vscode"
 	"github.com/ProstoyVadila/goproj/pkg/files"
 	"github.com/ProstoyVadila/goproj/pkg/folders"
+	"github.com/ProstoyVadila/goproj/pkg/output"
 )
 
 // some wierd Go embed magic here
@@ -17,40 +16,45 @@ import (
 //go:embed templates/* templates/files/*
 var EmbedFiles embed.FS
 
-// Generate creates files and initialize git repo with data from CLI or input.
-func Generate(dataFromCli ...*models.Setup) {
-	fmt.Println("Let's start!")
+// Generate creates files and folders, initializes git repo, opens VS Code according to GlobalConfig, CLI args or Input Setup.
+func Generate(ArgsSetup ...*models.Setup) {
+	output.Info(logo)
 
-	var setup *models.Setup
-	var err error
+	// trying to get setup from the configuration file or CLI args, or Input
+	setup := enrichSetup(ArgsSetup...)
 
-	if len(dataFromCli) == 1 {
-		setup = dataFromCli[0]
-	} else {
-		setup, err = input.GetSetup()
-		if err != nil {
-			log.Fatal()
-		}
-	}
+	// Show final Setup
+	setup.Show()
 
+	// aggregating all info about the projct to generate
 	projectInfo := models.NewProjectInfo(setup)
 	projectInfo.EmbedFiles = EmbedFiles
 
-	err = files.Generate(projectInfo)
-	if err != nil {
-		log.Fatal(err)
+	// generating files
+	output.Info("Generating files...")
+	if err := files.Generate(projectInfo); err != nil {
+		output.Fatal(err)
 	}
 
-	err = folders.Create(projectInfo.Folders)
-	if err != nil {
-		log.Fatal(err)
+	// generating folders
+	output.Info("Generating folders...")
+	if err := folders.Create(projectInfo.Folders); err != nil {
+		output.Fatal(err)
 	}
 
-	if !projectInfo.SkipGit {
-		err = git.InitGitRepo(projectInfo)
-		if err != nil {
-			log.Fatal(err)
+	// Git init
+	if projectInfo.InitGit {
+		if err := git.InitGitRepo(projectInfo); err != nil {
+			output.Fatal(err)
 		}
 	}
-	fmt.Println("successfully generated!")
+
+	output.Info("\nSuccessfully generated!")
+
+	// open VS Code
+	if projectInfo.InitVSCode {
+		if err := vscode.InitVSCode(); err != nil {
+			output.Err(err, "cannot open VS Code")
+		}
+	}
 }

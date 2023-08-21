@@ -2,14 +2,13 @@ package files
 
 import (
 	"embed"
-	"fmt"
 
 	"github.com/ProstoyVadila/goproj/internal/models"
 )
 
 func generateTemplate(info *models.Document, embedFiles embed.FS, errCh chan<- error) {
 	template := NewFile(info)
-	err := template.generate(embedFiles)
+	err := template.Generate(embedFiles)
 	if err != nil {
 		errCh <- err
 	}
@@ -18,8 +17,6 @@ func generateTemplate(info *models.Document, embedFiles embed.FS, errCh chan<- e
 
 // Generate creates files from templates and move pre-made files
 func Generate(projectInfo *models.ProjectInfo) error {
-	fmt.Println("Generating files")
-
 	errCh := make(chan error, len(projectInfo.Documents))
 	defer close(errCh)
 

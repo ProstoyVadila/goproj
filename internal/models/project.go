@@ -37,7 +37,8 @@ type ProjectInfo struct {
 	Author          string
 	Description     string
 	Path            string
-	SkipGit         bool
+	InitGit         bool
+	InitVSCode      bool
 }
 
 func (p *ProjectInfo) AddFiles(templates ...*Document) {
@@ -67,8 +68,8 @@ func (p *ProjectInfo) setFoldersToGenerate(foldersToGenerate map[string]struct{}
 	}
 }
 
-// generateDocuments creates Documents  for ProjectInfo by filling in the setup data into the existing configuration of templates and files.
-func (p *ProjectInfo) generateDocuments() {
+// setDocuments creates Documents for ProjectInfo by filling in the setup data into the existing configuration of templates and files.
+func (p *ProjectInfo) setDocuments() {
 	for _, v := range p.FilesToGenerate {
 		// setting a path where file will be created
 		v.Filepath = p.Path
@@ -103,10 +104,11 @@ func NewProjectInfo(setup *Setup) *ProjectInfo {
 	projectInfo := &ProjectInfo{
 		Author:        setup.Author,
 		PackageName:   setup.PackageName,
-		FilesToSkip:   setup.FilesToSkip,
-		FoldersToSkip: setup.FoldersToSkip,
+		FilesToSkip:   setup.FilesToSkip(),
+		FoldersToSkip: setup.FoldersToSkip(),
 		Description:   setup.Description,
-		SkipGit:       setup.SkipGit,
+		InitGit:       setup.InitGit,
+		InitVSCode:    setup.InitVSCode,
 		Path:          absPath,
 	}
 
@@ -114,7 +116,7 @@ func NewProjectInfo(setup *Setup) *ProjectInfo {
 
 	projectInfo.setFoldersToGenerate(foldersToGenerate)
 
-	projectInfo.generateDocuments()
+	projectInfo.setDocuments()
 
 	return projectInfo
 }

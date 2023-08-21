@@ -20,8 +20,8 @@ func NewFile(doc *models.Document) *File {
 	}
 }
 
-// get parses the file (or the template file) from the embed files
-func (t *File) get(embedFiles embed.FS) error {
+// Get parses the file (or the template file) from the embed files
+func (t *File) Get(embedFiles embed.FS) error {
 	tmpl, err := template.ParseFS(embedFiles, t.Document.FullDocPath())
 	if err != nil {
 		return err
@@ -30,8 +30,8 @@ func (t *File) get(embedFiles embed.FS) error {
 	return nil
 }
 
-// create creates file in the path
-func (t *File) create() error {
+// Create creates file in the path
+func (t *File) Create() error {
 	file, err := os.Create(t.Document.FullFilePath())
 	if err != nil {
 		return err
@@ -40,32 +40,23 @@ func (t *File) create() error {
 	return nil
 }
 
-// write writes tempate data to file
-func (t *File) write() error {
-	err := t.Tmpl.Execute(t.File, t.Document.Data)
-	if err != nil {
-		return err
-	}
-	return nil
+// Write writes tempate data to file
+func (t *File) Write() error {
+	return t.Tmpl.Execute(t.File, t.Document.Data)
 }
 
-// generate creates new files from the embed files with data if it's a template
-func (t *File) generate(embedFiles embed.FS) error {
+// Generate creates new files from the embed files with data if it's a template
+func (t *File) Generate(embedFiles embed.FS) (err error) {
 	defer t.File.Close()
 
-	err := t.get(embedFiles)
+	err = t.Get(embedFiles)
 	if err != nil {
-		return err
+		return
 	}
-	err = t.create()
+	err = t.Create()
 	if err != nil {
-		return err
-	}
-
-	err = t.write()
-	if err != nil {
-		return err
+		return
 	}
 
-	return nil
+	return t.Write()
 }
