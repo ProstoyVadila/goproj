@@ -27,7 +27,7 @@ func getTestDocument() *Document {
 	return doc
 }
 
-func TestNewDocument(t *testing.T) {
+func Test_NewDocument(t *testing.T) {
 	doc1 := getTestDocument()
 	doc2 := NewDocument(
 		doc1.Name,
@@ -42,7 +42,7 @@ func TestNewDocument(t *testing.T) {
 	assert.Equal(t, doc1, doc2)
 }
 
-func TestFullFilePath(t *testing.T) {
+func Test_FullFilePath(t *testing.T) {
 	doc := getTestDocument()
 
 	slash := "/"
@@ -53,7 +53,7 @@ func TestFullFilePath(t *testing.T) {
 	assert.NotEqual(t, filepath2, doc.FullFilePath())
 }
 
-func TestFullDocPath(t *testing.T) {
+func Test_FullDocPath(t *testing.T) {
 	doc := getTestDocument()
 
 	slash := "/"

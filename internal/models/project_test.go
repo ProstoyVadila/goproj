@@ -11,7 +11,7 @@ func getEmptyTestProjectInfo() *ProjectInfo {
 	return &ProjectInfo{}
 }
 
-func TestAddFiles(t *testing.T) {
+func Test_AddFiles(t *testing.T) {
 	doc := getTestDocument()
 	assert.NotEmpty(t, doc)
 
@@ -22,7 +22,7 @@ func TestAddFiles(t *testing.T) {
 	assert.Equal(t, doc, proj.Documents[0])
 }
 
-func TestAddFolders(t *testing.T) {
+func Test_AddFolders(t *testing.T) {
 	folder := NewFolder("test_folder")
 
 	proj := getEmptyTestProjectInfo()
@@ -32,7 +32,7 @@ func TestAddFolders(t *testing.T) {
 	assert.Equal(t, folder, proj.Folders[0])
 }
 
-func TestSetFilesToGenerate(t *testing.T) {
+func Test_setFilesToGenerate(t *testing.T) {
 	constructor := templates.NewReadmeInfo
 	testFilesToGenerate := map[string]*Document{
 		"readme": NewDocument(
@@ -78,7 +78,7 @@ func TestSetFilesToGenerate(t *testing.T) {
 
 }
 
-func TestSetFoldersToGenerate(t *testing.T) {
+func Test_setFoldersToGenerate(t *testing.T) {
 	testFoldersToGenerate := map[string]struct{}{
 		"cmd":      {},
 		"pkg":      {},
@@ -108,7 +108,7 @@ func TestSetFoldersToGenerate(t *testing.T) {
 	assert.Equal(t, folders, proj.Folders)
 }
 
-func TestSetDocuments(t *testing.T) {
+func Test_setDocuments(t *testing.T) {
 	constructor := templates.NewReadmeInfo
 	authorName := "Alice"
 	description := "test description"
@@ -144,7 +144,7 @@ func TestSetDocuments(t *testing.T) {
 	assert.Equal(t, doc.Data, proj.Documents[0].Data)
 }
 
-func TestNewProjectInfo(t *testing.T) {
+func Test_NewProjectInfo(t *testing.T) {
 	setup := getTestSetup(true)
 
 	proj := NewProjectInfo(setup)

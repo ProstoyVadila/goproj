@@ -1,8 +1,10 @@
 package models
 
 import (
+	"fmt"
 	"testing"
 
+	"github.com/elliotchance/orderedmap/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -27,7 +29,7 @@ func getTestSetup(isDefault bool) *Setup {
 	)
 }
 
-func TestNewSetup(t *testing.T) {
+func Test_NewSetup(t *testing.T) {
 	setup1 := getTestSetup(true)
 	setup2 := NewSetup(
 		setup1.PackageName,
@@ -41,7 +43,7 @@ func TestNewSetup(t *testing.T) {
 	assert.Equal(t, setup1, setup2)
 }
 
-func TestNewSetupFromConfig(t *testing.T) {
+func Test_NewSetupFromConfig(t *testing.T) {
 	setup1 := getTestSetup(true)
 
 	conf := NewGlobalConfig(
@@ -59,7 +61,7 @@ func TestNewSetupFromConfig(t *testing.T) {
 	assert.Equal(t, setup1.InitVSCode, setup2.InitVSCode)
 }
 
-func TestFilesToSkip(t *testing.T) {
+func Test_FilesToSkip(t *testing.T) {
 	setup := getTestSetup(true)
 
 	filesToSkip := []string{"Makefile", "Dockerfile"}
@@ -71,7 +73,7 @@ func TestFilesToSkip(t *testing.T) {
 	assert.Equal(t, filesToSkip, setup.FilesToSkip())
 }
 
-func TestFoldersToSkip(t *testing.T) {
+func Test_FoldersToSkip(t *testing.T) {
 	setup := getTestSetup(true)
 
 	foldersToSkip := []string{"pkg", "internal"}
@@ -85,7 +87,7 @@ func TestFoldersToSkip(t *testing.T) {
 	assert.Equal(t, foldersToSkip, setup.FoldersToSkip())
 }
 
-func TestUpdate(t *testing.T) {
+func Test_Update(t *testing.T) {
 	originalSetup := getTestSetup(true)
 
 	testCases := []struct {
@@ -277,4 +279,46 @@ func TestUpdate(t *testing.T) {
 			tt.testFunc(t, tt.toUpdate, tt.another, tt.original)
 		})
 	}
+}
+
+func TestSetup_getShow(t *testing.T) {
+	setup := getTestSetup(true)
+
+	omap := orderedmap.NewOrderedMap[string, any]()
+
+	omap.Set("Project (package) name: %s", setup.PackageName)
+	omap.Set("Author: %s", setup.Author)
+	omap.Set("Description: %s", setup.Description)
+	omap.Set("Files to skip: %v", setup.FilesToSkip())
+	omap.Set("Folders to skip: %v", setup.FoldersToSkip())
+	omap.Set("Init Git Repo: %v", setup.InitGit)
+	omap.Set("Open in VS Code: %v", setup.InitVSCode)
+
+	omapShow, msg := setup.getShow()
+
+	assert.NotEmpty(t, msg)
+	assert.NotEmpty(t, omapShow)
+	assert.Equal(t, omap, omapShow)
+}
+
+func TestSetup_ShowString(t *testing.T) {
+	setup := getTestSetup(true)
+	_, msg := setup.getShow()
+
+	showStr := setup.ShowString()
+
+	assert.NotEmpty(t, showStr)
+	assert.Contains(t, showStr, msg)
+	assert.Contains(t, showStr, setup.Author)
+	assert.Contains(t, showStr, setup.Description)
+	assert.Contains(t, showStr, setup.PackageName)
+	assert.Contains(t, showStr, fmt.Sprint(setup.FilesToSkip()))
+	assert.Contains(t, showStr, fmt.Sprint(setup.FoldersToSkip()))
+	assert.Contains(t, showStr, fmt.Sprint(setup.InitGit))
+	assert.Contains(t, showStr, fmt.Sprint(setup.InitVSCode))
+}
+
+func ExampleSetup_Show() {
+	setup := getTestSetup(true)
+	setup.Show()
 }

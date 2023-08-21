@@ -24,7 +24,7 @@ func getTestSurvey() *Survey {
 	}
 }
 
-func TestToSetup(t *testing.T) {
+func Test_ToSetup(t *testing.T) {
 	survey := getTestSurvey()
 	setup1 := NewSetup(
 		survey.PackageName,
@@ -37,7 +37,7 @@ func TestToSetup(t *testing.T) {
 	assert.Equal(t, setup1, survey.ToSetup())
 }
 
-func TestToGlobalConfig(t *testing.T) {
+func Test_ToGlobalConfig(t *testing.T) {
 	survey := getTestSurvey()
 	conf1 := NewGlobalConfig(
 		survey.Author,

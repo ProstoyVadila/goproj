@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestDockerfileInfo(t *testing.T) {
+func Test_DockerfileInfo(t *testing.T) {
 	version := GoVersion(runtime.Version()) + "-alpine"
 	dockerfile1 := &DockerfileInfo{
 		GoVersion:     version,
