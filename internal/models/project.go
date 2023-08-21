@@ -41,8 +41,8 @@ type ProjectInfo struct {
 	InitVSCode      bool
 }
 
-// AddFiles appneds Documents to ProjectInfo Documents field.
-func (p *ProjectInfo) AddFiles(templates ...*Document) {
+// AddDocuments appneds Documents to ProjectInfo Documents field.
+func (p *ProjectInfo) AddDocuments(templates ...*Document) {
 	p.Documents = append(p.Documents, templates...)
 }
 
@@ -92,7 +92,7 @@ func (p *ProjectInfo) setDocuments() {
 			// setting it as the Data field of Document for filling in the appropriate template
 			v.Data = resultValue[0].Interface()
 		}
-		p.AddFiles(v)
+		p.AddDocuments(v)
 	}
 }
 
