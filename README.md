@@ -190,7 +190,7 @@ There are some standart folders for any project in Go:
 
 ## Configuration
 
-You can set a global configuration for your new projects by command `gorpoj config` with args in CLI. It will create `~/.goproj.config.toml` config file in your user folder. And generator will read it every time when you start a new project (additinal args will override config setup for that project)
+You can set a global configuration for your new projects by command `gorpoj config` with args in CLI. It will create `goproj.config.toml` file in `~/.config/goproj` folder. And generator will read it every time when you start a new project (additinal args will override config setup for that project)
 
 ### Usage
 
@@ -200,7 +200,7 @@ Just type
 goproj config
 ```
 
-and answer a few questions like in [`goproj`](#quick-start) command.
+and answer a few questions like in [`goproj init`](#quick-start) command.
 
 You can set a global config by providing a file as well. Goproj supports `json`, `yaml` and `toml` file extensions.
 For example:
@@ -218,7 +218,7 @@ For example:
 goproj config -a "Bobert Doe" --skip="Dockerfile,.dockerignore,internal/,pkg/" --git=false --vscode=false
 ```
 
-Or you can set/change a global config manually by creating/changing `~/.goproj.config.toml` file in your user folder (It doesn't exist by default).
+Or you can set/change a global config manually by creating/changing `~/.config/goproj/goproj.config.toml` file (It doesn't exist by default).
 
 This is a list of all flags:
 
