@@ -6,7 +6,7 @@ build:
 	@go build -o bin/main
 
 tests:
-	@go tests .
+	@go test -v -cover ./...
 
 
 .PHONY: run build tests

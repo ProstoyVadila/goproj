@@ -15,13 +15,13 @@ type Setup struct {
 }
 
 // NewSetup constructs Setup by fields.
-func NewSetup(packageName, author, description string, skip []string, skipGit, initVSCode bool) *Setup {
+func NewSetup(packageName, author, description string, skip []string, initGit, initVSCode bool) *Setup {
 	return &Setup{
 		PackageName: packageName,
 		Author:      author,
 		Description: description,
 		Skip:        skip,
-		InitGit:     skipGit,
+		InitGit:     initGit,
 		InitVSCode:  initVSCode,
 	}
 }
