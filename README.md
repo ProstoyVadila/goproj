@@ -87,9 +87,9 @@ There is a description of all flags and options:
 Flags:
   -a, --author string         an optional flag to set your name
   -d, --description strings   an optional flag to set a description of your project
-  -g, --git                   an optional flag to define start git initialization or not (default true)
-  -s, --skip                  an optional flag to skip exact files and/or folders (add /) from the generation.
-  -c, --vscode                an optional flag to open the new project in VS Code (default true
+  -g, --git                   an optional flag to define start git initialization or not (default false)
+  -c, --vscode                an optional flag to open the new project in VS Code (default false)
+  -s, --skip                  an optional flag to skip exact files and/or folders (add / after folder's name) from the generation.
   -h, --help                  help for init
 ```
 
@@ -234,10 +234,10 @@ goproj config -a "Bobert Doe" -s="Dockerfile,.dockerignore,internal/,pkg/" --git
 Flags:
   -a, --author string   an optional flag to set author name
   -f, --file json       an optional flag to set information from yaml file (supprots `json`, `yaml`, `toml`)
-  -g, --git             an optional flag to define start git initialization or not (default true)
+  -g, --git             an optional flag to define start git initialization or not (default false)
+  -c, --vscode          an optional flag to open the new project in VS Code (default false)
+  -s, --skip            an optional flag to skip exact files and/or folders (add / after folder's name) from the generation
   -h, --help            help for config
-  -s, --skip /          an optional flag to skip exact files and/or folders (add /) from the generation
-  -c, --vscode          an optional flag to open the new project in VS Code (default true)
 ```
 
 You can find them with `gorpoj config --help` command.
