@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+	"sort"
 	"testing"
 
 	"github.com/ProstoyVadila/goproj/internal/models/templates"
@@ -84,7 +86,6 @@ func Test_setFoldersToGenerate(t *testing.T) {
 		"pkg":      {},
 		"internal": {},
 		"config":   {},
-		"tests":    {},
 	}
 	foldersToSkip := []string{"cmd", "pkg"}
 
@@ -102,9 +103,19 @@ func Test_setFoldersToGenerate(t *testing.T) {
 		}
 		folders = append(folders, NewFolder(folder))
 	}
+	fmt.Println(folders)
+	fmt.Println(proj.Folders)
 
 	assert.NotEmpty(t, proj.FoldersToSkip)
 	assert.NotEmpty(t, proj.Folders)
+	assert.Equal(t, len(folders), len(proj.Folders))
+
+	sort.Slice(folders, func(i, j int) bool {
+		return folders[i].Name > folders[j].Name
+	})
+	sort.Slice(proj.Folders, func(i, j int) bool {
+		return proj.Folders[i].Name > proj.Folders[j].Name
+	})
 	assert.Equal(t, folders, proj.Folders)
 }
 
