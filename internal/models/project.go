@@ -8,17 +8,6 @@ import (
 	"strings"
 )
 
-const (
-	TEMPLATE_PATH        = "./templates"
-	FILE_TO_MOVE_PATH    = "./templates/files"
-	LOCALRUN_RESULT_PATH = "./tests/tempFiles"
-
-	GITIGNORE_FILE    = ".gitignore"
-	DOCKERIGNORE_FILE = ".dockerignore"
-	MAIN_GO_FILE      = "main.go"
-	MAKEFILE          = "Makefile"
-)
-
 var foldersToGenerate = map[string]struct{}{
 	"cmd":      {},
 	"pkg":      {},
@@ -41,10 +30,12 @@ type ProjectInfo struct {
 	InitVSCode      bool
 }
 
-func (p *ProjectInfo) AddFiles(templates ...*Document) {
+// AddDocuments appneds Documents to ProjectInfo Documents field.
+func (p *ProjectInfo) AddDocuments(templates ...*Document) {
 	p.Documents = append(p.Documents, templates...)
 }
 
+// AddFolders appneds Folder to ProjectInfo Folders field.
 func (p *ProjectInfo) AddFolders(folders ...*Folder) {
 	p.Folders = append(p.Folders, folders...)
 }
@@ -90,7 +81,7 @@ func (p *ProjectInfo) setDocuments() {
 			// setting it as the Data field of Document for filling in the appropriate template
 			v.Data = resultValue[0].Interface()
 		}
-		p.AddFiles(v)
+		p.AddDocuments(v)
 	}
 }
 

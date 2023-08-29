@@ -25,9 +25,9 @@ func init() {
 
 	configCommand.Flags().StringP(FILE, "f", "", "an optional flag to set information from yaml file (supprots `json`, `yaml`, `toml`)")
 	configCommand.Flags().StringP(AUTHOR, "a", "", "an optional flag to set author name")
-	configCommand.Flags().StringSliceP(SKIP, "s", nil, "an optional flag to skip exact files and/or folders (add `/`) from the generation")
-	configCommand.Flags().BoolP(GIT, "g", true, "an optional flag to define start git initialization or not")
-	configCommand.Flags().BoolP(VSCODE, "c", true, "an optional flag to open the new project in VS Code")
+	configCommand.Flags().StringSliceP(SKIP, "s", nil, "an optional flag to skip exact files and/or folders (add `/` after folder's name) from the generation")
+	configCommand.Flags().BoolP(GIT, "g", false, "an optional flag to define start git initialization or not (Default false)")
+	configCommand.Flags().BoolP(VSCODE, "c", false, "an optional flag to open the new project in VS Code (Default false)")
 }
 
 func setupConfig(cmd *cobra.Command, args []string) {

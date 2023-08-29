@@ -5,17 +5,6 @@ import (
 	"github.com/elliotchance/orderedmap/v2"
 )
 
-var showString = `
-You set this configuration for your new projects:
-
-Author: %s
-Description: %s
-Obejcts to Skip: %v
-Init Git Repo: %v
-Open in VS Code: %v
-
-`
-
 type GlobalConfig struct {
 	Skip       []string `yaml:"skip" json:"skip" toml:"skip"`
 	Author     string   `yaml:"author" json:"author" toml:"author"`

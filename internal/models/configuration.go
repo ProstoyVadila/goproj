@@ -2,6 +2,18 @@ package models
 
 import "github.com/ProstoyVadila/goproj/internal/models/templates"
 
+const (
+	TEMPLATE_PATH        = "./templates"
+	FILE_TO_MOVE_PATH    = "./templates/files"
+	LOCALRUN_RESULT_PATH = "./tests/tempFiles"
+
+	GITIGNORE_FILE    = ".gitignore"
+	DOCKERIGNORE_FILE = ".dockerignore"
+	MAIN_GO_FILE      = "main.go"
+	MAKEFILE          = "Makefile"
+	ENVFILE           = ".env"
+)
+
 // Configuration fo each file
 var filesToGenerate = map[string]*Document{
 	// Templates
@@ -65,6 +77,14 @@ var filesToGenerate = map[string]*Document{
 	"makefile": NewDocument(
 		MAKEFILE,
 		MAKEFILE,
+		FILE_TO_MOVE_PATH,
+		struct{}{},
+		false,
+		[]string{},
+	),
+	".env": NewDocument(
+		ENVFILE,
+		ENVFILE,
 		FILE_TO_MOVE_PATH,
 		struct{}{},
 		false,
