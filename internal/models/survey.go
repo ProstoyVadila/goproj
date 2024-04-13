@@ -5,6 +5,7 @@ type Survey struct {
 	PackageName string
 	Author      string
 	Description string
+	Prefix      string
 	InitGit     bool
 	InitVSCode  bool
 }
@@ -27,6 +28,7 @@ func (s *Survey) ToSetup() *Setup {
 func (s *Survey) ToGlobalConfig() *GlobalConfig {
 	return NewGlobalConfig(
 		s.Author,
+		s.Prefix,
 		s.Skip,
 		s.InitGit,
 		s.InitVSCode,

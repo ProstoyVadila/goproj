@@ -55,8 +55,10 @@ func Test_NewSetup(t *testing.T) {
 func Test_NewSetupFromConfig(t *testing.T) {
 	setup1 := getTestSetup(true)
 
+	prefix := "github.com/alice"
 	conf := NewGlobalConfig(
 		setup1.Author,
+		prefix,
 		setup1.Skip,
 		setup1.InitGit,
 		setup1.InitVSCode,

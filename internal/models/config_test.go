@@ -13,9 +13,11 @@ func getTestGlobalConfig() *GlobalConfig {
 	skip := []string{"Makefile", "pkg/"}
 	initGit := true
 	initVSCode := true
+	prefix := "github.com/alice"
 
 	return &GlobalConfig{
 		Author:     author,
+		Prefix:     prefix,
 		Skip:       skip,
 		InitGit:    initGit,
 		InitVSCode: initVSCode,
@@ -26,6 +28,7 @@ func Test_NewGlobalConfig(t *testing.T) {
 	conf1 := getTestGlobalConfig()
 	conf2 := NewGlobalConfig(
 		conf1.Author,
+		conf1.Prefix,
 		conf1.Skip,
 		conf1.InitGit,
 		conf1.InitVSCode,
@@ -40,6 +43,7 @@ func TestGlobalConfig_getShow(t *testing.T) {
 	omap := orderedmap.NewOrderedMap[string, any]()
 
 	omap.Set("Author: %s", conf.Author)
+	omap.Set("Global prefix: %s", conf.Prefix)
 	omap.Set("Objects to skip: %v", conf.Skip)
 	omap.Set("Init Git Repo: %v", conf.InitGit)
 	omap.Set("Open in VS Code: %v", conf.InitVSCode)
