@@ -111,7 +111,7 @@ You can find more information with `goproj init --help` command.
 5. **Dockerfile** – multi-stage build dockerfile setup with your version of Go.
 
 ```Dockerfile
-FROM golang:1.20-alpine AS builder
+FROM golang:1.22-alpine AS builder
 WORKDIR /app
 COPY . .
 RUN env GOOS=linux CGO_ENABLED=0 go build -ldflags "-w" -o main
@@ -207,7 +207,7 @@ You can set a global config by providing a file as well. Goproj supports `json`,
 For example:
 
 ```bash
-goproj config -f ~Documets/my_config.toml
+goproj config -f my_config.toml
 ```
 
 You can find examples of config files [here](examples)
@@ -216,7 +216,7 @@ Or you can set it with additional flags like in the [gorpoj init](#command-line-
 For example:
 
 ```bash
-goproj config -a "Bobert Doe" --skip="Dockerfile,.dockerignore,internal/,pkg/" --git=false --vscode=false
+goproj config -a "Bobert Doe" -p "github.com/bobert_doe" --skip="Dockerfile,.dockerignore,internal/,pkg/" --git=false --vscode=false
 ```
 
 Or you can set/change a global config manually by creating/changing `~/.config/goproj/goproj.config.toml` file (It doesn't exist by default).
@@ -235,6 +235,7 @@ goproj config -a "Bobert Doe" -s="Dockerfile,.dockerignore,internal/,pkg/" --git
 Flags:
   -a, --author string   an optional flag to set author name
   -f, --file json       an optional flag to set information from yaml file (supprots `json`, `yaml`, `toml`)
+  -p, --prefix string   an optional flag to set repo prefix for your new projects (example: "github.com/<smth>")
   -g, --git             an optional flag to define start git initialization or not (default false)
   -c, --vscode          an optional flag to open the new project in VS Code (default false)
   -s, --skip            an optional flag to skip exact files and/or folders (add / after folder's name) from the generation
@@ -256,6 +257,5 @@ Please, enjoy! :)
 
 ## Plans
 
-- CI tests.
 - an option to set another folders or empty files to generate in the global config.
 - an option to choose a [license](https://choosealicense.com/).
