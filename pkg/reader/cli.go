@@ -67,10 +67,12 @@ func GetVSCode(cmd *cobra.Command, flag string) bool {
 	return initVSCode
 }
 
+// IsGetInitGit checks if InitGit flag is set
 func IsSetInitGit(cmd *cobra.Command, flag string) bool {
 	return cmd.Flags().Lookup(flag).Changed
 }
 
+// IsSetInitVSCode checks if InitVSCode is set
 func IsSetInitVSCode(cmd *cobra.Command, flag string) bool {
 	return cmd.Flags().Lookup(flag).Changed
 }
@@ -90,4 +92,13 @@ func GetConfigFile(cmd *cobra.Command, flag string) (config *models.GlobalConfig
 		log.Fatal(err)
 	}
 	return
+}
+
+// GetPrefix gets a repo prefix for full package name
+func GetPrefix(cmd *cobra.Command, flag string) string {
+	prefix, err := cmd.Flags().GetString(flag)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return prefix
 }

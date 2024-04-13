@@ -9,13 +9,16 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const FILE = "file"
+const (
+	FILE   = "file"
+	PREFIX = "prefix"
+)
 
 var configCommand = &cobra.Command{
 	Use:     "config",
 	Short:   "Set up global configuration for all new generated projects",
 	Long:    "Set up global configuration for all new generated projects to not do it every time. You can find generated config file \".goproj.config.toml\" in your user folder and change it manually.",
-	Example: "goproj config -a \"Bobert Doe\" -s=\"Dockerfile,.dockerignore,internal/,pkg/\" -g=false --vscode=false",
+	Example: "goproj config -a \"Bobert Doe\" -p=\"github.com/bobert_doe\" -s=\"Dockerfile,.dockerignore,internal/,pkg/\" -g=false --vscode=false",
 	Args:    cobra.NoArgs,
 	Run:     setupConfig,
 }
@@ -25,6 +28,7 @@ func init() {
 
 	configCommand.Flags().StringP(FILE, "f", "", "an optional flag to set information from yaml file (supprots `json`, `yaml`, `toml`)")
 	configCommand.Flags().StringP(AUTHOR, "a", "", "an optional flag to set author name")
+	configCommand.Flags().StringP(PREFIX, "p", "", "an optional flag to set repo prefix for your new projects (example: \"github.com/<smth>\")")
 	configCommand.Flags().StringSliceP(SKIP, "s", nil, "an optional flag to skip exact files and/or folders (add `/` after folder's name) from the generation")
 	configCommand.Flags().BoolP(GIT, "g", false, "an optional flag to define start git initialization or not (Default false)")
 	configCommand.Flags().BoolP(VSCODE, "c", false, "an optional flag to open the new project in VS Code (Default false)")
@@ -49,6 +53,7 @@ func setupConfig(cmd *cobra.Command, args []string) {
 	} else {
 		conf = models.NewGlobalConfig(
 			reader.GetAuthor(cmd, AUTHOR),
+			reader.GetPrefix(cmd, PREFIX),
 			reader.GetSkip(cmd, SKIP),
 			reader.GetInitGit(cmd, GIT),
 			reader.GetVSCode(cmd, VSCODE),

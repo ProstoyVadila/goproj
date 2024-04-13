@@ -44,6 +44,7 @@ func Test_ToGlobalConfig(t *testing.T) {
 	survey := getTestSurvey()
 	conf1 := NewGlobalConfig(
 		survey.Author,
+		survey.Prefix,
 		survey.Skip,
 		survey.InitGit,
 		survey.InitVSCode,

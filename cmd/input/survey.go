@@ -8,22 +8,24 @@ import (
 	"github.com/ProstoyVadila/goproj/internal/models"
 )
 
-// packageNameQuestion is a required question about the new generated project name
-var packageNameQuestion = &survey.Question{
-	Name: "PackageName",
-	Prompt: &survey.Input{
-		Message: "Project (package) name:",
-		Help:    "For example: github.com/me/new_project",
-	},
-	Validate: survey.Required,
-}
-
 // descriptionQuestion
 var descriptionQuestion = &survey.Question{
 	Name: "Description",
 	Prompt: &survey.Input{
-		Message: "Description",
-		Help:    "You can set a small description in README.md for your new projct.",
+		Message: "Description:",
+		Help:    "You can set a small description for README.md in your new projct.",
+	},
+}
+
+var prefixHelp = `
+This prefix will be added to package name in your future projects. 
+Example of prefix: github.com/<your_github_name>
+`
+var prefixQuestion = &survey.Question{
+	Name: "Prefix",
+	Prompt: &survey.Input{
+		Message: "Projects' global prefix: github.com/",
+		Help:    prefixHelp,
 	},
 }
 
@@ -74,6 +76,22 @@ var additionalQsuestions = []*survey.Question{
 			Default: true,
 		},
 	},
+}
+
+func getPackageNameQuestion(confExists bool, confs ...*models.GlobalConfig) *survey.Question {
+	message := "Project (package) name:"
+	help := "For example: github/blabla/new_project"
+	if confExists && len(confs) != 0 {
+		message += " " + confs[0].Prefix
+		help = fmt.Sprintf("Your prefix %s will be added your project name", confs[0].Prefix)
+	}
+	return &survey.Question{
+		Name: "PackageName",
+		Prompt: &survey.Input{
+			Message: message,
+			Help:    help,
+		},
+	}
 }
 
 // getConfigQuestion creates a question (type Confirm) about using GlobalConfig or not and provides it in the Question's Help.

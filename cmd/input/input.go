@@ -6,6 +6,7 @@ import (
 	"github.com/ProstoyVadila/goproj/pkg/output"
 )
 
+// TODO; refactor this crap
 // Get tries to get information through survey in input.
 func Get(configExists, isInit bool, conf ...*models.GlobalConfig) (*models.Survey, error) {
 	output.Info("\nLet's start!")
@@ -13,6 +14,7 @@ func Get(configExists, isInit bool, conf ...*models.GlobalConfig) (*models.Surve
 	var useConfig bool
 
 	if isInit {
+		packageNameQuestion := getPackageNameQuestion(configExists, conf...)
 		err := survey.AskOne(
 			packageNameQuestion.Prompt,
 			&surv.PackageName,
@@ -32,6 +34,9 @@ func Get(configExists, isInit bool, conf ...*models.GlobalConfig) (*models.Surve
 	}
 
 	if !configExists || !useConfig {
+		if !isInit {
+			additionalQsuestions = append(additionalQsuestions, prefixQuestion)
+		}
 		if err := survey.Ask(additionalQsuestions, surv); err != nil {
 			return surv, err
 		}
