@@ -5,34 +5,59 @@ import (
 	"github.com/elliotchance/orderedmap/v2"
 )
 
+const (
+	FromCli = iota + 1
+	FromConfig
+	FromSurvey
+)
+
 type Setup struct {
-	Skip        []string
-	PackageName string
-	Author      string
-	Description string
-	InitGit     bool
-	InitVSCode  bool
+	Skip            []string
+	PackageName     string
+	Author          string
+	Description     string
+	InitGit         bool
+	InitVSCode      bool
+	IsSetInitGit    bool
+	IsSetInitVSCode bool
+	From            int
 }
 
 // NewSetup constructs Setup by fields.
-func NewSetup(packageName, author, description string, skip []string, initGit, initVSCode bool) *Setup {
+func NewSetup(
+	packageName,
+	author,
+	description string,
+	skip []string,
+	initGit,
+	initVSCode,
+	isSetInitGit,
+	isSetInitVSCode bool,
+	from int,
+) *Setup {
 	return &Setup{
-		PackageName: packageName,
-		Author:      author,
-		Description: description,
-		Skip:        skip,
-		InitGit:     initGit,
-		InitVSCode:  initVSCode,
+		PackageName:     packageName,
+		Author:          author,
+		Description:     description,
+		Skip:            skip,
+		InitGit:         initGit,
+		InitVSCode:      initVSCode,
+		IsSetInitGit:    isSetInitGit,
+		IsSetInitVSCode: isSetInitVSCode,
+		From:            from,
 	}
 }
 
 // NewSetupFromConfig costructs Setup from ConfigFromFile.
 func NewSetupFromConfig(conf *GlobalConfig) *Setup {
 	return &Setup{
-		Author:     conf.Author,
-		Skip:       conf.Skip,
-		InitGit:    conf.InitGit,
-		InitVSCode: conf.InitVSCode,
+		Author:          conf.Author,
+		Skip:            conf.Skip,
+		InitGit:         conf.InitGit,
+		InitVSCode:      conf.InitVSCode,
+		IsSetInitGit:    true,
+		IsSetInitVSCode: true,
+		From:            FromConfig,
 	}
 }
 
@@ -48,10 +73,18 @@ func (s *Setup) Update(from *Setup) {
 	if len(from.Skip) != 0 {
 		s.Skip = from.Skip
 	}
-	if from.InitGit || s.InitGit != from.InitGit {
+	s.updateInitGit(from)
+	s.updateInitVSCode(from)
+}
+
+func (s *Setup) updateInitGit(from *Setup) {
+	if from.IsSetInitGit {
 		s.InitGit = from.InitGit
 	}
-	if from.InitVSCode || s.InitVSCode != from.InitVSCode {
+}
+
+func (s *Setup) updateInitVSCode(from *Setup) {
+	if from.IsSetInitVSCode {
 		s.InitVSCode = from.InitVSCode
 	}
 }

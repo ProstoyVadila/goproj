@@ -33,6 +33,9 @@ func Test_ToSetup(t *testing.T) {
 		survey.Skip,
 		survey.InitGit,
 		survey.InitVSCode,
+		true,
+		true,
+		FromSurvey,
 	)
 	assert.Equal(t, setup1, survey.ToSetup())
 }

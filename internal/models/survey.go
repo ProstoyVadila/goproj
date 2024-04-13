@@ -10,6 +10,7 @@ type Survey struct {
 }
 
 func (s *Survey) ToSetup() *Setup {
+	isSetInitGit, isSetInitVSCode := true, true
 	return NewSetup(
 		s.PackageName,
 		s.Author,
@@ -17,6 +18,9 @@ func (s *Survey) ToSetup() *Setup {
 		s.Skip,
 		s.InitGit,
 		s.InitVSCode,
+		isSetInitGit,
+		isSetInitVSCode,
+		FromSurvey,
 	)
 }
 

@@ -1,6 +1,7 @@
 package templates
 
 import (
+	"runtime"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -46,7 +47,7 @@ func TestNewGoModInfo(t *testing.T) {
 	packageName := "new_project"
 	gomod1 := &GoModInfo{
 		PackageName: packageName,
-		GoVersion:   "1.20",
+		GoVersion:   GoVersion(runtime.Version()),
 	}
 	gomod2 := NewGoModInfo(packageName)
 	assert.Equal(t, gomod1, gomod2)
