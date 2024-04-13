@@ -12,10 +12,14 @@ import (
 func enrichSetup(ArgsSetup ...*models.Setup) *models.Setup {
 	setup := new(models.Setup)
 
+	// var gitInit, vscodeInit bool
+
 	// Get setup from the global config
 	conf, confExists := config.Get()
 	if confExists {
 		setup = models.NewSetupFromConfig(conf)
+		// gitInit = conf.InitGit
+		// vscodeInit = conf.InitVSCode
 	}
 
 	// Update with CLI args or Input
@@ -28,5 +32,6 @@ func enrichSetup(ArgsSetup ...*models.Setup) *models.Setup {
 		}
 		setup.Update(inputSurvey.ToSetup())
 	}
+
 	return setup
 }

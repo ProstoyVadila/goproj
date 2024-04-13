@@ -11,12 +11,15 @@ import (
 func getTestSetup(isDefault bool) *Setup {
 	if isDefault {
 		return &Setup{
-			PackageName: "example_project",
-			Author:      "Alice",
-			Description: "example description",
-			Skip:        []string{"Makefile", "pkg/"},
-			InitGit:     true,
-			InitVSCode:  false,
+			PackageName:     "example_project",
+			Author:          "Alice",
+			Description:     "example description",
+			Skip:            []string{"Makefile", "pkg/"},
+			InitGit:         true,
+			InitVSCode:      false,
+			IsSetInitGit:    true,
+			IsSetInitVSCode: true,
+			From:            FromCli,
 		}
 	}
 	return NewSetup(
@@ -26,6 +29,9 @@ func getTestSetup(isDefault bool) *Setup {
 		[]string{"Makefile", "Dockerfile", "pkg/"},
 		false,
 		true,
+		true,
+		true,
+		FromCli,
 	)
 }
 
@@ -38,6 +44,9 @@ func Test_NewSetup(t *testing.T) {
 		setup1.Skip,
 		setup1.InitGit,
 		setup1.InitVSCode,
+		setup1.IsSetInitGit,
+		setup1.IsSetInitVSCode,
+		setup1.From,
 	)
 
 	assert.Equal(t, setup1, setup2)
@@ -120,6 +129,9 @@ func Test_Update(t *testing.T) {
 				originalSetup.Skip,
 				originalSetup.InitGit,
 				originalSetup.InitVSCode,
+				originalSetup.IsSetInitGit,
+				originalSetup.IsSetInitVSCode,
+				originalSetup.From,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -142,6 +154,9 @@ func Test_Update(t *testing.T) {
 				originalSetup.Skip,
 				originalSetup.InitGit,
 				originalSetup.InitVSCode,
+				originalSetup.IsSetInitGit,
+				originalSetup.IsSetInitVSCode,
+				originalSetup.From,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -163,6 +178,9 @@ func Test_Update(t *testing.T) {
 				[]string{"main.go", "cmd/"},
 				originalSetup.InitGit,
 				originalSetup.InitVSCode,
+				originalSetup.IsSetInitGit,
+				originalSetup.IsSetInitVSCode,
+				originalSetup.From,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -184,6 +202,9 @@ func Test_Update(t *testing.T) {
 				make([]string, 0),
 				originalSetup.InitGit,
 				originalSetup.InitVSCode,
+				originalSetup.IsSetInitGit,
+				originalSetup.IsSetInitVSCode,
+				originalSetup.From,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -204,6 +225,9 @@ func Test_Update(t *testing.T) {
 				originalSetup.Skip,
 				true,
 				originalSetup.InitVSCode,
+				originalSetup.IsSetInitGit,
+				originalSetup.IsSetInitVSCode,
+				originalSetup.From,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -223,6 +247,9 @@ func Test_Update(t *testing.T) {
 				originalSetup.Skip,
 				!originalSetup.InitGit,
 				originalSetup.InitVSCode,
+				originalSetup.IsSetInitGit,
+				originalSetup.IsSetInitVSCode,
+				originalSetup.From,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -243,6 +270,9 @@ func Test_Update(t *testing.T) {
 				originalSetup.Skip,
 				originalSetup.InitGit,
 				true,
+				originalSetup.IsSetInitGit,
+				originalSetup.IsSetInitVSCode,
+				originalSetup.From,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -262,6 +292,9 @@ func Test_Update(t *testing.T) {
 				originalSetup.Skip,
 				originalSetup.InitGit,
 				!originalSetup.InitVSCode,
+				originalSetup.IsSetInitGit,
+				originalSetup.IsSetInitVSCode,
+				originalSetup.From,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -270,6 +303,29 @@ func Test_Update(t *testing.T) {
 
 				assert.NotEqual(t, original.InitVSCode, toUpdate.InitVSCode)
 				assert.Equal(t, another.InitVSCode, toUpdate.InitVSCode)
+			},
+		},
+		{
+			name:     "case 10: init git and init vs code  are not set up",
+			toUpdate: getTestSetup(true),
+			another: NewSetup(
+				originalSetup.PackageName,
+				originalSetup.Author,
+				originalSetup.Description,
+				originalSetup.Skip,
+				originalSetup.InitGit,
+				originalSetup.InitVSCode,
+				false,
+				false,
+				originalSetup.From,
+			),
+			original: originalSetup,
+			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
+				assert.Equal(t, original, toUpdate)
+				toUpdate.Update(another)
+
+				assert.Equal(t, original.InitGit, toUpdate.InitGit)
+				assert.Equal(t, original.InitVSCode, toUpdate.InitVSCode)
 			},
 		},
 	}
