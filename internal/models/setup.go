@@ -1,6 +1,9 @@
 package models
 
 import (
+	"path/filepath"
+	"strings"
+
 	"github.com/ProstoyVadila/goproj/pkg/output"
 	"github.com/elliotchance/orderedmap/v2"
 )
@@ -77,16 +80,26 @@ func (s *Setup) Update(from *Setup) {
 	s.updateInitVSCode(from)
 }
 
+// updateInitGit sets InitGit if it was set in fromSetup
 func (s *Setup) updateInitGit(from *Setup) {
 	if from.IsSetInitGit {
 		s.InitGit = from.InitGit
 	}
 }
 
+// updateInitVSCode sets InitVSCode if it was set in fromSetup
 func (s *Setup) updateInitVSCode(from *Setup) {
 	if from.IsSetInitVSCode {
 		s.InitVSCode = from.InitVSCode
 	}
+}
+
+// ValidatePackageName adds prefix from global config
+func (s *Setup) ValidatePackageName(prefix string) {
+	if strings.Contains(s.PackageName, prefix) || strings.Contains(s.PackageName, "github") {
+		return
+	}
+	s.PackageName = filepath.Join(prefix, s.PackageName)
 }
 
 // FilesToSkip gets files from skip objects.

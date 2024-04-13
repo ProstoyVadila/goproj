@@ -29,5 +29,9 @@ func enrichSetup(ArgsSetup ...*models.Setup) *models.Setup {
 		setup.Update(inputSurvey.ToSetup())
 	}
 
+	if confExists {
+		setup.ValidatePackageName(conf.Prefix)
+	}
+
 	return setup
 }
