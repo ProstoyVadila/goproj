@@ -44,6 +44,9 @@ func packageName(cmd *cobra.Command, args []string) {
 		reader.GetSkip(cmd, SKIP),
 		reader.GetInitGit(cmd, GIT),
 		reader.GetVSCode(cmd, VSCODE),
+		reader.IsSetInitGit(cmd, GIT),
+		reader.IsSetInitVSCode(cmd, VSCODE),
+		models.FromCli,
 	)
 
 	project.Generate(setup)
