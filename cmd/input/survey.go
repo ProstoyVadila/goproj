@@ -22,8 +22,20 @@ var packageNameQuestion = &survey.Question{
 var descriptionQuestion = &survey.Question{
 	Name: "Description",
 	Prompt: &survey.Input{
-		Message: "Description",
-		Help:    "You can set a small description in README.md for your new projct.",
+		Message: "Description:",
+		Help:    "You can set a small description for README.md in your new projct.",
+	},
+}
+
+var prefixHelp = `
+This prefix will be added to package name in your future projects. 
+Example of prefix: github.com/<your_github_name>
+`
+var prefixQuestion = &survey.Question{
+	Name: "Prefix",
+	Prompt: &survey.Input{
+		Message: "Projects' global prefix: github.com/",
+		Help:    prefixHelp,
 	},
 }
 

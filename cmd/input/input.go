@@ -32,6 +32,7 @@ func Get(configExists, isInit bool, conf ...*models.GlobalConfig) (*models.Surve
 	}
 
 	if !configExists || !useConfig {
+		additionalQsuestions = append(additionalQsuestions, prefixQuestion)
 		if err := survey.Ask(additionalQsuestions, surv); err != nil {
 			return surv, err
 		}

@@ -19,7 +19,7 @@ func StoreConfig(argsConf ...*models.GlobalConfig) error {
 		}
 		conf = inputSurvey.ToGlobalConfig()
 	}
-
+	conf.ValidatePrefix()
 	conf.Show()
 	return config.Store(conf)
 }
