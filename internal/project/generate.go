@@ -2,7 +2,9 @@ package project
 
 import (
 	"embed"
+	"fmt"
 
+	"github.com/ProstoyVadila/goproj/internal/clipboard"
 	"github.com/ProstoyVadila/goproj/internal/git"
 	"github.com/ProstoyVadila/goproj/internal/info.go"
 	"github.com/ProstoyVadila/goproj/internal/models"
@@ -57,7 +59,7 @@ func Generate(ArgsSetup ...*models.Setup) {
 		}
 	}
 
-	output.Info("\nNew project successfully generated!")
+	output.Info("\nNew project successfully generated!\n")
 
 	// open VS Code
 	if projectInfo.InitVSCode {
@@ -65,11 +67,13 @@ func Generate(ArgsSetup ...*models.Setup) {
 			output.Err(err, "cannot open VS Code")
 		}
 	} else {
-		output.Info(
-			"Just jump into %s folder: `cd /%s`\n",
-			projectInfo.MainFolder,
-			projectInfo.MainFolder,
-		)
+
+		cmd := fmt.Sprintf("cd %s/", projectInfo.MainFolder)
+		if err := clipboard.Save(cmd); err != nil {
+			output.Info("Just jump into %s folder", projectInfo.MainFolder)
+		} else {
+			output.InfoWithCmd("saved to clipboard.\n", cmd)
+		}
 
 	}
 }

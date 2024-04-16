@@ -10,6 +10,8 @@ import (
 )
 
 var infoMsg = color.New(color.FgMagenta, color.Bold)
+
+// var infoWithFocusMsg = color.New(color.FgMagenta, color.FgCyan, color.Bold)
 var errMsg = color.New(color.FgRed)
 var fieldShowMsg = color.New(color.FgHiWhite, color.Bold)
 var valueShowMsg = color.New(color.FgCyan)
@@ -60,4 +62,9 @@ func ShowString(omap *orderedmap.OrderedMap[string, any], msg ...string) string 
 // Show prints a string of model's fields and values in pretty readable way.
 func Show(omap *orderedmap.OrderedMap[string, any], msg ...string) {
 	fmt.Println(ShowString(omap, msg...))
+}
+
+func InfoWithCmd(msg string, cmd string) {
+	valueShowMsg.Print(cmd + " ")
+	infoMsg.Println(msg)
 }
