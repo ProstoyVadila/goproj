@@ -8,16 +8,16 @@ import (
 
 const (
 	initCommand = "code"
-	arg0        = "."
+	initPath    = "."
 )
 
 // InitVSCode opens the new project in VS Code.
 func InitVSCode(path ...string) error {
-	arg := arg0
+	arg0 := initPath
 	if len(path) != 0 {
-		arg = filepath.Join(path[0], arg0)
+		arg0 = filepath.Join(path[0], initPath)
 	}
-	command := cmd.New(initCommand, arg)
+	command := cmd.New(initCommand, arg0)
 	if err := command.Execute(); err != nil {
 		return err
 	}

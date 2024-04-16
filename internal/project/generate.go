@@ -52,7 +52,7 @@ func Generate(ArgsSetup ...*models.Setup) {
 
 	// Git init
 	if projectInfo.InitGit {
-		if err := git.InitGitRepo(projectInfo); err != nil {
+		if err := git.InitGitRepo(projectInfo.MainFolder); err != nil {
 			output.Fatal(err)
 		}
 	}
