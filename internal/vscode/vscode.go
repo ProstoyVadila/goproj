@@ -1,6 +1,8 @@
 package vscode
 
 import (
+	"path/filepath"
+
 	"github.com/ProstoyVadila/goproj/pkg/cmd"
 )
 
@@ -10,8 +12,12 @@ const (
 )
 
 // InitVSCode opens the new project in VS Code.
-func InitVSCode() error {
-	command := cmd.New(initCommand, arg0)
+func InitVSCode(path ...string) error {
+	arg := arg0
+	if len(path) != 0 {
+		arg = filepath.Join(path[0], arg0)
+	}
+	command := cmd.New(initCommand, arg)
 	if err := command.Execute(); err != nil {
 		return err
 	}

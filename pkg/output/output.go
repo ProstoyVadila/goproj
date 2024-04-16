@@ -19,7 +19,7 @@ func Info(msg string, args ...interface{}) {
 	if len(args) == 0 {
 		infoMsg.Println(msg)
 	} else {
-		infoMsg.Printf(msg, args...)
+		infoMsg.Printf(msg+"\n", args...)
 	}
 }
 

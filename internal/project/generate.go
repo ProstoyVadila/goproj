@@ -57,12 +57,19 @@ func Generate(ArgsSetup ...*models.Setup) {
 		}
 	}
 
-	output.Info("\nSuccessfully generated!")
+	output.Info("\nNew project successfully generated!")
 
 	// open VS Code
 	if projectInfo.InitVSCode {
-		if err := vscode.InitVSCode(); err != nil {
+		if err := vscode.InitVSCode(projectInfo.MainFolder); err != nil {
 			output.Err(err, "cannot open VS Code")
 		}
+	} else {
+		output.Info(
+			"Just jump into %s folder: `cd /%s`\n",
+			projectInfo.MainFolder,
+			projectInfo.MainFolder,
+		)
+
 	}
 }
