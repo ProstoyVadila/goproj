@@ -12,6 +12,7 @@ func getTestSetup(isDefault bool) *Setup {
 	if isDefault {
 		return &Setup{
 			PackageName:     "example_project",
+			MainFolder:      "example_project",
 			Author:          "Alice",
 			Description:     "example description",
 			Skip:            []string{"Makefile", "pkg/"},
@@ -64,8 +65,10 @@ func Test_NewSetupFromConfig(t *testing.T) {
 		setup1.InitVSCode,
 	)
 	setup2 := NewSetupFromConfig(conf)
+	setup2.PackageName = setup1.PackageName
 
 	assert.NotEqual(t, setup1, setup2)
+	assert.NotEqual(t, setup1.From, setup2.From)
 	assert.Equal(t, setup1.Author, setup2.Author)
 	assert.Equal(t, setup1.Skip, setup2.Skip)
 	assert.Equal(t, setup1.InitGit, setup2.InitGit)
