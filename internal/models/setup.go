@@ -79,7 +79,7 @@ func (s *Setup) Update(from *Setup) {
 	if from.Description != "" {
 		s.Description = from.Description
 	}
-	if len(from.Skip) != 0 {
+	if len(from.Skip) != 0 || from.From == FromSurvey {
 		s.Skip = from.Skip
 	}
 	s.updateInitGit(from)
