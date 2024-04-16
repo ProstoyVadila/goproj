@@ -12,6 +12,7 @@ func getTestSetup(isDefault bool) *Setup {
 	if isDefault {
 		return &Setup{
 			PackageName:     "example_project",
+			MainFolder:      "example_project",
 			Author:          "Alice",
 			Description:     "example description",
 			Skip:            []string{"Makefile", "pkg/"},
@@ -64,8 +65,10 @@ func Test_NewSetupFromConfig(t *testing.T) {
 		setup1.InitVSCode,
 	)
 	setup2 := NewSetupFromConfig(conf)
+	setup2.PackageName = setup1.PackageName
 
 	assert.NotEqual(t, setup1, setup2)
+	assert.NotEqual(t, setup1.From, setup2.From)
 	assert.Equal(t, setup1.Author, setup2.Author)
 	assert.Equal(t, setup1.Skip, setup2.Skip)
 	assert.Equal(t, setup1.InitGit, setup2.InitGit)
@@ -96,6 +99,40 @@ func Test_FoldersToSkip(t *testing.T) {
 	setup.Skip = skip
 
 	assert.Equal(t, foldersToSkip, setup.FoldersToSkip())
+}
+
+func Test_validateMainFolder(t *testing.T) {
+	testCases := []struct {
+		name        string
+		PackageName string
+		want        string
+	}{
+		{
+			name:        "case 1: one word packageName",
+			PackageName: "my_new_package_name",
+			want:        "my_new_package_name",
+		},
+		{
+			name:        "case 2: packageName contains repo",
+			PackageName: "github.com/someone/new_package",
+			want:        "new_package",
+		},
+		{
+			name:        "case 3: wierd packageName",
+			PackageName: "something/new_package/",
+			want:        "new_package",
+		},
+		{
+			name:        "case 4: uppercase",
+			PackageName: "something/New_Package",
+			want:        "new_package",
+		},
+	}
+	for _, tt := range testCases {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equal(t, tt.want, validateMainFolder(tt.PackageName))
+		})
+	}
 }
 
 func Test_Update(t *testing.T) {

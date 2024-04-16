@@ -17,6 +17,7 @@ const (
 type Setup struct {
 	Skip            []string
 	PackageName     string
+	MainFolder      string
 	Author          string
 	Description     string
 	InitGit         bool
@@ -38,8 +39,11 @@ func NewSetup(
 	isSetInitVSCode bool,
 	from int,
 ) *Setup {
+
+	mainFolder := validateMainFolder(packageName)
 	return &Setup{
 		PackageName:     packageName,
+		MainFolder:      mainFolder,
 		Author:          author,
 		Description:     description,
 		Skip:            skip,
@@ -67,6 +71,8 @@ func NewSetupFromConfig(conf *GlobalConfig) *Setup {
 // Update updates Setup fields by another Setup
 func (s *Setup) Update(from *Setup) {
 	s.PackageName = from.PackageName
+	s.MainFolder = from.MainFolder
+
 	if from.Author != "" {
 		s.Author = from.Author
 	}
@@ -149,4 +155,14 @@ func (s *Setup) Show() {
 // ShowString returns output string for Setup.
 func (s *Setup) ShowString() string {
 	return output.ShowString(s.getShow())
+}
+
+func validateMainFolder(name string) string {
+	name = strings.ToLower(name)
+	name = strings.TrimRight(name, "/")
+	name_items := strings.Split(name, "/")
+	if len(name_items) == 1 {
+		return name
+	}
+	return name_items[len(name_items)-1]
 }
