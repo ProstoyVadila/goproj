@@ -98,6 +98,40 @@ func Test_FoldersToSkip(t *testing.T) {
 	assert.Equal(t, foldersToSkip, setup.FoldersToSkip())
 }
 
+func Test_validateMainFolder(t *testing.T) {
+	testCases := []struct {
+		name        string
+		PackageName string
+		want        string
+	}{
+		{
+			name:        "case 1: one word packageName",
+			PackageName: "my_new_package_name",
+			want:        "my_new_package_name",
+		},
+		{
+			name:        "case 2: packageName contains repo",
+			PackageName: "github.com/someone/new_package",
+			want:        "new_package",
+		},
+		{
+			name:        "case 3: wierd packageName",
+			PackageName: "something/new_package/",
+			want:        "new_package",
+		},
+		{
+			name:        "case 4: uppercase",
+			PackageName: "something/New_Package",
+			want:        "new_package",
+		},
+	}
+	for _, tt := range testCases {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equal(t, tt.want, validateMainFolder(tt.PackageName))
+		})
+	}
+}
+
 func Test_Update(t *testing.T) {
 	originalSetup := getTestSetup(true)
 

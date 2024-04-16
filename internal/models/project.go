@@ -4,6 +4,7 @@ import (
 	"embed"
 	"log"
 	"os"
+	"path/filepath"
 	"reflect"
 	"strings"
 )
@@ -23,6 +24,7 @@ type ProjectInfo struct {
 	FilesToSkip     []string
 	FoldersToSkip   []string
 	PackageName     string
+	MainFolder      string
 	Author          string
 	Description     string
 	Path            string
@@ -54,8 +56,9 @@ func (p *ProjectInfo) setFoldersToGenerate(foldersToGenerate map[string]struct{}
 	for _, folderToSkip := range p.FoldersToSkip {
 		delete(foldersToGenerate, folderToSkip)
 	}
-	for k := range foldersToGenerate {
-		p.AddFolders(NewFolder(k))
+	for folder := range foldersToGenerate {
+		folderPath := filepath.Join(p.MainFolder, folder)
+		p.AddFolders(NewFolder(folderPath))
 	}
 }
 
@@ -85,6 +88,12 @@ func (p *ProjectInfo) setDocuments() {
 	}
 }
 
+func (p *ProjectInfo) GetMainFolder() *Folder {
+	// TODO: remove log
+	log.Printf("My main folder %s\n", p.MainFolder)
+	return NewFolder(p.MainFolder)
+}
+
 // NewProjectInfo constructs a ProjectInfo
 func NewProjectInfo(setup *Setup) *ProjectInfo {
 	absPath, err := os.Getwd()
@@ -95,12 +104,13 @@ func NewProjectInfo(setup *Setup) *ProjectInfo {
 	projectInfo := &ProjectInfo{
 		Author:        setup.Author,
 		PackageName:   setup.PackageName,
+		MainFolder:    setup.MainFolder,
 		FilesToSkip:   setup.FilesToSkip(),
 		FoldersToSkip: setup.FoldersToSkip(),
 		Description:   setup.Description,
 		InitGit:       setup.InitGit,
 		InitVSCode:    setup.InitVSCode,
-		Path:          absPath,
+		Path:          filepath.Join(absPath, setup.MainFolder),
 	}
 
 	projectInfo.setFilesToGenerate(filesToGenerate)

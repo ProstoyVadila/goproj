@@ -4,6 +4,7 @@ import (
 	"embed"
 
 	"github.com/ProstoyVadila/goproj/internal/git"
+	"github.com/ProstoyVadila/goproj/internal/info.go"
 	"github.com/ProstoyVadila/goproj/internal/models"
 	"github.com/ProstoyVadila/goproj/internal/vscode"
 	"github.com/ProstoyVadila/goproj/pkg/files"
@@ -18,7 +19,7 @@ var EmbedFiles embed.FS
 
 // Generate creates files and folders, initializes git repo, opens VS Code according to GlobalConfig, CLI args or Input Setup.
 func Generate(ArgsSetup ...*models.Setup) {
-	output.Info(logo)
+	output.Info(info.LOGO)
 
 	// trying to get setup from the configuration file or CLI args, or Input
 	setup := enrichSetup(ArgsSetup...)
@@ -29,6 +30,13 @@ func Generate(ArgsSetup ...*models.Setup) {
 	// aggregating all info about the projct to generate
 	projectInfo := models.NewProjectInfo(setup)
 	projectInfo.EmbedFiles = EmbedFiles
+
+	// generating main folder
+	output.Info("Generating project folder...")
+	if err := folders.CreateOne(projectInfo.GetMainFolder()); err != nil {
+		output.Err(err, "oh no")
+		output.Fatal(err)
+	}
 
 	// generating files
 	output.Info("Generating files...")

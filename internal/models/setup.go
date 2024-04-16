@@ -1,6 +1,7 @@
 package models
 
 import (
+	"log"
 	"path/filepath"
 	"strings"
 
@@ -17,6 +18,7 @@ const (
 type Setup struct {
 	Skip            []string
 	PackageName     string
+	MainFolder      string
 	Author          string
 	Description     string
 	InitGit         bool
@@ -38,8 +40,11 @@ func NewSetup(
 	isSetInitVSCode bool,
 	from int,
 ) *Setup {
+
+	mainFolder := validateMainFolder(packageName)
 	return &Setup{
 		PackageName:     packageName,
+		MainFolder:      mainFolder,
 		Author:          author,
 		Description:     description,
 		Skip:            skip,
@@ -67,6 +72,8 @@ func NewSetupFromConfig(conf *GlobalConfig) *Setup {
 // Update updates Setup fields by another Setup
 func (s *Setup) Update(from *Setup) {
 	s.PackageName = from.PackageName
+	s.MainFolder = from.MainFolder
+
 	if from.Author != "" {
 		s.Author = from.Author
 	}
@@ -149,4 +156,19 @@ func (s *Setup) Show() {
 // ShowString returns output string for Setup.
 func (s *Setup) ShowString() string {
 	return output.ShowString(s.getShow())
+}
+
+func validateMainFolder(name string) string {
+	// TODO: remove log
+	log.Printf("validatiing main folder %s\n", name)
+	name = strings.ToLower(name)
+	name = strings.TrimRight(name, "/")
+	name_items := strings.Split(name, "/")
+	if len(name_items) == 1 {
+		return name
+	}
+
+	// TODO: remove log
+	log.Printf("main folder from slice %v\n", name_items)
+	return name_items[len(name_items)-1]
 }
