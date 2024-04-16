@@ -14,18 +14,19 @@ Init project structure:
 
 ```bash
 .
-├── cmd/
-├── internal/
-├── pkg/
-├── main.go
-├── Makefile
-├── Dockerfile
-├── LICENSE
-├── README.md
-├── go.mod
-├── .env
-├── .dockerignore
-└── .gitignore
+└── your_project
+    ├── cmd/
+    ├── internal/
+    ├── pkg/
+    ├── main.go
+    ├── go.mod
+    ├── Dockerfile
+    ├── LICENSE
+    ├── Makefile
+    ├── README.md
+    ├── .env
+    ├── .dockerignore
+    └── .gitignore
 ```
 
 ## Content
