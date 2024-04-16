@@ -6,7 +6,7 @@ import (
 
 	"github.com/ProstoyVadila/goproj/internal/clipboard"
 	"github.com/ProstoyVadila/goproj/internal/git"
-	"github.com/ProstoyVadila/goproj/internal/info.go"
+	"github.com/ProstoyVadila/goproj/internal/info"
 	"github.com/ProstoyVadila/goproj/internal/models"
 	"github.com/ProstoyVadila/goproj/internal/vscode"
 	"github.com/ProstoyVadila/goproj/pkg/files"
