@@ -89,8 +89,6 @@ func (p *ProjectInfo) setDocuments() {
 }
 
 func (p *ProjectInfo) GetMainFolder() *Folder {
-	// TODO: remove log
-	log.Printf("My main folder %s\n", p.MainFolder)
 	return NewFolder(p.MainFolder)
 }
 

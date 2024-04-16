@@ -1,7 +1,6 @@
 package models
 
 import (
-	"log"
 	"path/filepath"
 	"strings"
 
@@ -159,16 +158,11 @@ func (s *Setup) ShowString() string {
 }
 
 func validateMainFolder(name string) string {
-	// TODO: remove log
-	log.Printf("validatiing main folder %s\n", name)
 	name = strings.ToLower(name)
 	name = strings.TrimRight(name, "/")
 	name_items := strings.Split(name, "/")
 	if len(name_items) == 1 {
 		return name
 	}
-
-	// TODO: remove log
-	log.Printf("main folder from slice %v\n", name_items)
 	return name_items[len(name_items)-1]
 }
