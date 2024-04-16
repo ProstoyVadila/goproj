@@ -16,3 +16,8 @@ func Create(folders []*models.Folder) error {
 	}
 	return nil
 }
+
+// CreateOne create folder
+func CreateOne(foders *models.Folder) error {
+	return os.Mkdir(foders.Name, foders.Permissions)
+}

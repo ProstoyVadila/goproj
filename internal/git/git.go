@@ -1,18 +1,23 @@
 package git
 
 import (
-	"github.com/ProstoyVadila/goproj/internal/models"
 	"github.com/ProstoyVadila/goproj/pkg/cmd"
 )
 
 const (
 	gitCommand = "git"
-	arg0       = "init"
+	arg0       = "-C"
+	initPath   = "."
+	arg2       = "init"
 )
 
 // InitGitRepo initialize git repository
-func InitGitRepo(projectInfo *models.ProjectInfo) error {
-	command := cmd.New(gitCommand, arg0)
+func InitGitRepo(path ...string) error {
+	arg1 := initPath
+	if len(path) != 0 {
+		arg1 = path[0]
+	}
+	command := cmd.New(gitCommand, arg0, arg1, arg2)
 	if err := command.Execute(); err != nil {
 		return err
 	}

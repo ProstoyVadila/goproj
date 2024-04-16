@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"github.com/ProstoyVadila/goproj/internal/config/info.go"
+	"github.com/ProstoyVadila/goproj/internal/info.go"
 	"github.com/spf13/cobra"
 )
 
