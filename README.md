@@ -29,6 +29,15 @@ Init project structure:
     └── .gitignore
 ```
 
+### Available Commands:
+
+- **new**                Generates a new Go porject **in the new folder** with default files and folders
+- **init**                  Generates a new Go porject with default files and folders
+- **config**            Sets up global configuration for all new generated projects
+- **help**                Help about any command
+- **completion**    Generates the autocompletion script for the specified shell
+- **version**           Gets version info
+
 ## Content
 
 - [Quick Start](#quick-start)
@@ -70,13 +79,27 @@ and answer a few questions:
 
 Another option is to use CLI arguments to make it more in a Go way:
 
+#### Init Command
+
 ```bash
 goproj init <your_new_package>
 ```
 
 ![](/examples/usage/example_init.GIF)
 
-\
+or with
+
+#### New Command
+
+```bash
+goproj new <your_new_package>
+```
+
+This command generates a new project in the new folder. It can resolve folder's name by the entered project's name. \
+For example, `goproj new github.com/bob/mylib` generates everything in `mylib` folder.
+
+#### Arguments
+
 You can specify some parameters with optional flags. For example:
 
 ```bash
@@ -96,7 +119,7 @@ Flags:
   -h, --help                  help for init
 ```
 
-You can find more information with `goproj init --help` command.
+You can find more information with `goproj init --help` or `goproj new --help` commands.
 
 ## Project Structure
 
