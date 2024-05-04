@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	Version = "1.1.0"
+	Version = "1.1.1"
 	Author  = "Vadim Gorbachev"
 	Repo    = "github.com/ProstoyVadila/goproj"
 )
