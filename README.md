@@ -31,8 +31,8 @@ Init project structure:
 
 ### Available Commands:
 
-- **new**                Generates a new Go porject **in the new folder** with default files and folders
-- **init**                  Generates a new Go porject with default files and folders
+- **new**                Generates a new Go porject with default files and folders in the new folder
+- **init**                  Generates a new Go porject with default files and folders in the path
 - **config**            Sets up global configuration for all new generated projects
 - **help**                Help about any command
 - **completion**    Generates the autocompletion script for the specified shell
