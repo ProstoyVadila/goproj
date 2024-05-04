@@ -17,19 +17,20 @@ var foldersToGenerate = map[string]struct{}{
 
 // ProjectInfo contains all information about the new project to create.
 type ProjectInfo struct {
-	EmbedFiles      embed.FS
-	Documents       []*Document
-	Folders         []*Folder
-	FilesToGenerate map[string]*Document
-	FilesToSkip     []string
-	FoldersToSkip   []string
-	PackageName     string
-	MainFolder      string
-	Author          string
-	Description     string
-	Path            string
-	InitGit         bool
-	InitVSCode      bool
+	EmbedFiles        embed.FS
+	Documents         []*Document
+	Folders           []*Folder
+	FilesToGenerate   map[string]*Document
+	FilesToSkip       []string
+	FoldersToSkip     []string
+	PackageName       string
+	MainFolder        string
+	Author            string
+	Description       string
+	Path              string
+	InitGit           bool
+	InitVSCode        bool
+	GenerateNewFolder bool
 }
 
 // AddDocuments appneds Documents to ProjectInfo Documents field.
@@ -57,7 +58,10 @@ func (p *ProjectInfo) setFoldersToGenerate(foldersToGenerate map[string]struct{}
 		delete(foldersToGenerate, folderToSkip)
 	}
 	for folder := range foldersToGenerate {
-		folderPath := filepath.Join(p.MainFolder, folder)
+		folderPath := folder
+		if p.GenerateNewFolder {
+			folderPath = filepath.Join(p.MainFolder, folder)
+		}
 		p.AddFolders(NewFolder(folderPath))
 	}
 }
@@ -99,16 +103,23 @@ func NewProjectInfo(setup *Setup) *ProjectInfo {
 		log.Fatal(err)
 	}
 
+	var path string
+	if setup.GenerateNewFolder {
+		path = filepath.Join(absPath, setup.MainFolder)
+	} else {
+		path = absPath
+	}
 	projectInfo := &ProjectInfo{
-		Author:        setup.Author,
-		PackageName:   setup.PackageName,
-		MainFolder:    setup.MainFolder,
-		FilesToSkip:   setup.FilesToSkip(),
-		FoldersToSkip: setup.FoldersToSkip(),
-		Description:   setup.Description,
-		InitGit:       setup.InitGit,
-		InitVSCode:    setup.InitVSCode,
-		Path:          filepath.Join(absPath, setup.MainFolder),
+		Author:            setup.Author,
+		PackageName:       setup.PackageName,
+		MainFolder:        setup.MainFolder,
+		FilesToSkip:       setup.FilesToSkip(),
+		FoldersToSkip:     setup.FoldersToSkip(),
+		Description:       setup.Description,
+		InitGit:           setup.InitGit,
+		InitVSCode:        setup.InitVSCode,
+		Path:              path,
+		GenerateNewFolder: setup.GenerateNewFolder,
 	}
 
 	projectInfo.setFilesToGenerate(filesToGenerate)

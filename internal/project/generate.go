@@ -33,11 +33,13 @@ func Generate(ArgsSetup ...*models.Setup) {
 	projectInfo := models.NewProjectInfo(setup)
 	projectInfo.EmbedFiles = EmbedFiles
 
-	// generating main folder
-	output.Info("Generating project folder...")
-	if err := folders.CreateOne(projectInfo.GetMainFolder()); err != nil {
-		output.Err(err, "oh no")
-		output.Fatal(err)
+	if projectInfo.GenerateNewFolder {
+		// generating main folder
+		output.Info("Generating project folder...")
+		if err := folders.CreateOne(projectInfo.GetMainFolder()); err != nil {
+			output.Err(err, "oh no")
+			output.Fatal(err)
+		}
 	}
 
 	// generating files
@@ -54,7 +56,11 @@ func Generate(ArgsSetup ...*models.Setup) {
 
 	// Git init
 	if projectInfo.InitGit {
-		if err := git.InitGitRepo(projectInfo.MainFolder); err != nil {
+		var path []string
+		if projectInfo.GenerateNewFolder {
+			path = append(path, projectInfo.MainFolder)
+		}
+		if err := git.InitGitRepo(path...); err != nil {
 			output.Fatal(err)
 		}
 	}
@@ -63,16 +69,22 @@ func Generate(ArgsSetup ...*models.Setup) {
 
 	// open VS Code
 	if projectInfo.InitVSCode {
-		if err := vscode.InitVSCode(projectInfo.MainFolder); err != nil {
+		var path []string
+		if projectInfo.GenerateNewFolder {
+			path = append(path, projectInfo.MainFolder)
+		}
+		if err := vscode.InitVSCode(path...); err != nil {
 			output.Err(err, "cannot open VS Code")
 		}
 	} else {
 
-		cmd := fmt.Sprintf("cd %s/", projectInfo.MainFolder)
-		if err := clipboard.Save(cmd); err != nil {
-			output.Info("Just jump into %s folder", projectInfo.MainFolder)
-		} else {
-			output.InfoWithCmd("saved to clipboard.\n", cmd)
+		if projectInfo.GenerateNewFolder {
+			cmd := fmt.Sprintf("cd %s/", projectInfo.MainFolder)
+			if err := clipboard.Save(cmd); err != nil {
+				output.Info("Just jump into %s folder", projectInfo.MainFolder)
+			} else {
+				output.InfoWithCmd("saved to clipboard.\n", cmd)
+			}
 		}
 
 	}

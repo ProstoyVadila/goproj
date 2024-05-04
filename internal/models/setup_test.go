@@ -33,6 +33,7 @@ func getTestSetup(isDefault bool) *Setup {
 		true,
 		true,
 		FromCli,
+		true,
 	)
 }
 
@@ -48,6 +49,7 @@ func Test_NewSetup(t *testing.T) {
 		setup1.IsSetInitGit,
 		setup1.IsSetInitVSCode,
 		setup1.From,
+		setup1.GenerateNewFolder,
 	)
 
 	assert.Equal(t, setup1, setup2)
@@ -171,6 +173,7 @@ func Test_Update(t *testing.T) {
 				originalSetup.IsSetInitGit,
 				originalSetup.IsSetInitVSCode,
 				originalSetup.From,
+				originalSetup.GenerateNewFolder,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -196,6 +199,7 @@ func Test_Update(t *testing.T) {
 				originalSetup.IsSetInitGit,
 				originalSetup.IsSetInitVSCode,
 				originalSetup.From,
+				originalSetup.GenerateNewFolder,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -220,6 +224,7 @@ func Test_Update(t *testing.T) {
 				originalSetup.IsSetInitGit,
 				originalSetup.IsSetInitVSCode,
 				originalSetup.From,
+				originalSetup.GenerateNewFolder,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -244,6 +249,7 @@ func Test_Update(t *testing.T) {
 				originalSetup.IsSetInitGit,
 				originalSetup.IsSetInitVSCode,
 				originalSetup.From,
+				originalSetup.GenerateNewFolder,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -267,6 +273,7 @@ func Test_Update(t *testing.T) {
 				originalSetup.IsSetInitGit,
 				originalSetup.IsSetInitVSCode,
 				originalSetup.From,
+				originalSetup.GenerateNewFolder,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -289,6 +296,7 @@ func Test_Update(t *testing.T) {
 				originalSetup.IsSetInitGit,
 				originalSetup.IsSetInitVSCode,
 				originalSetup.From,
+				originalSetup.GenerateNewFolder,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -312,6 +320,7 @@ func Test_Update(t *testing.T) {
 				originalSetup.IsSetInitGit,
 				originalSetup.IsSetInitVSCode,
 				originalSetup.From,
+				originalSetup.GenerateNewFolder,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -334,6 +343,7 @@ func Test_Update(t *testing.T) {
 				originalSetup.IsSetInitGit,
 				originalSetup.IsSetInitVSCode,
 				originalSetup.From,
+				originalSetup.GenerateNewFolder,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {
@@ -357,6 +367,7 @@ func Test_Update(t *testing.T) {
 				false,
 				false,
 				originalSetup.From,
+				originalSetup.GenerateNewFolder,
 			),
 			original: originalSetup,
 			testFunc: func(t *testing.T, toUpdate, another, original *Setup) {

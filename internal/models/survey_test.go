@@ -36,6 +36,7 @@ func Test_ToSetup(t *testing.T) {
 		true,
 		true,
 		FromSurvey,
+		true,
 	)
 	assert.Equal(t, setup1, survey.ToSetup())
 }
