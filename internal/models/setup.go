@@ -15,16 +15,17 @@ const (
 )
 
 type Setup struct {
-	Skip            []string
-	PackageName     string
-	MainFolder      string
-	Author          string
-	Description     string
-	InitGit         bool
-	InitVSCode      bool
-	IsSetInitGit    bool
-	IsSetInitVSCode bool
-	From            int
+	Skip              []string
+	PackageName       string
+	MainFolder        string
+	Author            string
+	Description       string
+	From              int
+	InitGit           bool
+	InitVSCode        bool
+	IsSetInitGit      bool
+	IsSetInitVSCode   bool
+	GenerateNewFolder bool
 }
 
 // NewSetup constructs Setup by fields.
@@ -38,20 +39,22 @@ func NewSetup(
 	isSetInitGit,
 	isSetInitVSCode bool,
 	from int,
+	generateInFolder bool,
 ) *Setup {
 
 	mainFolder := validateMainFolder(packageName)
 	return &Setup{
-		PackageName:     packageName,
-		MainFolder:      mainFolder,
-		Author:          author,
-		Description:     description,
-		Skip:            skip,
-		InitGit:         initGit,
-		InitVSCode:      initVSCode,
-		IsSetInitGit:    isSetInitGit,
-		IsSetInitVSCode: isSetInitVSCode,
-		From:            from,
+		PackageName:       packageName,
+		MainFolder:        mainFolder,
+		Author:            author,
+		Description:       description,
+		Skip:              skip,
+		InitGit:           initGit,
+		InitVSCode:        initVSCode,
+		IsSetInitGit:      isSetInitGit,
+		IsSetInitVSCode:   isSetInitVSCode,
+		From:              from,
+		GenerateNewFolder: generateInFolder,
 	}
 }
 
@@ -72,6 +75,7 @@ func NewSetupFromConfig(conf *GlobalConfig) *Setup {
 func (s *Setup) Update(from *Setup) {
 	s.PackageName = from.PackageName
 	s.MainFolder = from.MainFolder
+	s.GenerateNewFolder = from.GenerateNewFolder
 
 	if from.Author != "" {
 		s.Author = from.Author

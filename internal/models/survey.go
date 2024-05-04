@@ -11,7 +11,7 @@ type Survey struct {
 }
 
 func (s *Survey) ToSetup() *Setup {
-	isSetInitGit, isSetInitVSCode := true, true
+	isSetInitGit, isSetInitVSCode, generateNewFolder := true, true, true
 	return NewSetup(
 		s.PackageName,
 		s.Author,
@@ -22,6 +22,7 @@ func (s *Survey) ToSetup() *Setup {
 		isSetInitGit,
 		isSetInitVSCode,
 		FromSurvey,
+		generateNewFolder,
 	)
 }
 
