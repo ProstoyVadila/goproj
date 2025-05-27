@@ -10,8 +10,8 @@ import (
 func TestDockerfileInfo(t *testing.T) {
 	version := GoVersion(runtime.Version()) + "-alpine"
 	dockerfile1 := &DockerfileInfo{
-		GoVersion:     version,
-		AlpineVersion: ALPINE_VERSION,
+		GoImageTag:     version,
+		AlpineImageTag: LATEST,
 	}
 	dockerfile2 := NewDockerfileInfo()
 	assert.Equal(t, dockerfile1, dockerfile2)
