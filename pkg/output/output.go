@@ -13,6 +13,7 @@ var infoMsg = color.New(color.FgMagenta, color.Bold)
 
 // var infoWithFocusMsg = color.New(color.FgMagenta, color.FgCyan, color.Bold)
 var errMsg = color.New(color.FgRed)
+var warnMsg = color.New(color.FgYellow)
 var fieldShowMsg = color.New(color.FgHiWhite, color.Bold)
 var valueShowMsg = color.New(color.FgCyan)
 
@@ -22,6 +23,14 @@ func Info(msg string, args ...interface{}) {
 		infoMsg.Println(msg)
 	} else {
 		infoMsg.Printf(msg+"\n", args...)
+	}
+}
+
+func Warn(msg string, args ...interface{}) {
+	if len(args) == 0 {
+		warnMsg.Println(msg)
+	} else {
+		warnMsg.Printf(msg+"\n", args...)
 	}
 }
 
