@@ -25,11 +25,10 @@ func NewDockerfileInfo() *DockerfileInfo {
 	goImageTag := goVersion + "-alpine"
 	exists, err := docker.ImageExists(goImageTag)
 	if err != nil {
-		msg := fmt.Sprintf("cannot check golang:%s docker image existance due %v", goImageTag, err)
+		msg := fmt.Sprintf("cannot check golang:%s docker image existance due %v.", goImageTag, err)
 		output.Warn(msg)
-	}
-	if !exists {
-		msg := fmt.Sprintf("cannot find golang:%s docker image. Adding golang:%s to the Dockerfile instead", goImageTag, LATEST)
+	} else if !exists {
+		msg := fmt.Sprintf("cannot find golang:%s docker image. Adding golang:%s to the Dockerfile instead.", goImageTag, LATEST)
 		output.Warn(msg)
 		goImageTag = LATEST
 	}
